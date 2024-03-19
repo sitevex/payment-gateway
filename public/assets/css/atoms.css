@@ -1,0 +1,105 @@
+/* Aquí es donde definirás estilos para componentes individuales que no pueden dividirse más */
+/* Texto básico (p, h1, h2, etc.) */
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6{
+    margin-bottom: .5rem;
+    line-height: 1;
+}
+.fs-xxs{font-size: 0.625rem;}
+.fs-xs{font-size: 0.75rem;}
+.fs-sm{font-size: 0.875rem;}
+.flex-center{
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+.text-body-highlight{
+    --zc-text-opacity: 1;
+    color: rgba(var(--zc-body-highlight-color-rgb), var(--zc-text-opacity)) !important;
+}
+.text-body-tertiary{
+    --zc-text-opacity: 1;
+    color: rgba(var(--zc-tertiary-color-rgb), var(--zc-text-opacity)) !important;
+}
+
+/* Botones simples */
+.btn-primary-zc {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #4b95e6;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #2d65c8;
+    --bs-btn-hover-border-color: rgba(0, 0, 0, 0.2);
+    --bs-btn-focus-shadow-rgb: 255, 255, 255;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #2a53a3;
+    --bs-btn-active-border-color: rgba(0, 0, 0, 0.25);
+    --bs-btn-active-shadow: initial;
+    --bs-btn-disabled-color: #6db2ed;
+    --bs-btn-disabled-bg: #deedfb;
+    --bs-btn-disabled-border-color: transparent;
+}
+.btn-warning-zc {
+    --bs-btn-color: #070600;
+    --bs-btn-bg: #ffc700;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: #070600;
+    --bs-btn-hover-bg: #d19100;
+    --bs-btn-hover-border-color: rgb(209,145,0);
+    --bs-btn-focus-shadow-rgb: 255, 255, 255;
+    --bs-btn-active-color: #070600;
+    --bs-btn-active-bg: #a66702;
+    --bs-btn-active-border-color: rgba(166,103,2);
+    --bs-btn-active-shadow: initial;
+    --bs-btn-disabled-color: #ffd70d;
+    --bs-btn-disabled-bg: #fffcc1;
+    --bs-btn-disabled-border-color: transparent;
+}
+.btn-dark-zc {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #1d2e51;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #16233f;
+    --bs-btn-hover-border-color: rgb(22,35,63);
+    --bs-btn-focus-shadow-rgb: 255, 255, 255;
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #0c1322;
+    --bs-btn-active-border-color: rgb(12,19,34);
+    --bs-btn-active-shadow: initial;
+    --bs-btn-disabled-color: #99a7c9;
+    --bs-btn-disabled-bg: #fffcc1;
+    --bs-btn-disabled-border-color: transparent;
+}
+
+/* Campos de entrada (input, textarea, select) */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-control{
+    background-color: #eeeeee;
+}
+.form-control:focus{
+    box-shadow: none;
+}
+::placeholder {
+    font-size: 0.875rem;
+}
+
+
+/* Iconos individuales */
+/* Etiquetas (span, label) */
+
+
+

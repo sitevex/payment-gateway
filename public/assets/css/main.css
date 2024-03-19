@@ -1,0 +1,27 @@
+@import url('atoms.css');
+:root{
+    --zc-body-color: #31394a;
+    --zc-body-highlight-color-rgb: 34, 40, 52;
+    --zc-tertiary-color-rgb: 82, 91, 117;
+}
+body {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    color: var(--zc-body-color);
+}
+.divider-inner{
+    height: 44px;
+    margin-bottom: -18px;
+    background: -webkit-linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.03) 3px,transparent);
+    background: linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.03) 3px,transparent);
+}
+.divider-inner::after{
+    display: block;
+    width: 100%;
+    height: 44px;
+    background-color: transparent;
+    background: -webkit-linear-gradient(to right,#fff,rgba(255,255,255,0),#fff);
+    background: linear-gradient(to right,#fff,rgba(255,255,255,0),#fff);
+    z-index: 1;
+    content: "";
+}
