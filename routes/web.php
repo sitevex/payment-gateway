@@ -8,3 +8,6 @@ Route::get('/', function () {
 });
 
 Route::get('/index', [SeguridadController::class, 'index'])->name('index');
+Route::get('/pedido', function () {
+    return view('pages.pedido.index');
+});

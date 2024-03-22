@@ -6,3 +6,52 @@
     Botones compuestos (con iconos, texto, etc.)
     Encabezados compuestos
  */
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Para que el borde superior se aplique correctamente */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+    height: 330px;
+}
+
+.card-img-top {
+    max-width: 75px;
+    height: auto;
+    border-radius: 10px;
+    border-top: 6px; /* Agrega un borde superior de 3px de grosor y color negro */
+    padding-top: 10px; /* Opcional: para dar un espacio entre el borde y la imagen */
+}
+.btn-primary {
+    border: 2px solid #007bff; /* Cambia el color y el grosor del borde según tus preferencias */
+    margin-bottom: 10px;
+}
+
+.icono {
+    width: 30px; /* ajusta el ancho según tu preferencia */
+    height: 30px; /* ajusta el alto según tu preferencia */
+}
+
+.list-group-item {
+    text-align: left;
+}
+
+.list-group-radio .form-check-input:checked + .list-group-item {
+    background-color: var(--bs-body);
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 2px var(--bs-primary);
+}
+.list-group-radio .list-group-item {
+    cursor: pointer;
+    border-radius: .5rem;
+}
+
+.react-shadow-w0axkt {
+    font-size: var(--chakra-fontSizes-sm);
+    text-transform: uppercase;
+    padding-bottom: var(--chakra-space-4);
+    font-weight: var(--chakra-fontWeights-semibold);
+    color: var(--chakra-colors-colorText);
+    font-family: var(--chakra-fonts-body);
+}
