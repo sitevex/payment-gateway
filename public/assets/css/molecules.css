@@ -55,3 +55,33 @@
     color: var(--chakra-colors-colorText);
     font-family: var(--chakra-fonts-body);
 }
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+th, td {
+    border: 1px solid rgb(10, 3, 109);
+    padding: 6px;
+    text-align: center;
+}
+
+.cantidad-columna {
+    width: 50px;
+}
+.precio-columna {
+    width: 100px;
+}
+
+.negrita {
+    font-weight: bold;
+}
+p {
+    margin-top: 13px;
+    margin-bottom: 1rem;
+}
+.center-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

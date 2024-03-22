@@ -2,8 +2,7 @@
 @section('title', 'Pago Digital')
 @section('content')
 
-
-<header class=" p-3 mb-2 border-bottom">
+<header class="p-3 mb-2 border-bottom">
     <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
         <a class="navbar-brand" href="#">@include('components.atoms.logo.zc_mayoristas')</a>
         <ul class="nav nav-pills">
@@ -23,32 +22,52 @@
         </ul>
     </nav>
 </header>
+
 <section>
-    <div class="container ">
-        <div class="row flex min-vh-100 py-5 ">
-            <div class="container text-center ">
-                <div class="row ">
-                    <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="width: 18rem;">
-                        <img src="{{ asset('assets/imagenes/PDF_file_icon.svg.png')}}" class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Fecha: </li>
-                                <li class="list-group-item">Num. Pedido:</li>
-                                <li class="list-group-item">Valor a Pagar</li>
-                            </ul>
-                        </div>
-                        <div class="container text-center mx-auto">
-                            <button id="infoButton" class="btn btn-primary" type="button">información</button>
-                            <button id="pagarButton" class="btn btn-primary" type="button">Pagar</button>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center gx-4">
+            <div class="col-md-4 mb-4 d-flex">
+                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="width: 100%;">
+                    <a href="ruta_del_archivo.pdf" download="nombre_del_archivo.pdf">
+                        <img src="assets/imagenes/PDF_file_icon.svg.png" class="card-img-top"
+                            alt="Icono de archivo PDF">
+                    </a>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Fecha: </li>
+                            <li class="list-group-item">Num. Pedido:</li>
+                            <li class="list-group-item">Valor a Pagar</li>
+                        </ul>
                     </div>
-                    <div class="col">
-                        Column
-                    </div>
-                    <div class="col">
-                        Column
+                    <div class="container text-center">
+                        <button id="infoButton" class="btn btn-primary" type="button">Información</button>
+                        <button id="pagarButton" class="btn btn-primary" type="button">Pagar</button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4 mb-4 d-flex">
+                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="width: 100%;">
+                    <a href="ruta_del_archivo.pdf" download="nombre_del_archivo.pdf">
+                        <img src="assets/imagenes/PDF_file_icon.svg.png" class="card-img-top"
+                            alt="Icono de archivo PDF">
+                    </a>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Fecha: </li>
+                            <li class="list-group-item">Num. Pedido:</li>
+                            <li class="list-group-item">Valor a Pagar</li>
+                        </ul>
+                    </div>
+                    <div class="container text-center">
+                        <button id="infoButton" class="btn btn-primary" type="button">Información</button>
+                        <button id="pagarButton" class="btn btn-primary" type="button">Pagar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 ">
+                <div class="card shadow p-3 mb-5 bg-body-tertiary rounded" style="width: 100%;">
+                <!--agregar contenido de la card-->
+                </div>                
             </div>
         </div>
     </div>
@@ -59,57 +78,68 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Detalle</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3">
-                    <div class="col-md-6 border-bottom">
-                        <label for="inputEmail4" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputPassword4" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="inputPassword4">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress" class="form-label">Address</label>
-                        <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                    </div>
-                    <div class="col-12">
-                        <label for="inputAddress2" class="form-label">Address 2</label>
-                        <input type="text" class="form-control" id="inputAddress2"
-                            placeholder="Apartment, studio, or floor">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="inputCity" class="form-label">City</label>
-                        <input type="text" class="form-control" id="inputCity">
-                    </div>
-                    <div class="col-md-4">
-                        <label for="inputState" class="form-label">State</label>
-                        <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="inputZip" class="form-label">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
-                    </div>
-                    <div class="col-12">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
-                            <label class="form-check-label" for="gridCheck">
-                                Check me out
-                            </label>
+                <div class="container text-center">
+                    <div class="row ">
+                        <div class="col-md-4 ">
+                            <a class="navbar-brand" href="#">@include('components.atoms.logo.zc_mayoristas')</a>
                         </div>
+                        <div class="col-md-4 offset-md-4 text-center">Fecha</div>
                     </div>
+                </div>
+                <div class="row justify-content-around">
+                    <div class="col-md-6">
+                        <p class="fw-bold">Nombres:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="fw-bold">Apellidos:</p>
+                    </div>
+                    <div class="col-md-12">
+                        <p class="fw-bold">Ruc:</p>
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <td class="negrita">Producto</td>
+                        <td class="negrita">Cantidad</td>
+                        <td class="negrita">Precio</td>
+                    </tr>
+                    <tr>
+                        <td>Producto 1</td>
+                        <td>6</td>
+                        <td>$7.00</td>
+                    </tr>
+                    <tr>
+                        <td>Producto 2</td>
+                        <td>10</td>
+                        <td>$11.00</td>
+                    </tr>
+                    <tr>
+                        <td>Producto 3</td>
+                        <td>14</td>
+                        <td>$15.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="table-active negrita">Subtotal</td>
+                        <td>$0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="table-active negrita">IVA</td>
+                        <td>$0.00</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="table-active negrita">TOTAL</td>
+                        <td>$0.00</td>
+                    </tr>
+                </table>
 
-                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                <!--<button type="button" class="btn btn-primary">Understood</button>-->
             </div>
         </div>
     </div>
@@ -120,22 +150,20 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            
                 <h5 class="modal-title">Método de pago</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="container text-center">
                 <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                     <div class="list-group list-group-radio d-grid gap-2 border-0">
-                    <img src="{{ asset('assets/imagenes/descarga.png')}}" style="width: 400px; height: auto;">
-
+                        <img src="{{ asset('assets/imagenes/descarga.png')}}" style="width: 400px; height: auto;">
                         <!-- <p class="chakra-text react-shadow-w0axkt">Método de pago</p> -->
                         <div class="position-relative">
                             <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5" type="radio"
                                 name="listGroupRadioGrid" id="listGroupRadioGrid1" value="" checked="">
                             <label class="list-group-item py-3 pe-5" for="listGroupRadioGrid1">
-                            <strong class="fw-semibold">
-                            <i class="bi bi-credit-card" style="color: black;"></i> Payphone</strong>
+                                <strong class="fw-semibold">
+                                    <i class="bi bi-credit-card" style="color: black;"></i> Payphone</strong>
                                 <span class="d-block small opacity-75">With support text underneath to add more
                                     detail</span>
                             </label>
@@ -145,11 +173,10 @@
                                 name="listGroupRadioGrid" id="listGroupRadioGrid2" value="">
                             <label class="list-group-item py-3 pe-5" for="listGroupRadioGrid2">
                                 <strong class="fw-semibold">
-                                <i class="bi bi-credit-card" style="color: black;"></i> Datafast</strong>
+                                    <i class="bi bi-credit-card" style="color: black;"></i> Datafast</strong>
                                 <span class="d-block small opacity-75">Some other text goes here</span>
                             </label>
                         </div>
-
                         <div class="position-relative">
                             <input class="form-check-input position-absolute top-50 end-0 me-3 fs-5" type="radio"
                                 name="listGroupRadioGrid" id="listGroupRadioGrid3" value="">
