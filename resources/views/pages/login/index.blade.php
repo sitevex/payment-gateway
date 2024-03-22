@@ -3,17 +3,17 @@
 @section('content')
 <!-- Importar el componente Modal -->
 @component('components.organisms.modal_mesaje', [
-'modalId' => 'mensajeModal', // ID único para la modal
-'modalSize' => 'modal-sm', // Tamaño de la modal
-'modalHeaderJustify' => 'justify-content-center',
-'modalTitle' => 'Título de la Modal 1', // Título de la modal
-'showCloseButton' => false, // Mostrar el botón de cierre
-'textAlign' => 'text-center', // Justificar el texto
-'modalFooter' => '<button type="button" class="btn btn-lg btn-dark-zc fw-bold w-100"
-    data-bs-dismiss="modal">Aceptar</button>'
-])
-<!-- Contenido de la modal -->
-<p>Contenido de la Modal 1 aquí...</p>
+    'modalId' => 'mensajeModal', // ID único para la modal
+    'modalSize' => 'modal-sm', // Tamaño de la modal
+    'modalHeaderJustify' => 'justify-content-center',
+    'modalTitle' => 'Título de la Modal 1', // Título de la modal
+    'showCloseButton' => false, // Mostrar el botón de cierre
+    'textAlign' => 'text-center', // Justificar el texto
+    'modalFooter' => '<button type="button" class="btn btn-lg btn-dark-zc fw-bold w-100"
+        data-bs-dismiss="modal">Aceptar</button>'
+    ])
+    <!-- Contenido de la modal -->
+    <p>Contenido de la Modal 1 aquí...</p>
 @endcomponent
 <section>
     <div class="container">
@@ -31,8 +31,7 @@
                             <p class="text-body-tertiary">Por favor, introduce tu número de identificación para acceder
                                 a tus pedidos</p>
                         </div>
-                        <form class="row g-3 needs-validation" novalidate action="#" method="get" id="rucForm">
-                            @csrf
+                        <form class="row g-3 needs-validation" novalidate id="rucForm">
                             <div class="col-md-12">
                                 <label for="numeroIdentificacion" class="form-label fs-sm d-none">Número de idetificación</label>
                                 <input type="number" class="form-control form-control-lg" name="numeroIdentificacion" id="numeroIdentificacion" placeholder="Ingresa tu número de identificación (ruc)" required data-error="Número de identificación incorrecto. Por favor, inténtalo de nuevo." />
@@ -121,6 +120,8 @@
 
             const data = await response.json();
             console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
+            // Redirigir a la nueva vista con los datos
+            window.location.href = '/vista/businessPartners';
         } catch (error) {
             console.error('Error fetching data:', error);
         }
