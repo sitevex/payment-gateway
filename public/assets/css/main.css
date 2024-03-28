@@ -1,28 +1,141 @@
 @import url('atoms.css');
 @import url('molecules.css');
-:root{
+@import url('organisms.css');
+
+:root {
     --zc-body-color: #31394a;
+    --zc-bg-white: #ffffff;
+    --zc-bg-jade-50: #effef7;
+    --zc-bg-alabaster-50: #fbfbfb;
     --zc-body-highlight-color-rgb: 34, 40, 52;
     --zc-tertiary-color-rgb: 82, 91, 117;
 }
+
 body {
     font-family: "Nunito Sans", sans-serif;
     font-optical-sizing: auto;
     color: var(--zc-body-color);
+    background: #f5f6fa;
 }
-.divider-inner{
+
+.divider-inner {
     height: 44px;
     margin-bottom: -18px;
-    background: -webkit-linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.03) 3px,transparent);
-    background: linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.03) 3px,transparent);
+    background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, .14), rgba(0, 0, 0, .03) 3px, transparent);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, .14), rgba(0, 0, 0, .03) 3px, transparent);
 }
-.divider-inner::after{
+
+.divider-inner::after {
     display: block;
     width: 100%;
     height: 44px;
     background-color: transparent;
-    background: -webkit-linear-gradient(to right,#fff,rgba(255,255,255,0),#fff);
-    background: linear-gradient(to right,#fff,rgba(255,255,255,0),#fff);
+    background: -webkit-linear-gradient(to right, #fff, rgba(255, 255, 255, 0), #fff);
+    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0), #fff);
     z-index: 1;
     content: "";
+}
+
+.body-loader {
+    display: none;
+}
+
+.loader-box {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    /* background: rgba(0, 0, 0, 0.15); */
+    background: rgba(255, 255, 255, 0.7);
+    display: grid;
+    place-items: center;
+    z-index: 99999999;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: inline-block;
+    border-top: 4px solid #ffc700;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border-bottom: 4px solid #16233f;
+    border-left: 4px solid transparent;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.content-profile {
+    position: relative;
+    animation: animatop 0.9s cubic-bezier(0.425, 1.14, 0.47, 1.125) forwards;
+}
+@keyframes animatop {
+    0% {
+        opacity: 0;
+        bottom: -500px;
+    }
+    100% {
+        opacity: 1;
+        bottom: 0px;
+    }
+}
+.card-profile{
+    overflow: hidden;
+    background: rgb(243, 245, 249) none repeat scroll 0% 0% !important;
+}
+
+.round-circle-left, .round-circle-right {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: var(--zc-bg-white);
+    border-radius: 50%;
+    top: 55px;
+}
+
+.round-circle-left {
+    left: -13px;
+}
+.round-circle-right {
+    right: -13px;
+}
+
+.border-dashed {
+    border-bottom-style: dashed !important;
+    border-bottom-width: 1px !important;
+}
+
+.shadow-sm-zc{
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+.nav-detalleOrden .nav-link{
+    color: var(--zc-body-color);
+    background-color: transparent;
+}
+.nav-detalleOrden .nav-link.active, .nav-detalleOrden .show > .nav-link{
+    font-weight: 500;
+    color: var(--zc-body-color);
+    background-color: transparent;
+    border-bottom-color: currentcolor;
+    border-bottom: 2px solid #11642a;
 }

@@ -7,25 +7,12 @@
     Encabezados compuestos
  */
 
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column; /* Para que el borde superior se aplique correctamente */
-    justify-content: center; /* Centra horizontalmente el contenido */
-    align-items: center; /* Centra verticalmente el contenido */
-    height: 330px;
-}
-
 .card-img-top {
     max-width: 75px;
     height: auto;
     border-radius: 10px;
     border-top: 6px; /* Agrega un borde superior de 3px de grosor y color negro */
     padding-top: 10px; /* Opcional: para dar un espacio entre el borde y la imagen */
-}
-.btn-primary {
-    border: 2px solid #007bff; /* Cambia el color y el grosor del borde según tus preferencias */
-    margin-bottom: 10px;
 }
 
 .icono {
@@ -74,10 +61,6 @@ th, td {
 
 .negrita {
     font-weight: bold;
-}
-p {
-    margin-top: 13px;
-    margin-bottom: 1rem;
 }
 .center-section {
     display: flex;

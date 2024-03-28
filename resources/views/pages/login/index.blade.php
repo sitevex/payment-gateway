@@ -5,10 +5,10 @@
 @component('components.organisms.modal_mesaje', [
     'modalId' => 'mensajeModal', // ID único para la modal
     'modalSize' => 'modal-sm', // Tamaño de la modal
-    'modalHeaderJustify' => 'justify-content-center',
+    'modalHeaderClass' => 'justify-content-center',
     'modalTitle' => 'Título de la Modal 1', // Título de la modal
     'showCloseButton' => false, // Mostrar el botón de cierre
-    'textAlign' => 'text-center', // Justificar el texto
+    'modalBodyClass' => 'py-0 text-center', // Justificar el texto
     'modalFooter' => '<button type="button" class="btn btn-lg btn-dark-zc fw-bold w-100"
         data-bs-dismiss="modal">Aceptar</button>'
     ])

@@ -46,3 +46,54 @@ function validarRuc(ruc) {
         return false;
     }
 }
+
+// Función para mostrar el modal con el mensaje
+function mostrarMensajeModal(titulo, mensaje) {
+    let modalTitle = document.querySelector('#mensajeModal .modal-title');
+    let modalBody = document.querySelector('#mensajeModal .modal-body');
+
+    modalTitle.textContent = titulo;
+    modalBody.innerHTML = '<p>' + mensaje + '</p>';
+
+    let modal = new bootstrap.Modal(document.getElementById('mensajeModal'));
+    modal.show();
+}
+
+function showLoader() {
+    console.log('showLoder');
+    document.body.style.overflow = 'hidden';
+    var loader = document.querySelector('.body-loader');
+    if (loader) {
+        loader.style.display = 'block';
+    }
+}
+
+function hideLoader() {
+    console.log('hideLoader');
+    document.body.style.overflow = 'auto';
+    var loader = document.querySelector('.body-loader');
+    if (loader) {
+        loader.style.display = 'none';
+    }
+}
+
+
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()

@@ -10,3 +10,65 @@
     Formulario de contacto completo
     Barra lateral con widgets
  */
+
+/* STEP */
+.multi-step-form {
+    /* get rid of  scroll bars */
+    overflow: hidden;
+    position: relative;
+}
+
+.box-step {
+    animation: fade 500ms ease-in-out forwards;
+    /* the active one is going to kind of animate in the screen as long as we give it a transition */
+    opacity: 0;
+    position: absolute;
+    display: inline;
+}
+
+.box-step.active {
+    display: block;
+    position: static;
+    /* animation: none; */
+    animation: slide 250ms 250ms ease-in-out both;
+}
+
+.hide {
+    display: none;
+}
+
+@keyframes slide {
+    0% {
+        display: none;
+        transform: translateX(200%);
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade {
+    0% {
+        display: none;
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(.75);
+        opacity: 0;
+        display: block;
+
+    }
+
+    100% {
+        display: block;
+        transform: scale(0);
+        opacity: 0;
+        display: none;
+    }
+}
