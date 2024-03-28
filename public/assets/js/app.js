@@ -166,16 +166,16 @@ async function obtenerUsuario() {
 
         const data = await response.json();
         hideLoader();
-        header.style.display = 'block';
-        console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
-        userNameNavbar.textContent = data.value[0].CardName;
+        
         if (data.value.length === 0) {
             header.style.display = 'none';
             // Si no hay datos, mostrar mensaje y evitar avanzar
             mostrarMensajeModal('Información no encontrada', 'No se encuentra información del usuario.');
             return;
         }
-
+        header.style.display = 'block';
+        console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
+        userNameNavbar.textContent = data.value[0].CardName;
         // Si hay datos, permitir avanzar al siguiente 'step'
         // _nextStep = true;
     } catch (error) {
