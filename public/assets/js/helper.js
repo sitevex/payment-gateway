@@ -53,14 +53,38 @@ function mostrarMensajeModal(titulo, mensaje) {
     let modalBody = document.querySelector('#mensajeModal .modal-body');
 
     modalTitle.textContent = titulo;
-    modalBody.innerHTML = '<p>' + mensaje + '</p>';
+    modalBody.innerHTML = '<p class="fs-sm">' + mensaje + '</p>';
 
     let modal = new bootstrap.Modal(document.getElementById('mensajeModal'));
     modal.show();
 }
 
+function mostrarErrorModal(titulo, mensaje) {
+    let modalTitle = document.querySelector('#errorModal .modal-title');
+    let modalBody = document.querySelector('#errorModal .modal-body');
+
+    modalTitle.textContent = titulo;
+    modalBody.innerHTML = '<p class="fs-sm">' + mensaje + '</p>';
+
+    let modal = new bootstrap.Modal(document.getElementById('errorModal'));
+    modal.show();
+}
+
+detalleOrdenModal.addEventListener('shown.bs.modal', function (event) {
+    console.log('test detalle');
+    const button = event.relatedTarget;
+    const modo = button.getAttribute('data-modo');
+
+    if (modo === 'datalle') {
+        const id = button.getAttribute('data-id');
+        console.log(id);
+    }
+
+});
+/* function mostrarDetalleModal() {
+} */
+
 function showLoader() {
-    console.log('showLoder');
     document.body.style.overflow = 'hidden';
     var loader = document.querySelector('.body-loader');
     if (loader) {
@@ -69,7 +93,6 @@ function showLoader() {
 }
 
 function hideLoader() {
-    console.log('hideLoader');
     document.body.style.overflow = 'auto';
     var loader = document.querySelector('.body-loader');
     if (loader) {

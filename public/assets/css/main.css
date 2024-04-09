@@ -4,6 +4,8 @@
 
 :root {
     --zc-body-color: #31394a;
+    --zc-bg-madison: #112860;
+    --zc-bg-mountain: #00BA88;
     --zc-bg-white: #ffffff;
     --zc-bg-jade-50: #effef7;
     --zc-bg-alabaster-50: #fbfbfb;
@@ -12,12 +14,19 @@
 }
 
 body {
-    font-family: "Nunito Sans", sans-serif;
+    font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
     color: var(--zc-body-color);
     background: #f5f6fa;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
-
+.main{
+    align-items: center;
+    display: flex;
+    flex-grow: 1;
+}
 .divider-inner {
     height: 44px;
     margin-bottom: -18px;
@@ -30,8 +39,8 @@ body {
     width: 100%;
     height: 44px;
     background-color: transparent;
-    background: -webkit-linear-gradient(to right, #fff, rgba(255, 255, 255, 0), #fff);
-    background: linear-gradient(to right, #fff, rgba(255, 255, 255, 0), #fff);
+    background: -webkit-linear-gradient(to right, #f5f6fa, rgba(255, 255, 255, 0), #f5f6fa);
+    background: linear-gradient(to right, #f5f6fa, rgba(255, 255, 255, 0), #f5f6fa);
     z-index: 1;
     content: "";
 }
@@ -126,7 +135,7 @@ body {
 }
 
 .shadow-sm-zc{
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 .nav-detalleOrden .nav-link{
     color: var(--zc-body-color);

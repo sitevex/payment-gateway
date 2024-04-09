@@ -18,7 +18,7 @@ class PasarelaPagoController extends Controller
 
     public function businessPartnersTwo(Request $request) 
     {
-        // Obtener el valor de 'ruc' desde la solicitud
+        // Obtener el valor de 'ruc' desde la solicitud formulario Login
         $ruc = $request->input('ruc');
 
         // Solicitud GET
@@ -34,4 +34,18 @@ class PasarelaPagoController extends Controller
         return response()->json($businessPartners);
     }
 
+    function listaSolicitud(Request $request) {
+        $customerCode = $request->input('customerCode');
+        
+        // Solicitud GET
+        $resource = '/sml.svc/LISTADOSERVICIO';
+        $filter = '$filter=CUSTOMERCODE eq \'' . $customerCode . '\'';
+        $orderby = '$orderby=CREATIONDATE desc';
+
+        $query = "$filter&$orderby";
+
+        $listadoServicio = $this->serviceLayer->getRequestQuery($resource, $query);
+        // dd($listadoServicio);
+        return response()->json($listadoServicio);
+    }
 }

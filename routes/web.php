@@ -24,3 +24,4 @@ Route::get('/indextwo', function () {
     return view('pages.pasarela_pago.index');
 });
 Route::get('/businessPartnerstwo', [PasarelaPagoController::class, 'businessPartnersTwo'])->name('businessPartners');
+Route::get('/lista-solicitud', [PasarelaPagoController::class, 'listaSolicitud'])->name('listaSolicitud');
