@@ -93,7 +93,7 @@ class ServiceLayer
         return $response->json();
     }
 
-    function postRequest($resource, $data) 
+    public function postRequest($resource, $data) 
     {
         $url = $this->baseUrl . $resource;
         $response = Http::withHeaders([
@@ -104,5 +104,17 @@ class ServiceLayer
         ->post($url, $data);
 
         return $response->json();
+    }
+
+    public function logoutB1SLayer() {
+        $url = $this->baseUrl . 'Logout';
+        $response = Http::withHeaders([
+            // 'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
+            'Cookie' => 'B1SESSION=' . $this->sessionId,
+        ])
+        ->post($url);
+
+        return $response;
     }
 }

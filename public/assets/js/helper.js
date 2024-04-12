@@ -1,3 +1,4 @@
+const csrfToken = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
 /* function validarRuc(ruc) {
     // Eliminar espacios en blanco y guiones
     ruc = ruc.replace(/\s/g, '').replace(/-/g, '');
@@ -100,6 +101,42 @@ function hideLoader() {
     }
 }
 
+function capitalizarPrimeraLetraCadaPalabra(texto) {
+    // Dividir el texto en un array de palabras
+    let palabras = texto.split(' ');
+
+    // Capitalizar la primera letra de cada palabra
+    let palabrasCapitalizadas = palabras.map(palabra => {
+        // Verificar que la palabra no esté vacía
+        if (palabra.length > 0) {
+            return palabra[0].toUpperCase() + palabra.slice(1).toLowerCase();
+        } else {
+            return '';
+        }
+    });
+
+    // Unir las palabras en una cadena nuevamente
+    let textoCapitalizado = palabrasCapitalizadas.join(' ');
+
+    return textoCapitalizado;
+}
+
+function formatearFecha(fechaString) {
+    // Dividir la cadena de fecha en día, mes y año
+    const [anio, mes, dia] = fechaString.split('-');
+
+    // Obtener nombre del mes en español
+    const meses = [
+        "ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
+        "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"
+    ];
+    const nombreMes = meses[parseInt(mes, 10) - 1]; // Restar 1 para obtener el mes correcto del array
+
+    // Formatear la fecha final
+    const fechaFormateada = `${nombreMes} ${dia}, ${anio}`;
+    
+    return fechaFormateada;
+}
 
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (() => {

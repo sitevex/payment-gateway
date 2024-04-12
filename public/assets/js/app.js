@@ -8,6 +8,7 @@ const multiStepForm = document.querySelector("[data-multi-step]");
 const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
 const navItemSteps  = document.querySelectorAll(".navbar-step .navbar-nav li a.nav-link")
 const progressSteps = document.querySelectorAll(".nav-step");
+const logoutLink = document.getElementById('logout');
 
 navAvatar.style.display = 'none';
 
@@ -36,6 +37,17 @@ document.querySelector("#btnGetInto").addEventListener('click', async function (
     }
     checkAndContinue();
 });
+
+// ------------------ Logout ------------------
+if (logoutLink) {
+    logoutLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        logoutSAPLayer();
+    })
+}
+
+// ------------------ Realizar compra ------------------
+
 
 // ------------------ Atrás ------------------
 document.querySelectorAll('[data-previous]').forEach(prevBtn => {
@@ -107,9 +119,8 @@ function doActionStep(currentStep) {
             console.log('Obtener pedidos..');
         break;
         case 2:
-            console.log('ha eligido una especialidad');
-            console.log('Obtener todas las centrales medicas....');
-            obtenerCentroMedico();
+            console.log('Metodo de pago');
+            // obtenerCentroMedico();
         break;
         case 3:
             console.log('ha eligido un centro medico');
@@ -131,6 +142,7 @@ function doActionStep(currentStep) {
 async function obtenerUsuario(numeroIdentificacion) {
     showLoader();
     let userNameNavbar = document.getElementById('user-name-navbar');
+    let firstName = document.getElementById('user-first-name');
     // let rucInput = document.getElementById('numeroIdentificacion').value.trim();
     // Aquí puedes enviar el formulario si todo está correcto
     const url = `/businessPartnerstwo?ruc=${numeroIdentificacion}`;
@@ -147,10 +159,12 @@ async function obtenerUsuario(numeroIdentificacion) {
         if (data.value.length === 0) {
             return false;
         } else {
-            console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
+            // console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
+            let userName = data.value[0].CardName
             navAvatar.style.display = 'block';
-            userNameNavbar.textContent = data.value[0].CardName;
-            cardCode = data.value[0].CardCode
+            userNameNavbar.textContent = userName;
+            cardCode = data.value[0].FederalTaxID
+            firstName.textContent = userName.charAt(0).toUpperCase();
             obtenerPedido(cardCode);
             return true;
         }
@@ -163,13 +177,14 @@ async function obtenerUsuario(numeroIdentificacion) {
 }
 
 async function obtenerPedido(customerCode) {
+    showLoader();
     let contentMsjNoOrders = document.querySelector('.msj-noOrders');
     contentMsjNoOrders.hidden=true;
 
     let contentOrders = document.querySelector('.content-orders');
     contentOrders.innerHTML = '';
 
-    const url = `/lista-solicitud?customerCode=${customerCode}`;
+    const url = `/lista-pedido?customerCode=${customerCode}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -177,6 +192,7 @@ async function obtenerPedido(customerCode) {
         }
 
         const data = await response.json();
+        hideLoader();
         if (data.value.length === 0) {
             mostrarNoExistenOrdenes();
         } else {
@@ -205,17 +221,17 @@ function mostrarOrdenes(data) {
                     <div class="d-flex justify-content-between">
                         <div>
                             <span class="badge text-bg-sail">Número de orden</span>
-                            <p class="fs-sm text-start mb-0">ORD12345</p>
+                            <p class="fs-sm text-start mb-0">${item.NO_PEDIDO}</p>
                         </div>
                         <div class="d-flex flex-column">
                             <span class="badge text-bg-sail">Fecha y Hora</span>
-                            <p class="fs-xxs text-end mb-0">AGO 09, 2024</p>
-                            <p class="fs-xs fw-bold text-end mb-0">10:20 AM</p>
+                            <p class="fs-xxs text-end mb-0">${formatearFecha(item.FECHA)}</p>
+                            <p class="fs-xs fw-bold text-end mb-0 d-none" >10:20 AM</p>
                         </div>
                     </div>
-                    <p class="fw-bold mb-0">ZC - Guayaquil</p>
-                    <p class="fs-sm mb-0">Cliente Ejemplo S.A.</p>
-                    <p class="fs-sm mb-0">clienteejemplosa@hotmail.com</p>
+                    <p class="fw-bold mb-0 d-none">ZC - Guayaquil</p>
+                    <p class="fs-sm mb-0">${capitalizarPrimeraLetraCadaPalabra(item.NOMBRE_CLIENTE)}</p>
+                    <p class="fs-sm mb-0">${item.EMAIL}</p>
                     <div class="card border-0 rounded-4 mt-3" style="background-color: rgb(159,178,205, 0.3);">
                         <div class="card-body position-relative">
                             <div class="round-circle-left"></div>
@@ -223,17 +239,21 @@ function mostrarOrdenes(data) {
                             <ul class="list-unstyled fs-sm pb-2 border-dashed">
                                 <li class="d-flex justify-content-between align-items-center">
                                     <span class="me-2">Subtotal:</span>
-                                    <span class="text-end">$2181.80</span>
+                                    <span class="text-end">$ ${item.SUBTOTAL}</span>
                                 </li>
                                 <li class="d-flex justify-content-between align-items-center">
                                     <span class="me-2">Descuento:</span>
-                                    <span class="text-end">-</span>
+                                    <span class="text-end">${item.DESCUENTO}</span>
                                 </li>
+                                <li class="d-flex justify-content-between align-items-center">
+                                <span class="me-2">Impuesto:</span>
+                                <span class="text-end">$ ${item.IMPUESTO}</span>
+                            </li>
                             </ul>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <small>Precio a pagar</small>
-                                    <h5 class="total-price fw-bold">$2181.80 <small>USD</small></h5>
+                                    <h5 class="total-price fw-bold">$ ${item.TOTAL}<small>USD</small></h5>
                                 </div>
                                 <div>
                                     <i class="fa-solid fa-file-invoice fs-2"></i>
@@ -243,10 +263,10 @@ function mostrarOrdenes(data) {
                     </div>
                 </div>
                 <div class="card-footer border-0 bg-transparent row g-2 flex-column mx-0 pb-3">
-                    <button type="button" class="btn btn-lg btn-dark-zc fw-bold" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal" data-modo="datalle" data-id="${item.SERVICECALLID}">
+                    <button type="button" class="btn btn-lg btn-dark-zc btn-look-detail fw-bold" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal" data-modo="datalle" data-id="${item.NO_PEDIDO}" data-subtotal="${item.SUBTOTAL}" data-descuento="${item.DESCUENTO}" data-impuesto="${item.IMPUESTO}" data-totalPagar="${item.TOTAL}">
                         Ver detalle
                     </button>
-                    <button type="button" class="btn btn-lg btn-dark-zc fw-bold">
+                    <button type="button" class="btn btn-lg btn-dark-zc btn-make-purchase fw-bold" data-item-id="${item.NO_PEDIDO}">
                         Realizar compra
                     </button>
                 </div>
@@ -254,6 +274,106 @@ function mostrarOrdenes(data) {
         </div>
         `;
         contentOrders.innerHTML += elemento;
+    });
+    
+    const btnsMakePurchase = document.querySelectorAll(".btn-make-purchase");
+    btnsMakePurchase.forEach(btn => {
+        btn.addEventListener('click', function () {
+            let itemId = btn.getAttribute('data-item-id');
+            _nextStep[itemId] = true;
+            checkAndContinue(itemId);
+        });
+    });
+
+    const btnsLookDetail = document.querySelectorAll(".btn-look-detail");
+    btnsLookDetail.forEach(btn => {
+        btn.addEventListener('click', function () {
+            let itemId = btn.getAttribute('data-id');
+            let dataSubtotal = btn.getAttribute('data-subtotal');
+            let dataDescuento = btn.getAttribute('data-descuento');
+            let dataImpuesto = btn.getAttribute('data-impuesto');
+            let dataTotalPagar = btn.getAttribute('data-totalPagar');
+
+            let numberOrden = document.getElementById('numberOrden');
+            let detalleSubtotal = document.getElementById('detalleSubtotal');
+            let detalleDescuento = document.getElementById('detalleDescuento');
+            let detalleImpuesto = document.getElementById('detalleImpuesto');
+            let detalleTotalPagar = document.getElementById('detalleTotalPagar');
+            
+            numberOrden.textContent = itemId;
+            detalleSubtotal.textContent = dataSubtotal;
+            detalleDescuento.textContent = dataDescuento;
+            detalleImpuesto.textContent = dataImpuesto;
+            detalleTotalPagar.textContent = dataTotalPagar;
+            
+            //console.log(itemId);
+            obtenerDetallePedido(itemId);
+        });
+    });
+}
+
+async function obtenerDetallePedido(noPedido){
+    showLoader();
+    
+    let contentItemsOrden = document.getElementById('list-items-orden');
+    let listOrderSummary = document.getElementById('list-orderSummary');
+    let placeholderGlow = document.querySelectorAll(".placeholder-glow");
+    
+    contentItemsOrden.innerHTML = '';
+    listOrderSummary.hidden=true;
+
+    placeholderGlow.forEach(element => {
+        element.style.display = 'block'; // O puedes usar element.classList.add('hidden');
+    });
+
+    const url = `/detalle-ordenes?noPedido=${noPedido}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        hideLoader();
+        if (data.value.length === 0) {
+            mostrarNoExistenOrdenes();
+        } else {
+            listOrderSummary.hidden=false;
+            placeholderGlow.forEach(element => {
+                element.style.display = 'none'; // O puedes usar element.classList.add('hidden');
+            });
+            mostrarItemsDetalle(data);
+        }
+    } catch (error) {
+        mostrarErrorModal('Error', 'Se produjo un error al obtener el detalle del pedido. Por favor, inténtalo de nuevo más tarde o regresa a la página de inicio.');
+        console.error('Error fetching data:', error);
+    }
+}
+
+function mostrarItemsDetalle(data) {
+    let contentItemsOrden = document.getElementById('list-items-orden');
+
+    data.value.forEach(itemsDetalle => {
+        // Dividir el nombre del item en palabras
+        let nombreMarca = itemsDetalle.NAME_ITEM.split(' ');
+        let elemento = `
+        <div class="list-group-item list-group-item-action list-group-items-details gap-3 px-0 bg-transparent" aria-current="true">
+            <div class="my-auto text-start w-auto">
+                <span class="badge text-bg-sail">${itemsDetalle.COD_ITEM}</span>
+                <h6 class="fs-sm fw-medium line-clamp-2 mb-0">${capitalizarPrimeraLetraCadaPalabra(itemsDetalle.NAME_ITEM)}</h6>
+                <p class="fs-xxs line-clamp-1 mb-0 opacity-75">${nombreMarca[0].toUpperCase()}</p>
+            </div>
+            <div class="d-flex flex-column w-auto justify-content-between lh-sm text-end">
+                <small class="fs-xs text-nowrap">Cant: ${itemsDetalle.CANTIDAD}</small>
+                <small class="fs-xs fw-medium text-nowrap">Desc: ${itemsDetalle.DESCUENTO_LIN}</small>
+                <small class="fs-xs fw-medium text-nowrap">Prec tras/desc: $ ${itemsDetalle.PRECIO_DESCUENTO}</small>
+                <small class="fs-xs fw-medium text-nowrap">Iva: ${itemsDetalle.IMPUESTO_LIN}</small>
+                <small class="fs-xs fw-medium text-nowrap">SubTotal: $ ${itemsDetalle.TOTAL_ARTICULO}</small>
+            </div>
+        </div>
+        `;
+        contentItemsOrden.innerHTML += elemento;
     });
 }
 
@@ -265,7 +385,7 @@ function mostrarNoExistenOrdenes() {
     contentMsjNoOrders.hidden=false
 
     let elemento = `
-        <div class="card" style="background: #1D2E51;">
+        <div class="card circle-outer" style="background: #1D2E51;">
             <div class="card-body p-4 py-md-4 px-md-5">
                 <div class="row g-0 align-items-center">
                     <div class="col-12 col-md-7 z-1">
@@ -276,10 +396,6 @@ function mostrarNoExistenOrdenes() {
                     </div>
                     <div class="col-12 col-md-5">
                         <img src="assets/img/banner/producto_3.png" class="img-fluid d-block overflow-hidden position-sticky z-1" width="512" alt="producto_zc" />
-                        <div class="circle-outer top">
-                            <!-- Circulo interno superior -->
-                            <div class="circle-inner"></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -287,4 +403,28 @@ function mostrarNoExistenOrdenes() {
     `;
 
     contentMsjNoOrders.innerHTML = elemento;
+}
+
+
+async function logoutSAPLayer() {
+    // const url = '';
+    try {
+        const response = await fetch('/logout-sap', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al cerrar sesión. Por favor, inténtelo de nuevo.');
+        }
+
+        // Recargar la página actual después de cerrar sesión
+        window.location.reload();
+    } catch (error) {
+        console.error(error.message);
+        // Manejar el error apropiadamente, por ejemplo, mostrar un mensaje al usuario
+    }
 }

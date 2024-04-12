@@ -23,37 +23,58 @@
     'modalTitle' => 'Título de la Modal 1', // Título de la modal
     'showCloseButton' => false, // Mostrar el botón de cierre
     'modalBodyClass' => 'py-0 text-center', // Justificar el texto
-    'modalFooter' => '<a href="/indextwo" class="btn btn-lg btn-dark-zc fw-bold w-100">Aceptar</a>'
+    'modalFooter' => '<a href="/index" class="btn btn-lg btn-dark-zc fw-bold w-100">Aceptar</a>'
     ])
     <!-- Contenido de la modal -->
 @endcomponent
 
 @component('components.organisms.modal_detalleOrden', [
     'modalId' => 'detalleOrdenModal',
-    'modalSize' => 'modal-sm',
-    'modalHeaderClass' => 'justify-content-center d-none',
-    'modalTitle' => 'Título de la Modal 2',
+    'modalDialogClass' => 'modal-dialog-centered modal-dialog-scrollable',
+    'modalHeaderClass' => 'flex-column justify-content-between border-0 bg-alabaster-50 px-0',
+    'modalTitle' => 'Orden:',
     'showCloseButton' => false,
     'modalBodyClass' => 'p-0 text-center bg-alabaster-50',
-    'modalFooter' => '<button type="button" class="btn btn-lg btn-dark-zc fw-bold w-100"
-        data-bs-dismiss="modal">Aceptar</button>'
+    'modalFooter' => '
+        <div class="placeholder-glow w-100">
+            <span class="placeholder col-12"></span>
+        </div>
+        <div class="placeholder-glow w-100">
+            <span class="placeholder col-12"></span>
+        </div>
+        <div class="placeholder-glow w-100">
+            <span class="placeholder col-12"></span>
+        </div>
+        <ul class="list-group list-group-flush w-100" id="list-orderSummary">
+            <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
+                Subtotal
+                <span id="detalleSubtotal">$2181.80</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
+                Descuento
+                <span id="detalleDescuento">-</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
+                Impuesto
+                <span id="detalleImpuesto">-</span>
+            </li>
+            <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center fs-xs fw-bold">
+                Total a pagar
+                <span id="detalleTotalPagar">$2181.80</span>
+            </li>
+        </ul>
+        <button type="button" class="btn btn-lg btn-dark-zc fw-bold w-100"data-bs-dismiss="modal">Aceptar</button>
+    '
     ])
     <!-- Contenido de la modal -->
-    <div class="d-flex p-3">
-        <div>
-            <h6 class="text-start mb-0">Orden: <b class="text-end">ORD12345</b></h6>
-        </div>
-    </div>
-    <ul class="nav nav-pills nav-detalleOrden gap-3 px-3 bg-white" id="pills-tab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link px-0 py-1 rounded-0 active" id="pills-resume-tab" data-bs-toggle="pill" data-bs-target="#pills-resume" type="button" role="tab" aria-controls="pills-resume" aria-selected="true">Resumen</button>
-        </li>
-    </ul>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-resume" role="tabpanel" aria-labelledby="pills-resume-tab" tabindex="0">
-            <div class="d-flex flex-column flex-md-row gap-3 align-items-center justify-content-center px-3">
-                <div class="list-group">
-                    <a class="list-group-item list-group-item-action d-flex gap-3 px-0 border-0 bg-transparent" aria-current="true">
+            <div class="d-flex flex-column gap-3 align-items-center justify-content-center px-3">
+                <div class="placeholder-glow w-100 h-13p">
+                    <span class="placeholder col-12 h-100"></span>
+                </div>
+                <div class="list-group list-group-flush w-100" id="list-items-orden">
+                    <a class="list-group-item list-group-item-action d-flex gap-3 px-0 border-0 bg-transparent d-none" aria-current="true">
                         <img src="https://zcmayoristas.com/zcwebstore/wp-content/uploads/2024/03/DHI-HY-SAV849HAN-E-1-300x300.jpg" alt="twbs" width="62" height="62" class="border bg-white rounded-3 flex-shrink-0">
                         <div class="d-flex gap-2 w-100 justify-content-between">
                             <div class="my-auto text-start">
@@ -66,7 +87,7 @@
                             </div>
                         </div>
                     </a>
-                    <a class="list-group-item list-group-item-action d-flex flex-column gap-1 px-0 border-0 bg-transparent" aria-current="true">
+                    <a class="list-group-item list-group-item-action d-flex flex-column gap-1 px-0 bg-transparent" aria-current="true">
                         <div class="my-auto text-start">
                             <span class="badge text-bg-sail">ORD12345</span>
                             <h6 class="fs-sm fw-medium line-clamp-2 mb-0">Ruijie Reyee Router Gateway Cloud 4 Ptos Poe + 1giga</h6>
@@ -80,35 +101,8 @@
                             <small class="fs-xs fw-medium text-nowrap">SubTotal: $250.80</small>
                         </div>
                     </a>
-                    <a class="list-group-item list-group-item-action d-flex gap-3 px-0 border-0 bg-transparent" aria-current="true">
-                        <img src="https://zcmayoristas.com/zcwebstore/wp-content/uploads/2023/06/ZKT0111-300x300.jpg" alt="twbs" width="62" height="62" class="border bg-white rounded-3 flex-shrink-0">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <div class="my-auto text-start">
-                                <h6 class="fs-sm fw-medium line-clamp-2 mb-0">Zkteco Tl700w Cerradura Smart Lector Huellas, Taejetas y Clave, Seguro</h6>
-                                <p class="fs-xxs line-clamp-1 mb-0 opacity-75">CONTROLES DE ACCESSO</p>
-                            </div>
-                            <div class="d-flex flex-column justify-content-center text-end">
-                                <small class="fs-sm fw-medium text-nowrap">$1592.00</small>
-                                <small class="fs-xs text-nowrap">Cant: 8</small>
-                            </div>
-                        </div>
-                    </a>
                 </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
-                    Subtotal
-                    <span>$2181.80</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
-                    Descuento
-                    <span>-</span>
-                </li>
-                <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center fs-xs fw-bold">
-                    Total a pagar
-                    <span>$2181.80</span>
-                </li>
-            </ul>
         </div>
     </div>
 @endcomponent
@@ -212,11 +206,43 @@
                 </div>
             </section>
             <section class="box-step hide" data-step="2">
+                <div class="text-center">
+                    <h3 class="fw-bold">Mis Pedidos</h3>
+                    <p>Explora Todas tus Órdenes</p>
+                </div>
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-9 col-xl-8 msj-noOrders mb-5">
                     </div>
                 </div>
                 <div class="row g-3 justify-content-center content-orders">
+                </div>
+                <div class="text-end mt-5">
+                    <button type="button" class="btn btn-light-zc btn-light px-md-5" data-previous><i class="fa-solid fa-arrow-left"></i> Atrás</button>
+                </div>
+            </section>
+            <section class="box-step hide" data-step="3">
+                <div class="text-center">
+                    <h3 class="fw-bold">Método de Pago</h3>
+                    <p>Elige tu forma de Pago</p>
+                </div>
+                <div class="row justify-content-evenly">
+                    <div class="col-12 col-md-5">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+                                        Datos de Facturación
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5">
+
+                    </div>
                 </div>
                 <div class="text-end mt-5">
                     <button type="button" class="btn btn-light-zc btn-light px-md-5" data-previous><i class="fa-solid fa-arrow-left"></i> Atrás</button>

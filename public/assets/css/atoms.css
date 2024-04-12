@@ -1,4 +1,42 @@
 /* Aquí es donde definirás estilos para componentes individuales que no pueden dividirse más */
+.avatar{
+    position: relative;
+    width: 2.375rem;
+    height: 2.375rem;
+    cursor: pointer;
+}
+.avatar .avatar-initial{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+.avatar.avatar-online::after {
+    background-color: var(--zc-bg-mountain);
+}
+.avatar.avatar-online::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    box-shadow: 0 0 0 2px var(--zc-bg-madison);
+}
+.btn-close:focus{
+    box-shadow: none;
+}
+.bg-avatar{
+    background-color: rgba(209, 213, 219, 0.95);
+    color: var(--zc-body-color);
+}
 .bg-alabaster-50{
     background: var(--zc-bg-alabaster-50);
 }
@@ -25,6 +63,9 @@
     margin-bottom: .5rem;
     line-height: 1;
 }
+.h-12p{height: 3rem;}
+.h-13p{height: 3.125rem;}
+.h-14p{height: 3.5rem;}
 .fs-xxs{font-size: 0.625rem;}
 .fs-xs{font-size: 0.75rem;}
 .fs-sm{font-size: 0.875rem;}
@@ -114,7 +155,7 @@
     --bs-btn-disabled-border-color: transparent;
 }
 
-.circle-outer {
+/* .circle-outer {
     position: absolute;
     width: 370px;
     height: 370px;
@@ -128,7 +169,7 @@
     height: 330px;
     background-color: rgba(39, 71, 129, 0.8);
     border-radius: 50%;
-    margin: 20px; /* Ajusta este valor para controlar la separación entre los círculos */
+    margin: 20px;
 }
 
 .circle-outer.top {
@@ -139,8 +180,76 @@
 .circle-outer.bottom {
     bottom: -100px;
     right: 10px;
+} */
+
+.circle-outer {
+    position: relative;
 }
 
+/* .card::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 1px solid rgba(39, 71, 129, 0.5);
+    z-index: 1;
+} */
+
+.circle-outer::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    width: 290px;
+    height: 290px;
+    border: 1px solid rgba(39, 71, 129, 0.5);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
+    z-index: 0;
+}
+
+.circle-outer::after {
+    top: -145px;
+    right: 10px;
+}
+
+/* .card::before {
+    bottom: -60px;
+    right: 10px;
+} */
+
+/* .circle-outer .card-body {
+    position: relative;
+    z-index: 2;
+} */
+
+/* .card-body::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(39, 71, 129, 0.8);
+} */
+
+.circle-outer::before {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(39, 71, 129, 0.8);
+    clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
+}
+
+.circle-outer::before {
+    width: 250px;
+    height: 250px;
+    top: -125px;
+    right: 30px;
+}
+
+/* .card-body::before {
+    width: 80px;
+    height: 80px;
+    bottom: -40px;
+    right: 30px;
+} */
 
 
 /* CSS */
@@ -211,6 +320,10 @@ input[type=number] {
 }
 .form-control.is-valid, .was-validated .form-control:valid{
     background-image: none;
+}
+.list-group-items-details{
+    display: flex;
+    justify-content: space-between;
 }
 ::placeholder {
     font-size: 0.875rem;
@@ -305,6 +418,9 @@ input[type=number] {
     nav.navbar-step .navbar-nav .nav-link .nav-link-text{
         /* display: none !important;  */
         font-size: 10px;
+    }
+    .list-group-items-details{
+        flex-direction: column;
     }
 }
 

@@ -34,18 +34,47 @@ class PasarelaPagoController extends Controller
         return response()->json($businessPartners);
     }
 
-    function listaSolicitud(Request $request) {
+    public function listaPedido(Request $request) {
         $customerCode = $request->input('customerCode');
         
         // Solicitud GET
-        $resource = '/sml.svc/LISTADOSERVICIO';
-        $filter = '$filter=CUSTOMERCODE eq \'' . $customerCode . '\'';
-        $orderby = '$orderby=CREATIONDATE desc';
+        $resource = '/sml.svc/ORDEN_CAB';
+        $filter = '$filter=RUC eq \'' . $customerCode . '\'';
+        //$orderby = '$orderby=CREATIONDATE desc';
 
-        $query = "$filter&$orderby";
+        $query = "$filter";
 
         $listadoServicio = $this->serviceLayer->getRequestQuery($resource, $query);
         // dd($listadoServicio);
         return response()->json($listadoServicio);
+    }
+
+    public function obtenerDetallePedido(Request $request){
+        $noPedido = $request->input('noPedido');
+        
+        $resource = '/sml.svc/ORDEN_LIN';
+        $filter = '$filter=NO_PEDIDO eq ' .$noPedido;
+       
+        $query = "$filter";
+        $detallePedido = $this->serviceLayer->getRequestQuery($resource, $query);
+        // dd($detallePedido);
+        return response()->json($detallePedido);
+    }
+
+    public function logoutSap() {
+        $response = $this->serviceLayer->logoutB1SLayer();
+
+        // Verificar la respuesta y realizar acciones necesarias
+        if ($response->successful()) {
+            // Logout exitoso, realizar acciones adicionales si es necesario
+            // Por ejemplo, limpiar la sesión local del usuario
+            session()->flush();
+
+            // Redireccionar al usuario a la página de inicio u otra página
+            // return redirect()->route('indextwo')->with('success', '¡Sesión cerrada correctamente!');
+        } else {
+            // Logout no exitoso, manejar el error apropiadamente
+            return back()->with('error', 'Error al cerrar sesión. Por favor, inténtelo de nuevo.');
+        }
     }
 }
