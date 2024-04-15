@@ -206,8 +206,8 @@
                 </div>
             </section>
             <section class="box-step hide" data-step="2">
-                <div class="text-center">
-                    <h3 class="fw-bold">Mis Pedidos</h3>
+                <div class="text-center mb-5">
+                    <h3 class="fw-bold mb-0">Mis Pedidos</h3>
                     <p>Explora Todas tus Órdenes</p>
                 </div>
                 <div class="row justify-content-center">
@@ -221,27 +221,80 @@
                 </div>
             </section>
             <section class="box-step hide" data-step="3">
-                <div class="text-center">
-                    <h3 class="fw-bold">Método de Pago</h3>
+                <div class="text-center mb-5">
+                    <h3 class="fw-bold mb-0">Método de Pago</h3>
                     <p>Elige tu forma de Pago</p>
                 </div>
-                <div class="row justify-content-evenly">
-                    <div class="col-12 col-md-5">
+                <div class="row justify-content-center gap-4">
+                    <div class="col-12 col-md-4">
                         <div class="accordion accordion-flush" id="accordionFlushExample">
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
+                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
                                         Datos de Facturación
                                     </button>
                                 </h2>
                                 <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                                    <div class="accordion-body">
+                                        <div class="card border-0">
+                                            <div class="card-body p-0">
+                                                <div class="row g-3">
+                                                    <div class="col-12">
+                                                        <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación</label>
+                                                        <input type="text" class="form-control form-control-lg" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="nombreFact" class="form-label fs-xs fw-bold mb-1">Nombres y Apellidos</label>
+                                                        <input type="text" class="form-control form-control-lg" name="nombreFact" id="nombreFact" required disabled readonly />
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="emailFact" class="form-label fs-xs fw-bold mb-1">Email</label>
+                                                        <input type="text" class="form-control form-control-lg" name="emailFact" id="emailFact" required />
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="telefonoFact" class="form-label fs-xs fw-bold mb-1">Teléfono</label>
+                                                        <input type="number" class="form-control form-control-lg" name="telefonoFact" id="telefonoFact" required />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-5">
-
+                    <div class="col-12 col-md-4">
+                        <div class="card border-0 shadow-xs-zc">
+                            <div class="card-body">
+                                <div class="col-12">
+                                    <h6 class="fs-sm fw-bold mb-3">Realiza tus pagos con:</h6>
+                                    <div class="row payment-cart-type d-flex justify-content-center mb-3">
+                                        <div class="col-5 text-center">
+                                            <a href="#">
+                                                <div class="form-check px-2 py-0">
+                                                    <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-5 text-center">
+                                            <a href="#">
+                                                <div class="form-check px-2 py-0">
+                                                    <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center fs-sm fw-bold">
+                                            Total a pagar:
+                                            <span class="text-dark-zc">$ 1254.23</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="text-end mt-5">

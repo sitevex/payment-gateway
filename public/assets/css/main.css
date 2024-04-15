@@ -137,6 +137,9 @@ body {
 .shadow-sm-zc{
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
+.shadow-xs-zc{
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
 .nav-detalleOrden .nav-link{
     color: var(--zc-body-color);
     background-color: transparent;

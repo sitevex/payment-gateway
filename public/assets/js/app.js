@@ -115,12 +115,11 @@ function updateProgressbar() {
 function doActionStep(currentStep) {
     switch (currentStep) {
         case 1:
-            // obtenerUsuario(numeroIdentificacion.value);
             console.log('Obtener pedidos..');
         break;
         case 2:
             console.log('Metodo de pago');
-            // obtenerCentroMedico();
+            // datosFactura();
         break;
         case 3:
             console.log('ha eligido un centro medico');
@@ -176,6 +175,7 @@ async function obtenerUsuario(numeroIdentificacion) {
     }
 }
 
+// Step Pedido
 async function obtenerPedido(customerCode) {
     showLoader();
     let contentMsjNoOrders = document.querySelector('.msj-noOrders');
@@ -266,7 +266,7 @@ function mostrarOrdenes(data) {
                     <button type="button" class="btn btn-lg btn-dark-zc btn-look-detail fw-bold" data-bs-toggle="modal" data-bs-target="#detalleOrdenModal" data-modo="datalle" data-id="${item.NO_PEDIDO}" data-subtotal="${item.SUBTOTAL}" data-descuento="${item.DESCUENTO}" data-impuesto="${item.IMPUESTO}" data-totalPagar="${item.TOTAL}">
                         Ver detalle
                     </button>
-                    <button type="button" class="btn btn-lg btn-dark-zc btn-make-purchase fw-bold" data-item-id="${item.NO_PEDIDO}">
+                    <button type="button" class="btn btn-lg btn-dark-zc btn-make-purchase fw-bold" data-item-id="${item.NO_PEDIDO}" data-pedido='${JSON.stringify(item)}'>
                         Realizar compra
                     </button>
                 </div>
@@ -280,8 +280,12 @@ function mostrarOrdenes(data) {
     btnsMakePurchase.forEach(btn => {
         btn.addEventListener('click', function () {
             let itemId = btn.getAttribute('data-item-id');
+            let pedido = JSON.parse(btn.getAttribute('data-pedido'));
+
             _nextStep[itemId] = true;
             checkAndContinue(itemId);
+
+            datosFactura(pedido);
         });
     });
 
@@ -377,6 +381,18 @@ function mostrarItemsDetalle(data) {
     });
 }
 
+// Step Método de pago
+function datosFactura(pedido) {
+    document.getElementById('numeroIdentificacionFact').value = pedido.RUC;
+    document.getElementById('nombreFact').value = pedido.NOMBRE_CLIENTE;
+    document.getElementById('emailFact').value = pedido.EMAIL;
+    document.getElementById('telefonoFact').value = pedido.TELEFONO;
+    console.log(pedido.NO_PEDIDO);
+    console.log(pedido.TOTAL);
+}
+
+
+
 function mostrarNoExistenOrdenes() {
     let contentOrders = document.querySelector('.content-orders');
     contentOrders.hidden=true
@@ -405,8 +421,8 @@ function mostrarNoExistenOrdenes() {
     contentMsjNoOrders.innerHTML = elemento;
 }
 
-
 async function logoutSAPLayer() {
+    showLoader();
     // const url = '';
     try {
         const response = await fetch('/logout-sap', {
@@ -420,7 +436,7 @@ async function logoutSAPLayer() {
         if (!response.ok) {
             throw new Error('Error al cerrar sesión. Por favor, inténtelo de nuevo.');
         }
-
+        hideLoader();
         // Recargar la página actual después de cerrar sesión
         window.location.reload();
     } catch (error) {
