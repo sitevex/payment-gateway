@@ -412,6 +412,7 @@ function procesoPago() {
     let transactionId = unicoFact.value;
     let reference = referenceFact.value;
     let documentId = noPedidoFact.value;
+    inpuesto = Math.round(inpuesto*100);
     valorPagar = Math.round(valorPagar*100);
 
     let parametros = {
