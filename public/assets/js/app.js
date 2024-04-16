@@ -409,7 +409,7 @@ function procesoPago(){
     
     /* valorPagar = Math.round(valorPagar*100); */
     /* console.log(valorPagar); */
-    let valorPagar = "11";
+    let valorPagar = "1100";
     let parametros = {
         amount: valorPagar,
         amountWithoutTax: valorPagar,
