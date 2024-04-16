@@ -277,11 +277,11 @@
                                             </a>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <a href="#">
+                                            <button id="btnPagarPayphone">
                                                 <div class="form-check px-2 py-0">
                                                     <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
                                                 </div>
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

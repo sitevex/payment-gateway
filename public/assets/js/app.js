@@ -391,7 +391,53 @@ function datosFactura(pedido) {
     console.log(pedido.TOTAL);
 }
 
+// Pay
+document.querySelector('#btnPagarPayphone').addEventListener('click', function () {
+    console.log('test pagar');
+    procesoPago();
+});
 
+function procesoPago(){
+    
+    /* console.log('text');
+    let interno = btnPagar.getAttribute("data-noInterno");
+    let tipoDocumento = btnPagar.getAttribute("data-tipoDocumento");
+    let observacion = btnPagar.getAttribute("data-observacion");
+    let serie = btnPagar.getAttribute("data-serie");
+    let noDocumento = btnPagar.getAttribute("data-noDocumento");
+    let valorPagar = btnPagar.getAttribute("data-valorPagar"); */
+    
+    /* valorPagar = Math.round(valorPagar*100); */
+    /* console.log(valorPagar); */
+    let valorPagar = 11;
+    let parametros = {
+        amount: valorPagar,
+        amountWithoutTax: valorPagar,
+        clientTransactionId: "Pruebas003",
+        responseUrl: "https://pagodigital.zcmayoristas.com/response",
+        cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
+    };
+    console.log(parametros);
+    parametros['Referer'] = document.referrer;
+
+    $.ajax({
+        data: parametros,
+        url:'https://pay.payphonetodoesposible.com/api/button/Prepare',
+        type:'POST',
+        beforeSend:function(xhr) {
+            xhr.setRequestHeader('Authorization', "Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw")
+            xhr.setRequestHeader('Referer', document.referrer);
+        },
+        
+        success: function SolicitarPago(respuesta){
+            location.href= respuesta.payWithCard;
+        }, error: function(respuesta){
+            alert("Error en la llamada:" + respuesta);
+        }
+
+    });
+
+}
 
 function mostrarNoExistenOrdenes() {
     let contentOrders = document.querySelector('.content-orders');
