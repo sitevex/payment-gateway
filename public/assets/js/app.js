@@ -418,7 +418,7 @@ function procesoPago() {
     let parametros = {
         amount: valorPagar,
         // tax: inpuesto,
-        currency: "USD",
+        // currency: "USD",
         clientTransactionId: transactionId,
         reference: reference,
         documentId: documentId,
