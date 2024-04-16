@@ -421,7 +421,7 @@ function procesoPago() {
         // currency: "USD",
         // clientTransactionId: transactionId,
         // reference: reference,
-        documentId: documentId,
+        // documentId: documentId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };
