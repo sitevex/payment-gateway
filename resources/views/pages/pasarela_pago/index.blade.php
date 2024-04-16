@@ -23,7 +23,7 @@
     'modalTitle' => 'Título de la Modal 1', // Título de la modal
     'showCloseButton' => false, // Mostrar el botón de cierre
     'modalBodyClass' => 'py-0 text-center', // Justificar el texto
-    'modalFooter' => '<a href="/index" class="btn btn-lg btn-dark-zc fw-bold w-100">Aceptar</a>'
+    'modalFooter' => '<a href="/" class="btn btn-lg btn-dark-zc fw-bold w-100">Aceptar</a>'
     ])
     <!-- Contenido de la modal -->
 @endcomponent
