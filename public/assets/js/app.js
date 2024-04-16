@@ -390,7 +390,9 @@ function datosFactura(pedido) {
     document.getElementById('noPedidoFact').value = pedido.NO_PEDIDO;
     document.getElementById('referenceFact').value = pedido.VENDEDOR;
     document.getElementById('unicoFact').value = pedido.UNICO;
+    document.getElementById('impuestoFact').value = pedido.IMPUESTO;
     document.getElementById('totalPagarFact').value = pedido.TOTAL;
+    documentId.getElementById('totalPagarLabel').textContent = pedido.TOTAL;
     // console.log(pedido.NO_PEDIDO);
     // console.log(pedido.TOTAL);
 }
@@ -402,19 +404,20 @@ document.querySelector('#btnPayphone').addEventListener('click', function () {
 });
 
 function procesoPago() {
-    // let interno = btnPagar.getAttribute("data-noInterno");
-    // let tipoDocumento = btnPagar.getAttribute("data-tipoDocumento");
-    // let observacion = btnPagar.getAttribute("data-observacion");
-    // let serie = btnPagar.getAttribute("data-serie");
-    // let noDocumento = btnPagar.getAttribute("data-noDocumento");
     let valorPagar = totalPagarFact.value;
-
+    let inpuesto = impuestoFact.value;
+    let transactionId = unicoFact.value;
+    let reference = referenceFact.value;
+    let documentId = noPedidoFact.value;
     valorPagar = Math.round(valorPagar*100);
 
     let parametros = {
         amount: valorPagar,
-        amountWithoutTax: valorPagar,
-        clientTransactionId: "Pruebas003",
+        tax: inpuesto,
+        currency: "USD",
+        clientTransactionId: transactionId,
+        reference: reference,
+        documentId: documentId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };

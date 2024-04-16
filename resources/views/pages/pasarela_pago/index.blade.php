@@ -244,6 +244,7 @@
                                                         <input type="hidden" name="referenceFact" id="referenceFact" />
                                                         <input type="hidden" name="unicoFact" id="unicoFact" />
                                                         <input type="hidden" name="totalPagarFact" id="totalPagarFact" />
+                                                        <input type="hidden" name="impuestoFact" id="impuestoFact" />
                                                     </div>
                                                     <div class="col-12">
                                                         <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación</label>
@@ -295,7 +296,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center fs-sm fw-bold">
                                             Total a pagar:
-                                            <span class="text-dark-zc">$ 1254.23</span>
+                                            <span class="text-dark-zc" id="totalPagarLabel">$ 1254.23</span>
                                         </li>
                                     </ul>
                                 </div>
