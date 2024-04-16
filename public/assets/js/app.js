@@ -417,11 +417,12 @@ function procesoPago() {
 
     let parametros = {
         amount: valorPagar,
-        // tax: inpuesto,
-        // currency: "USD",
-        // clientTransactionId: transactionId,
-        // reference: reference,
-        // documentId: documentId,
+        amountWithoutTax: valorPagar,
+        tax: inpuesto,
+        currency: "USD",
+        clientTransactionId: transactionId,
+        reference: reference,
+        documentId: documentId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };
