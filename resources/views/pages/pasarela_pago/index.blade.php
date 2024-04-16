@@ -240,6 +240,12 @@
                                             <div class="card-body p-0">
                                                 <div class="row g-3">
                                                     <div class="col-12">
+                                                        <input type="hidden" name="noPedidoFact" id="noPedidoFact" />
+                                                        <input type="hidden" name="referenceFact" id="referenceFact" />
+                                                        <input type="hidden" name="unicoFact" id="unicoFact" />
+                                                        <input type="hidden" name="totalPagarFact" id="totalPagarFact" />
+                                                    </div>
+                                                    <div class="col-12">
                                                         <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación</label>
                                                         <input type="text" class="form-control form-control-lg" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
                                                     </div>
@@ -270,14 +276,14 @@
                                     <h6 class="fs-sm fw-bold mb-3">Realiza tus pagos con:</h6>
                                     <div class="row payment-cart-type d-flex justify-content-center mb-3">
                                         <div class="col-5 text-center">
-                                            <a href="#">
+                                            <button type="button" class="btn" id="btnPlaceToPay">
                                                 <div class="form-check px-2 py-0">
                                                     <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
                                                 </div>
-                                            </a>
+                                            </button>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <button id="btnPagarPayphone">
+                                            <button type="button" class="btn" id="btnPayphone">
                                                 <div class="form-check px-2 py-0">
                                                     <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
                                                 </div>

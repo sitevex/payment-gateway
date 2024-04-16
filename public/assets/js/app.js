@@ -387,18 +387,29 @@ function datosFactura(pedido) {
     document.getElementById('nombreFact').value = pedido.NOMBRE_CLIENTE;
     document.getElementById('emailFact').value = pedido.EMAIL;
     document.getElementById('telefonoFact').value = pedido.TELEFONO;
-    console.log(pedido.NO_PEDIDO);
-    console.log(pedido.TOTAL);
+    document.getElementById('noPedidoFact').value = pedido.NO_PEDIDO;
+    document.getElementById('referenceFact').value = pedido.VENDEDOR;
+    document.getElementById('unicoFact').value = pedido.UNICO;
+    document.getElementById('totalPagarFact').value = pedido.TOTAL;
+    // console.log(pedido.NO_PEDIDO);
+    // console.log(pedido.TOTAL);
 }
 
 // Pay
-document.querySelector('#btnPagarPayphone').addEventListener('click', function () {
+document.querySelector('#btnPayphone').addEventListener('click', function () {
     console.log('test pagar');
     procesoPago();
 });
 
 function procesoPago() {
-    let valorPagar = 1100; // Aquí defines el valor que deseas pagar
+    let interno = btnPagar.getAttribute("data-noInterno");
+    let tipoDocumento = btnPagar.getAttribute("data-tipoDocumento");
+    let observacion = btnPagar.getAttribute("data-observacion");
+    let serie = btnPagar.getAttribute("data-serie");
+    let noDocumento = btnPagar.getAttribute("data-noDocumento");
+    let valorPagar = totalPagarFact.value;
+
+    valorPagar = Math.round(valorPagar*100);
 
     let parametros = {
         amount: valorPagar,
