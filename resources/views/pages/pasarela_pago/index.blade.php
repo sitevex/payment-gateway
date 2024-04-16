@@ -307,6 +307,7 @@
 @endsection
 @push('script-app')
 <!-- <script src="{{asset('assets/js/helper.js')}}"></script> -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
     // let isValid = true;
     // let errorMessage = "";
