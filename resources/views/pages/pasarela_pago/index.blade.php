@@ -296,7 +296,7 @@
                                     <ul class="list-group">
                                         <li class="list-group-item d-flex justify-content-between align-items-center fs-sm fw-bold">
                                             Total a pagar:
-                                            <span class="text-dark-zc" id="totalPagarLabel">$ 1254.23</span>
+                                            <span class="text-dark-zc" id="totalPagarLabel"></span>
                                         </li>
                                     </ul>
                                 </div>

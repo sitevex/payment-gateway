@@ -383,6 +383,9 @@ function mostrarItemsDetalle(data) {
 
 // Step Método de pago
 function datosFactura(pedido) {
+    let totalPagarLabel = document.getElementById('totalPagarLabel');
+    totalPagarLabel.innerHTML = '';
+
     document.getElementById('numeroIdentificacionFact').value = pedido.RUC;
     document.getElementById('nombreFact').value = pedido.NOMBRE_CLIENTE;
     document.getElementById('emailFact').value = pedido.EMAIL;
@@ -392,7 +395,7 @@ function datosFactura(pedido) {
     document.getElementById('unicoFact').value = pedido.UNICO;
     document.getElementById('impuestoFact').value = pedido.IMPUESTO;
     document.getElementById('totalPagarFact').value = pedido.TOTAL;
-    documentId.getElementById('totalPagarLabel').textContent = pedido.TOTAL;
+    totalPagarLabel.textContent = '$ ' + pedido.TOTAL;
     // console.log(pedido.NO_PEDIDO);
     // console.log(pedido.TOTAL);
 }
