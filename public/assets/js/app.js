@@ -420,7 +420,7 @@ function procesoPago() {
         // tax: inpuesto,
         // currency: "USD",
         clientTransactionId: transactionId,
-        reference: reference,
+        // reference: reference,
         documentId: documentId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
