@@ -402,11 +402,11 @@ document.querySelector('#btnPayphone').addEventListener('click', function () {
 });
 
 function procesoPago() {
-    let interno = btnPagar.getAttribute("data-noInterno");
-    let tipoDocumento = btnPagar.getAttribute("data-tipoDocumento");
-    let observacion = btnPagar.getAttribute("data-observacion");
-    let serie = btnPagar.getAttribute("data-serie");
-    let noDocumento = btnPagar.getAttribute("data-noDocumento");
+    // let interno = btnPagar.getAttribute("data-noInterno");
+    // let tipoDocumento = btnPagar.getAttribute("data-tipoDocumento");
+    // let observacion = btnPagar.getAttribute("data-observacion");
+    // let serie = btnPagar.getAttribute("data-serie");
+    // let noDocumento = btnPagar.getAttribute("data-noDocumento");
     let valorPagar = totalPagarFact.value;
 
     valorPagar = Math.round(valorPagar*100);

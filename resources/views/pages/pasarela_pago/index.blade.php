@@ -276,14 +276,14 @@
                                     <h6 class="fs-sm fw-bold mb-3">Realiza tus pagos con:</h6>
                                     <div class="row payment-cart-type d-flex justify-content-center mb-3">
                                         <div class="col-5 text-center">
-                                            <button type="button" class="btn" id="btnPlaceToPay">
+                                            <button type="button" class="btn p-0" id="btnPlaceToPay">
                                                 <div class="form-check px-2 py-0">
                                                     <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
                                                 </div>
                                             </button>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <button type="button" class="btn" id="btnPayphone">
+                                            <button type="button" class="btn p-0" id="btnPayphone">
                                                 <div class="form-check px-2 py-0">
                                                     <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
                                                 </div>
