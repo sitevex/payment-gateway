@@ -227,67 +227,51 @@
                 </div>
                 <div class="row justify-content-center gap-4">
                     <div class="col-12 col-md-4">
-                        <div class="accordion accordion-flush" id="accordionFlushExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="true" aria-controls="flush-collapseOne">
-                                        Datos de Facturación
-                                    </button>
-                                </h2>
-                                <div id="flush-collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFlushExample">
-                                    <div class="accordion-body">
-                                        <div class="card border-0">
-                                            <div class="card-body p-0">
-                                                <div class="row g-3">
-                                                    <div class="col-12">
-                                                        <input type="hidden" name="noPedidoFact" id="noPedidoFact" />
-                                                        <input type="hidden" name="referenceFact" id="referenceFact" />
-                                                        <input type="hidden" name="unicoFact" id="unicoFact" />
-                                                        <input type="hidden" name="totalPagarFact" id="totalPagarFact" />
-                                                        <input type="hidden" name="impuestoFact" id="impuestoFact" />
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación</label>
-                                                        <input type="text" class="form-control form-control-lg" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label for="nombreFact" class="form-label fs-xs fw-bold mb-1">Nombres y Apellidos</label>
-                                                        <input type="text" class="form-control form-control-lg" name="nombreFact" id="nombreFact" required disabled readonly />
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label for="emailFact" class="form-label fs-xs fw-bold mb-1">Email</label>
-                                                        <input type="text" class="form-control form-control-lg" name="emailFact" id="emailFact" required />
-                                                    </div>
-                                                    <div class="col-12">
-                                                        <label for="telefonoFact" class="form-label fs-xs fw-bold mb-1">Teléfono</label>
-                                                        <input type="number" class="form-control form-control-lg" name="telefonoFact" id="telefonoFact" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <h6 class="fw-bold mb-3">Datos de Facturación</h6>
+                        <div class="card border-0 shadow-zc rounded-4">
+                            <div class="card-body p-4">
+                                <div class="row gap-3">
+                                    <input type="hidden" name="noPedidoFact" id="noPedidoFact" />
+                                    <input type="hidden" name="referenceFact" id="referenceFact" />
+                                    <input type="hidden" name="unicoFact" id="unicoFact" />
+                                    <input type="hidden" name="totalPagarFact" id="totalPagarFact" />
+                                    <input type="hidden" name="impuestoFact" id="impuestoFact" />
+                                    <div class="col-12">
+                                        <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="nombreFact" class="form-label fs-xs fw-bold mb-1">Razón Social <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="nombreFact" id="nombreFact" required disabled readonly />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="telefonoFact" class="form-label fs-xs fw-bold mb-1">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="telefonoFact" id="telefonoFact" required />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="emailFact" class="form-label fs-xs fw-bold mb-1">Email <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="emailFact" id="emailFact" required />
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <p class="fs-xs text-dark px-4 pt-2">(*) Campos obligatorios</p>
                     </div>
                     <div class="col-12 col-md-4">
-                        <div class="card border-0 shadow-xs-zc">
+                        <h6 class="fw-bold mb-3">Pago</h6>
+                        <div class="card border-0 shadow-zc rounded-4">
                             <div class="card-body">
                                 <div class="col-12">
                                     <h6 class="fs-sm fw-bold mb-3">Realiza tus pagos con:</h6>
                                     <div class="row payment-cart-type d-flex justify-content-center mb-3">
                                         <div class="col-5 text-center">
-                                            <button type="button" class="btn p-0" id="btnPlaceToPay">
-                                                <div class="form-check px-2 py-0">
-                                                    <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
-                                                </div>
+                                            <button type="button" class="btn form-check" id="btnPlaceToPay">
+                                                <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
                                             </button>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <button type="button" class="btn p-0" id="btnPayphone">
-                                                <div class="form-check px-2 py-0">
-                                                    <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
-                                                </div>
+                                            <button type="button" class="btn form-check" id="btnPayphone">
+                                                <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
                                             </button>
                                         </div>
                                     </div>

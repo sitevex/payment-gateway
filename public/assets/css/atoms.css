@@ -33,6 +33,10 @@
     border-radius: 100%;
     box-shadow: 0 0 0 2px var(--zc-bg-madison);
 }
+.backdrop-blur{
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
 .btn-close:focus{
     box-shadow: none;
 }

@@ -138,6 +138,12 @@ function formatearFecha(fechaString) {
     return fechaFormateada;
 }
 
+// Desplazar hasta la parte superior
+function scrollTop() {
+    document.body.scrollTop = 0;    // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (() => {
     'use strict'

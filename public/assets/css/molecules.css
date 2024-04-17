@@ -13,6 +13,7 @@ nav.navbar-step ul.navbar-nav{
     padding: 12px 6px;
     border-radius: 1rem;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background: #ffffff;
 }
 nav.navbar-step .navbar-nav li{
     border-right: 1px solid #dee2e6;

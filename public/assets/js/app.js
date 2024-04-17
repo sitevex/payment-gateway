@@ -57,6 +57,7 @@ document.querySelectorAll('[data-previous]').forEach(prevBtn => {
         doActionStep(currentStep);
         showCurrentStep();
         updateProgressbar();
+        scrollTop();
     });
 });
 
@@ -67,6 +68,7 @@ function checkAndContinue() {
         doActionStep(currentStep);
         showCurrentStep();
         updateProgressbar();
+        scrollTop();
     }
 }
 
@@ -119,7 +121,6 @@ function doActionStep(currentStep) {
         break;
         case 2:
             console.log('Metodo de pago');
-            // datosFactura();
         break;
         case 3:
             console.log('ha eligido un centro medico');
@@ -283,8 +284,8 @@ function mostrarOrdenes(data) {
             let pedido = JSON.parse(btn.getAttribute('data-pedido'));
 
             _nextStep[itemId] = true;
+            // scrollTop();
             checkAndContinue(itemId);
-
             datosFactura(pedido);
         });
     });
@@ -383,6 +384,7 @@ function mostrarItemsDetalle(data) {
 
 // Step Método de pago
 function datosFactura(pedido) {
+    
     let totalPagarLabel = document.getElementById('totalPagarLabel');
     totalPagarLabel.innerHTML = '';
 
@@ -396,6 +398,7 @@ function datosFactura(pedido) {
     document.getElementById('impuestoFact').value = pedido.IMPUESTO;
     document.getElementById('totalPagarFact').value = pedido.TOTAL;
     totalPagarLabel.textContent = '$ ' + pedido.TOTAL;
+    
     // console.log(pedido.NO_PEDIDO);
     // console.log(pedido.TOTAL);
 }

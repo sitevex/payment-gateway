@@ -23,7 +23,7 @@
             <span class="loader"></span>
         </div>
     </div>
-    <header class="backdrop-blur-sm" id="header">   <!-- position-sticky -->
+    <header class="backdrop-blur-sm sticky-top" id="header">   <!-- position-sticky -->
         <div class="navbar-top bg-body-tertiary">
             <div class="d-flex justify-content-between align-items-center">
                 <!-- navbar top left -->
@@ -62,7 +62,7 @@
                 </ul>
             </div>
         </nav>
-        <nav class="navbar navbar-step navbar-expand-lg bg-transparent py-3">
+        <nav class="navbar navbar-step navbar-expand-lg backdrop-blur backdrop-filter bg-transparent pt-3">
             <div class="container px-0 px-md-3">
                 <div class="d-flex justify-content-center align-items-center w-100">
                     <ul class="navbar-nav flex-row mx-auto" nav-multi-step>
@@ -104,7 +104,7 @@
             </div>
         </nav>
     </header>
-    <main id="top" class="main">
+    <main id="top" class="main pt-3">
         <div class="container">
             @yield('content')
         </div>
