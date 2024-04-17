@@ -410,7 +410,6 @@ function procesoPago() {
     let valorPagar = totalPagarFact.value;
     let inpuesto = impuestoFact.value;
     let transactionId = unicoFact.value;
-    let reference = referenceFact.value;
     let documentId = noPedidoFact.value;
     inpuesto = Math.round(inpuesto*100);
     valorPagar = Math.round(valorPagar*100);
@@ -418,11 +417,7 @@ function procesoPago() {
     let parametros = {
         amount: valorPagar,
         amountWithoutTax: valorPagar,
-        tax: inpuesto,
-        currency: "USD",
-        clientTransactionId: transactionId,
-        reference: reference,
-        documentId: documentId,
+        clientTransactionId: "Pruebas003",
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };
