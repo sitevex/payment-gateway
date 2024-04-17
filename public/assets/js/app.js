@@ -417,7 +417,7 @@ function procesoPago() {
     let parametros = {
         amount: valorPagar,
         amountWithoutTax: valorPagar,
-        clientTransactionId: "Pruebas003",
+        clientTransactionId: transactionId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };
