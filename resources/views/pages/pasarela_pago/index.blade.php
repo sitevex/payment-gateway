@@ -216,8 +216,8 @@
                 </div>
                 <div class="row g-3 justify-content-center content-orders">
                 </div>
-                <div class="text-end mt-5">
-                    <button type="button" class="btn btn-light-zc btn-light px-md-5" data-previous><i class="fa-solid fa-arrow-left"></i> Atrás</button>
+                <div class="text-end mb-3 mt-5">
+                    <button type="button" class="btn btn-light-zc btn-light px-md-5 col-12 col-md-auto" data-previous><i class="fa-solid fa-arrow-left"></i> Atrás</button>
                 </div>
             </section>
             <section class="box-step hide" data-step="3">
@@ -288,8 +288,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-end mt-5">
-                    <button type="button" class="btn btn-light-zc btn-light px-md-5" data-previous><i class="fa-solid fa-arrow-left"></i> Atrás</button>
+                <div class="text-end mb-3 mt-5">
+                    <button type="button" class="btn btn-light-zc btn-light px-md-5 col-12 col-md-auto" data-previous><i class="fa-solid fa-arrow-left"></i> Atrás</button>
                 </div>
             </section>
         </div>
