@@ -417,12 +417,14 @@ function procesoPagoPayPhone() {
     let valorPagar = totalPagarFact.value;
     let transactionId = unicoFact.value;
     let reference = referenceFact.value;
+    subtotal = Math.round(subtotal*100);
     inpuesto = Math.round(inpuesto*100);
     valorPagar = Math.round(valorPagar*100);
 
     let parametros = {
-        amount: valorPagar,
         amountWithoutTax: subtotal,
+        tax: inpuesto,
+        amount: valorPagar,
         currency: "USD",
         clientTransactionId: transactionId,
         reference: reference,
