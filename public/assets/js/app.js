@@ -413,18 +413,19 @@ document.querySelector('#btnPayphone').addEventListener('click', function () {
 function procesoPagoPayPhone() {
     let documentId = noPedidoFact.value;
     let subtotal = subTotalPagarFact.value;
-    let inpuesto = impuestoFact.value;
+    let impuesto = impuestoFact.value;
     let valorPagar = totalPagarFact.value;
     let transactionId = unicoFact.value;
     let reference = referenceFact.value;
     subtotal = Math.round(subtotal*100);
-    inpuesto = Math.round(inpuesto*100);
-    valorPagar = Math.round(valorPagar*100);
+    impuesto = Math.round(impuesto*100);
+    // valorPagar = Math.round(valorPagar*100);
+    valorPagar = Math.round(2*100);
 
     let parametros = {
-        amountWithoutTax: subtotal,
-        amountWithTax: inpuesto,
-        tax: 15,
+        amountWithoutTax: valorPagar,
+        // amountWithTax: impuesto,
+        // tax: 15,
         amount: valorPagar,
         currency: "USD",
         clientTransactionId: transactionId,
