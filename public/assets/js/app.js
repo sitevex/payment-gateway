@@ -420,7 +420,7 @@ function procesoPago() {
 
     let parametros = {
         amount: valorPagar,
-        amountWithoutTax: valorPagar,
+        // amountWithoutTax: valorPagar,
         currency: "USD",
         clientTransactionId: transactionId,
         reference: reference,
