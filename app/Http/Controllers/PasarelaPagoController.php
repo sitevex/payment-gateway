@@ -63,7 +63,38 @@ class PasarelaPagoController extends Controller
 
     public function payphoneTransResp(Request $request) {
         $response = $request->all();
-        dd($response);
+        
+        // Obtener los parámetros de la URL enviados por PayPhone
+        $transaccion = $request->query('id');
+        $client = $request->query('clientTransactionId');
+
+        // Preparar JSON de llamada
+        $data_array = array(
+            "id" => (int)$transaccion,
+            "clientTxId" => $client
+        );
+
+        $data = json_encode($data_array);
+
+        // Realizar la llamada a la API de Payphone
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://pay.payphonetodoesposible.com/api/button/V2/Confirm");
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt_array($curl, array(
+            CURLOPT_HTTPHEADER => array(
+                "Authorization: Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw", 
+                "Content-Type:application/json"
+            ),
+            CURLOPT_RETURNTRANSFER => 1
+        ));
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        // Enviar la respuesta de la transacción
+        return response()->json($result);
+
+        // dd($response);
         return view('pages.pasarela_pago.payphone_trans_resp');
     }
 
