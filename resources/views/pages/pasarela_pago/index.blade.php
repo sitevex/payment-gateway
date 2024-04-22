@@ -225,8 +225,8 @@
                     <h3 class="fw-bold mb-0">Método de Pago</h3>
                     <p>Elige tu forma de Pago</p>
                 </div>
-                <div class="row justify-content-center gap-4">
-                    <div class="col-12 col-md-4">
+                <div class="row justify-content-center gap-lg-3">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <h6 class="fw-bold mb-3">Datos de Facturación</h6>
                         <div class="card border-0 shadow-zc rounded-4">
                             <div class="card-body p-4">
@@ -234,15 +234,16 @@
                                     <input type="hidden" name="noPedidoFact" id="noPedidoFact" />
                                     <input type="hidden" name="referenceFact" id="referenceFact" />
                                     <input type="hidden" name="unicoFact" id="unicoFact" />
-                                    <input type="hidden" name="totalPagarFact" id="totalPagarFact" />
+                                    <input type="hidden" name="subTotalPagarFact" id="subTotalPagarFact" />
                                     <input type="hidden" name="impuestoFact" id="impuestoFact" />
+                                    <input type="hidden" name="totalPagarFact" id="totalPagarFact" />
                                     <div class="col-12">
                                         <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
+                                        <input type="text" class="form-control border-white" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
                                     </div>
                                     <div class="col-12">
                                         <label for="nombreFact" class="form-label fs-xs fw-bold mb-1">Razón Social <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="nombreFact" id="nombreFact" required disabled readonly />
+                                        <input type="text" class="form-control border-white" name="nombreFact" id="nombreFact" required disabled readonly />
                                     </div>
                                     <div class="col-12">
                                         <label for="telefonoFact" class="form-label fs-xs fw-bold mb-1">Teléfono <span class="text-danger">*</span></label>
@@ -257,7 +258,7 @@
                         </div>
                         <p class="fs-xs text-dark px-4 pt-2">(*) Campos obligatorios</p>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <h6 class="fw-bold mb-3">Pago</h6>
                         <div class="card border-0 shadow-zc rounded-4">
                             <div class="card-body">

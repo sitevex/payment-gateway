@@ -145,7 +145,7 @@ async function obtenerUsuario(numeroIdentificacion) {
     let firstName = document.getElementById('user-first-name');
     // let rucInput = document.getElementById('numeroIdentificacion').value.trim();
     // Aquí puedes enviar el formulario si todo está correcto
-    const url = `/businessPartnerstwo?ruc=${numeroIdentificacion}`;
+    const url = `/businessPartners?ruc=${numeroIdentificacion}`;
 
     try {
         const response = await fetch(url);
@@ -395,6 +395,7 @@ function datosFactura(pedido) {
     document.getElementById('noPedidoFact').value = pedido.NO_PEDIDO;
     document.getElementById('referenceFact').value = pedido.VENDEDOR;
     document.getElementById('unicoFact').value = pedido.UNICO;
+    document.getElementById('subTotalPagarFact').value = pedido.SUBTOTAL;
     document.getElementById('impuestoFact').value = pedido.IMPUESTO;
     document.getElementById('totalPagarFact').value = pedido.TOTAL;
     totalPagarLabel.textContent = '$ ' + pedido.TOTAL;
@@ -406,21 +407,22 @@ function datosFactura(pedido) {
 // Pay
 document.querySelector('#btnPayphone').addEventListener('click', function () {
     console.log('test pagar');
-    procesoPago();
+    procesoPagoPayPhone();
 });
 
-function procesoPago() {
-    let valorPagar = totalPagarFact.value;
+function procesoPagoPayPhone() {
+    let documentId = noPedidoFact.value;
+    let subtotal = subTotalPagarFact.value;
     let inpuesto = impuestoFact.value;
+    let valorPagar = totalPagarFact.value;
     let transactionId = unicoFact.value;
     let reference = referenceFact.value;
-    let documentId = noPedidoFact.value;
     inpuesto = Math.round(inpuesto*100);
     valorPagar = Math.round(valorPagar*100);
 
     let parametros = {
         amount: valorPagar,
-        // amountWithoutTax: valorPagar,
+        amountWithoutTax: subtotal,
         currency: "USD",
         clientTransactionId: transactionId,
         reference: reference,

@@ -16,7 +16,7 @@ class PasarelaPagoController extends Controller
         $this->serviceLayer = $serviceLayer;
     }
 
-    public function businessPartnersTwo(Request $request) 
+    public function businessPartners(Request $request) 
     {
         // Obtener el valor de 'ruc' desde la solicitud formulario Login
         $ruc = $request->input('ruc');
@@ -59,6 +59,12 @@ class PasarelaPagoController extends Controller
         $detallePedido = $this->serviceLayer->getRequestQuery($resource, $query);
         // dd($detallePedido);
         return response()->json($detallePedido);
+    }
+
+    public function payphoneTransResp(Request $request) {
+        $response = $request->all();
+        dd($response);
+        return view('pages.pasarela_pago.payphone_trans_resp');
     }
 
     public function logoutSap() {
