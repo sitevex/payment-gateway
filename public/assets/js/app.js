@@ -423,7 +423,8 @@ function procesoPagoPayPhone() {
 
     let parametros = {
         amountWithoutTax: subtotal,
-        tax: inpuesto,
+        amountWithTax: inpuesto,
+        tax: 15,
         amount: valorPagar,
         currency: "USD",
         clientTransactionId: transactionId,
