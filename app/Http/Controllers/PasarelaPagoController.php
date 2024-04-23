@@ -63,41 +63,9 @@ class PasarelaPagoController extends Controller
         return response()->json($detallePedido);
     }
 
-    public function pagoPayPhone(Request $request)
-    {
-        try {
-            // Obtener los datos de la solicitud del cliente
-            $data = $request->json()->all();
-
-            // Generar un nuevo transactionId si es necesario
-            if (!isset($data['transactionId'])) {
-                $data['transactionId'] = Uuid::uuid4()->toString();
-            }
-
-            // Realizar la solicitud al servicio de PayPhone
-            $response = Http::withHeaders([
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw'
-            ])->post('https://pay.payphonetodoesposible.com/api/button/Prepare', $data);
-
-            // Verificar si la respuesta es exitosa
-            if ($response->successful()) {
-                $responseData = $response->json();
-                return redirect($responseData['payWithCard']);
-            } else {
-                // Manejar errores de manera más precisa
-                $error = $response->json();
-                return back()->with('error', $error['message'] ?? 'Error en la solicitud de pago');
-            }
-        } catch (\Exception $e) {
-            // Manejar errores generales
-            return back()->with('error', $e->getMessage());
-        }
-    }
-
     public function payphoneTransResp(Request $request) {
         $response = $request->all();
-        
+
         // Obtener los parámetros de la URL enviados por PayPhone
         $transaccion = $request->query('id');
         $client = $request->query('clientTransactionId');

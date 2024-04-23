@@ -407,38 +407,38 @@ function datosFactura(pedido) {
 // Pay
 document.querySelector('#btnPayphone').addEventListener('click', function () {
     console.log('test pagar');
-    // procesoPagoPayPhone();
-    pagoPayPhone();
+    procesoPagoPayPhone();
+    // pagoPayPhone();
 });
 
-// opcion 1
 function procesoPagoPayPhone() {
     // variables
     let documentId = noPedidoFact.value;
     let subtotal = subTotalPagarFact.value;
     let impuesto = impuestoFact.value;
     let valorPagar = totalPagarFact.value;
+    let identificadorUnico = generarIdentificadorUnico();
     let transactionId = unicoFact.value;
     let reference = referenceFact.value;
     subtotal = Math.round(subtotal*100);
     impuesto = Math.round(impuesto*100);
     // valorPagar = Math.round(valorPagar*100);
     valorPagar = Math.round(2*100);
-    
+    // console.log(transactionId + identificadorUnico);
     let parametros = {
         amountWithoutTax: valorPagar,
         // amountWithTax: impuesto,
         // tax: 15,
         amount: valorPagar,
         currency: "USD",
-        clientTransactionId: transactionId,
+        clientTransactionId: transactionId + identificadorUnico,
         reference: reference,
         documentId: documentId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };
 
-    console.log(parametros);
+    // console.log(parametros);
     parametros['Referer'] = document.referrer;
 
     fetch('https://pay.payphonetodoesposible.com/api/button/Prepare', {
@@ -463,52 +463,6 @@ function procesoPagoPayPhone() {
         alert("Error en la llamada:" + error.message);
     });
 
-}
-
-// opcion 2
-async function pagoPayPhone() {
-    showLoader();
-    try {
-        // variables
-        let documentId = noPedidoFact.value;
-        let subtotal = subTotalPagarFact.value;
-        let impuesto = impuestoFact.value;
-        let valorPagar = totalPagarFact.value;
-        let transactionId = unicoFact.value;
-        let reference = referenceFact.value;
-        subtotal = Math.round(subtotal*100);
-        impuesto = Math.round(impuesto*100);
-        // valorPagar = Math.round(valorPagar*100);
-        valorPagar = Math.round(2*100);
-        
-        let data = {
-            documentId: documentId,
-            subtotal: subtotal,
-            impuesto: impuesto,
-            valorPagar: valorPagar,
-            transactionId: transactionId,
-            reference: reference
-        }
-
-        let response = await fetch('/pago-payphone', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-
-        let responseData = await response.json();
-        hideLoader();
-        console.log('Resuesta del servidor:', responseData);
-    } catch (error) {
-        console.log('Error en la llamada:', error);
-    }
 }
 
 function mostrarNoExistenOrdenes() {

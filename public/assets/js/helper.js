@@ -138,6 +138,23 @@ function formatearFecha(fechaString) {
     return fechaFormateada;
 }
 
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+function generarIdentificadorUnico() {
+    let caracteres = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let identificador = '';
+    for (let i = 0; i < 10; i++) {
+        identificador += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    // return 'identificadorUnico' + identificador;
+    return identificador;
+}
+
 // Desplazar hasta la parte superior
 function scrollTop() {
     document.body.scrollTop = 0;    // For Safari
