@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\B1SLayer\ServiceLayer;
+use App\Models\PasarelaPago;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -94,10 +95,44 @@ class PasarelaPagoController extends Controller
         curl_close($curl);
 
         // Enviar la respuesta de la transacción
-        return response()->json($result);
+        // return response()->json($result);
+
+        $result_array = json_decode($result, true);
+
+        $pasarelaPago = new PasarelaPago();
+        $pasarelaPago->email = $result_array['email'];
+        $pasarelaPago->cardType = $result_array['cardType'];
+        $pasarelaPago->bin = $result_array['bin'];
+        $pasarelaPago->lastDigits = $result_array['lastDigits'];
+        $pasarelaPago->deferredCode = $result_array['deferredCode'];
+        $pasarelaPago->deferred = $result_array['deferred'];
+        $pasarelaPago->cardBrandCode = $result_array['cardBrandCode'];
+        $pasarelaPago->cardBrand = $result_array['cardBrand'];
+        $pasarelaPago->amount = $result_array['amount'];
+        $pasarelaPago->clientTransactionId = $result_array['clientTransactionId'];
+        $pasarelaPago->phoneNumber = $result_array['phoneNumber'];
+        $pasarelaPago->statusCode = $result_array['statusCode'];
+        $pasarelaPago->transactionStatus = $result_array['transactionStatus'];
+        $pasarelaPago->authorizationCode = $result_array['authorizationCode'];
+        $pasarelaPago->messageCode = $result_array['messageCode'];
+        $pasarelaPago->transactionId = $result_array['transactionId'];
+        $pasarelaPago->document = $result_array['document'];
+        $pasarelaPago->currency = $result_array['currency'];
+        $pasarelaPago->optionalParameter1 = $result_array['optionalParameter1'];
+        $pasarelaPago->optionalParameter2 = $result_array['optionalParameter2'];
+        $pasarelaPago->optionalParameter3 = $result_array['optionalParameter3'];
+        $pasarelaPago->optionalParameter4 = $result_array['optionalParameter4'];
+        $pasarelaPago->storeName = $result_array['storeName'];
+        $pasarelaPago->date = $result_array['date'];
+        $pasarelaPago->regionIso = $result_array['regionIso'];
+        $pasarelaPago->transactionType = $result_array['transactionType'];
+        $pasarelaPago->reference = $result_array['reference'];
+        $pasarelaPago->tipoPasarela = 'payphone';
+
+        $pasarelaPago->save();
 
         // dd($response);
-        return view('pages.pasarela_pago.payphone_trans_resp');
+        return view('pages.pasarela_pago.payphone_trans_resp', compact('result'));
     }
 
     public function logoutSap() {
