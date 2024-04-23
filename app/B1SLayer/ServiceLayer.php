@@ -16,16 +16,16 @@ class ServiceLayer
     public function __construct() 
     {
         // DEV
-        $this->baseUrl = 'https://zcmayo.pa2.sap.topmanage.cloud/b1s/v1/';
-        $this->companyDB = 'C370617_ZCINV_TST1';
-        $this->username = 'tmcloud\\zcmayo-tecnologia';
-        $this->password = '0v97VzW4U5ONm5fa';
-
-        // PROD
         // $this->baseUrl = 'https://zcmayo.pa2.sap.topmanage.cloud/b1s/v1/';
-        // $this->companyDB = 'C370615_ZCMAYO_PRD';
+        // $this->companyDB = 'C370617_ZCINV_TST1';
         // $this->username = 'tmcloud\\zcmayo-tecnologia';
         // $this->password = '0v97VzW4U5ONm5fa';
+
+        // PROD
+        $this->baseUrl = 'https://zcmayo.pa2.sap.topmanage.cloud/b1s/v1/';
+        $this->companyDB = 'C370615_ZCMAYO_PRD';
+        $this->username = 'tmcloud\\zcmayo-tecnologia';
+        $this->password = '0v97VzW4U5ONm5fa';
         
         // Autenticar y obtener SessionId al crear la instancia de ServiceLayer
         $this->authenticate();
