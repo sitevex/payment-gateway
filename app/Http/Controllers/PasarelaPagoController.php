@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\B1SLayer\ServiceLayer;
+use Ramsey\Uuid\Uuid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Http;
 
 class PasarelaPagoController extends Controller
 {
@@ -59,6 +61,42 @@ class PasarelaPagoController extends Controller
         $detallePedido = $this->serviceLayer->getRequestQuery($resource, $query);
         // dd($detallePedido);
         return response()->json($detallePedido);
+    }
+
+    function pagoPayPhone(Request $request) {
+        $documentId = $request->input('documentId');
+        $subtotal = $request->input('subtotal');
+        $impuesto = $request->input('impuesto');
+        $valorPagar = $request->input('valorPagar');
+        // $transactionId = $request->input('transactionId');
+        $reference = $request->input('reference');
+
+        $transactionId = Uuid::uuid4()->toString();
+        $valorPagar = round($valorPagar * 100);
+
+        $parametros = [
+            'amountWithoutTax' => $valorPagar,
+            'amount' => $valorPagar,
+            'currency' => 'USD',
+            'clientTransactionId' => $transactionId,
+            'reference' => $reference,
+            'documentId' => $documentId,
+            'responseUrl' => 'https://pagodigital.zcmayoristas.com/response',
+            'cancellationUrl' => 'https://pagodigital.zcmayoristas.com/response'
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw',
+        ])->post('https://pay.payphonetodoesposible.com/api/button/Prepare', $parametros);
+
+        if ($response->successful()) {
+            $respuesta = $response->json();
+            return redirect($respuesta['payWithCard']);
+        } else {
+            return back()->with('error', 'Error en la solicitud de pago');
+        }
+        
     }
 
     public function payphoneTransResp(Request $request) {

@@ -407,10 +407,13 @@ function datosFactura(pedido) {
 // Pay
 document.querySelector('#btnPayphone').addEventListener('click', function () {
     console.log('test pagar');
-    procesoPagoPayPhone();
+    // procesoPagoPayPhone();
+    pagoPayPhone();
 });
 
+// opcion 1
 function procesoPagoPayPhone() {
+    // variables
     let documentId = noPedidoFact.value;
     let subtotal = subTotalPagarFact.value;
     let impuesto = impuestoFact.value;
@@ -421,7 +424,7 @@ function procesoPagoPayPhone() {
     impuesto = Math.round(impuesto*100);
     // valorPagar = Math.round(valorPagar*100);
     valorPagar = Math.round(2*100);
-
+    
     let parametros = {
         amountWithoutTax: valorPagar,
         // amountWithTax: impuesto,
@@ -459,8 +462,54 @@ function procesoPagoPayPhone() {
     .catch(function(error) {
         alert("Error en la llamada:" + error.message);
     });
+
 }
 
+// opcion 2
+async function pagoPayPhone() {
+    showLoader();
+    try {
+        // variables
+        let documentId = noPedidoFact.value;
+        let subtotal = subTotalPagarFact.value;
+        let impuesto = impuestoFact.value;
+        let valorPagar = totalPagarFact.value;
+        let transactionId = unicoFact.value;
+        let reference = referenceFact.value;
+        subtotal = Math.round(subtotal*100);
+        impuesto = Math.round(impuesto*100);
+        // valorPagar = Math.round(valorPagar*100);
+        valorPagar = Math.round(2*100);
+        
+        let data = {
+            documentId: documentId,
+            subtotal: subtotal,
+            impuesto: impuesto,
+            valorPagar: valorPagar,
+            transactionId: transactionId,
+            reference: reference
+        }
+
+        let response = await fetch('/pago-payphone', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        let responseData = await response.json();
+        hideLoader();
+        console.log('Resuesta del servidor:', responseData);
+    } catch (error) {
+        console.log('Error en la llamada:', error);
+    }
+}
 
 function mostrarNoExistenOrdenes() {
     let contentOrders = document.querySelector('.content-orders');
