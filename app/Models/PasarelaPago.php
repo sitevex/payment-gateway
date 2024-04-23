@@ -14,4 +14,6 @@ class PasarelaPago extends Model
      * @var string
      */
     protected $table = 'pag_dig_Respuesta';
+
+    public $timestamps = false;
 }
