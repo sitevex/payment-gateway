@@ -93,9 +93,15 @@ class PasarelaPagoController extends Controller
         ));
         $result = curl_exec($curl);
         curl_close($curl);
-        
+        return response()->json($result);
         $result_array = json_decode($result, true);
 
+       // Verificar si la respuesta contiene un errorCode y su valor es 20
+        if (isset($result_array['errorCode']) && $result_array['errorCode'] === 20) {
+            // Manejar el caso del errorCode 20 específico (transacción no encontrada)
+            return redirect()->route('payphoneMessage')->with('error', $result_array['message']);
+        }
+        
         $pasarelaPago = new PasarelaPago();
         $pasarelaPago->email = $result_array['email'];
         $pasarelaPago->cardType = $result_array['cardType'];
@@ -129,6 +135,10 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->save();
 
         return redirect()->route('index')->with('success', 'La transacción se ha completado con éxito');
+    }
+
+    public function payphoneMessageError() {
+        return view('pages.pasarela_pago.message_error');
     }
 
     public function logoutSap() {
