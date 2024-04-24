@@ -93,13 +93,13 @@ class PasarelaPagoController extends Controller
         ));
         $result = curl_exec($curl);
         curl_close($curl);
-
-        if($result->code == 200){
+        return response()->json($result);
+        /* if($result->code == 200){
             return redirect('/');
         }else{
             session()->flash('alert', $result->message);
             return redirect('/');
-        }
+        } */
 
         // Enviar la respuesta de la transacción
         // return response()->json($result);
