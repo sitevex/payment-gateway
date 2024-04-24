@@ -408,7 +408,6 @@ function datosFactura(pedido) {
 document.querySelector('#btnPayphone').addEventListener('click', function () {
     console.log('test pagar');
     procesoPagoPayPhone();
-    // pagoPayPhone();
 });
 
 function procesoPagoPayPhone() {

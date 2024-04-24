@@ -94,10 +94,17 @@ class PasarelaPagoController extends Controller
         $result = curl_exec($curl);
         curl_close($curl);
 
+        if($result->code == 200){
+            return redirect('/');
+        }else{
+            session()->flash('alert', $result->message);
+            return redirect('/');
+        }
+
         // Enviar la respuesta de la transacción
         // return response()->json($result);
 
-        $result_array = json_decode($result, true);
+        /* $result_array = json_decode($result, true);
 
         $pasarelaPago = new PasarelaPago();
         $pasarelaPago->email = $result_array['email'];
@@ -132,8 +139,7 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->save();
 
         // dd($response);
-        // return view('pages.pasarela_pago.payphone_trans_resp', compact('result'));
-        return redirect()->route('payphoneTransResp')->with('success', 'La transacción se ha completado con éxito');
+        return redirect()->route('payphoneTransResp')->with('success', 'La transacción se ha completado con éxito'); */
     }
 
     public function logoutSap() {
