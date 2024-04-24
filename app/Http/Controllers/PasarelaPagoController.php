@@ -132,7 +132,8 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->save();
 
         // dd($response);
-        return view('pages.pasarela_pago.payphone_trans_resp', compact('result'));
+        // return view('pages.pasarela_pago.payphone_trans_resp', compact('result'));
+        return redirect()->route('payphoneTransResp')->with('success', 'La transacción se ha completado con éxito');
     }
 
     public function logoutSap() {
