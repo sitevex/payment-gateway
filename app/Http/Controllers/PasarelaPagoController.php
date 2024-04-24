@@ -93,18 +93,7 @@ class PasarelaPagoController extends Controller
         ));
         $result = curl_exec($curl);
         curl_close($curl);
-        // dd($result);
-        // return response()->json($result);
-        /* if($result->code == 200){
-            return redirect('/');
-        }else{
-            session()->flash('alert', $result->message);
-            return redirect('/');
-        } */
-
-        // Enviar la respuesta de la transacción
-        // return response()->json($result);
-
+        
         $result_array = json_decode($result, true);
 
         $pasarelaPago = new PasarelaPago();
@@ -139,7 +128,6 @@ class PasarelaPagoController extends Controller
 
         $pasarelaPago->save();
 
-        // dd($response);
         return redirect()->route('index')->with('success', 'La transacción se ha completado con éxito');
     }
 

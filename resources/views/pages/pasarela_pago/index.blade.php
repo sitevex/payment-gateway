@@ -266,13 +266,13 @@
                                     <h6 class="fs-sm fw-bold mb-3">Realiza tus pagos con:</h6>
                                     <div class="row payment-cart-type d-flex justify-content-center mb-3">
                                         <div class="col-5 text-center">
-                                            <button type="button" class="btn form-check" id="btnPlaceToPay">
-                                                <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
+                                            <button type="button" class="btn btn-payphone form-check" id="btnPayphone">
+                                                <img src="{{ asset('assets/img/logo/payphone_white.png')}}" class="card-img" width="128" alt="payphone">
                                             </button>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <button type="button" class="btn form-check" id="btnPayphone">
-                                                <img src="{{ asset('assets/img/logo/payphone.png')}}" class="card-img" width="128" alt="payphone">
+                                            <button type="button" class="btn btn-placetopay form-check" id="btnPlaceToPay">
+                                                <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
                                             </button>
                                         </div>
                                     </div>

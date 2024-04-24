@@ -363,18 +363,18 @@ function mostrarItemsDetalle(data) {
         // Dividir el nombre del item en palabras
         let nombreMarca = itemsDetalle.NAME_ITEM.split(' ');
         let elemento = `
-        <div class="list-group-item list-group-item-action list-group-items-details gap-3 px-0 bg-transparent" aria-current="true">
-            <div class="my-auto text-start w-auto">
+        <div class="list-group-item list-group-item-action list-group-items-details px-0 bg-transparent" aria-current="true">
+            <div class="my-auto text-start col-auto col-md-8">
                 <span class="badge text-bg-sail">${itemsDetalle.COD_ITEM}</span>
                 <h6 class="fs-sm fw-medium line-clamp-2 mb-0">${capitalizarPrimeraLetraCadaPalabra(itemsDetalle.NAME_ITEM)}</h6>
                 <p class="fs-xxs line-clamp-1 mb-0 opacity-75">${nombreMarca[0].toUpperCase()}</p>
             </div>
-            <div class="d-flex flex-column w-auto justify-content-between lh-sm text-end">
-                <small class="fs-xs text-nowrap">Cant: ${itemsDetalle.CANTIDAD}</small>
-                <small class="fs-xs fw-medium text-nowrap">Desc: ${itemsDetalle.DESCUENTO_LIN}</small>
-                <small class="fs-xs fw-medium text-nowrap">Prec tras/desc: $ ${itemsDetalle.PRECIO_DESCUENTO}</small>
-                <small class="fs-xs fw-medium text-nowrap">Iva: ${itemsDetalle.IMPUESTO_LIN}</small>
-                <small class="fs-xs fw-medium text-nowrap">SubTotal: $ ${itemsDetalle.TOTAL_ARTICULO}</small>
+            <div class="d-flex flex-column col-5 col-md-3 lh-sm ms-auto">
+                <small class="fs-xs text-nowrap d-flex justify-content-between">Cant: <b>${itemsDetalle.CANTIDAD}</b></small>
+                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Desc: <b>${itemsDetalle.DESCUENTO_LIN}</b></small>
+                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Prec tras/desc: <b>$${itemsDetalle.PRECIO_DESCUENTO}</b></small>
+                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Iva: <b>${itemsDetalle.IMPUESTO_LIN}</b></small>
+                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">SubTotal: <b>$${itemsDetalle.TOTAL_ARTICULO}</b></small>
             </div>
         </div>
         `;
