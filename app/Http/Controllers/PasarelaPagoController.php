@@ -93,7 +93,8 @@ class PasarelaPagoController extends Controller
         ));
         $result = curl_exec($curl);
         curl_close($curl);
-        return response()->json($result);
+        dd($result);
+        // return response()->json($result);
         /* if($result->code == 200){
             return redirect('/');
         }else{
