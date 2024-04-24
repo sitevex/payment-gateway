@@ -5,7 +5,10 @@ let navAvatar = document.querySelector('.nav-avatar');
 let numeroIdentificacion = document.getElementById('numeroIdentificacion');
 // ------------------ MUlti step ------------------ 
 const multiStepForm = document.querySelector("[data-multi-step]");
-const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
+if (multiStepForm) {
+    const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
+    return formSteps;
+}
 const navItemSteps  = document.querySelectorAll(".navbar-step .navbar-nav li a.nav-link")
 const progressSteps = document.querySelectorAll(".nav-step");
 const logoutLink = document.getElementById('logout');

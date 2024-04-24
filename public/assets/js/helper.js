@@ -71,17 +71,20 @@ function mostrarErrorModal(titulo, mensaje) {
     modal.show();
 }
 
-detalleOrdenModal.addEventListener('shown.bs.modal', function (event) {
-    console.log('test detalle');
-    const button = event.relatedTarget;
-    const modo = button.getAttribute('data-modo');
+if (detalleOrdenModal) {
+    detalleOrdenModal.addEventListener('shown.bs.modal', function (event) {
+        console.log('test detalle');
+        const button = event.relatedTarget;
+        const modo = button.getAttribute('data-modo');
+    
+        if (modo === 'datalle') {
+            const id = button.getAttribute('data-id');
+            console.log(id);
+        }
+    
+    });
+}
 
-    if (modo === 'datalle') {
-        const id = button.getAttribute('data-id');
-        console.log(id);
-    }
-
-});
 /* function mostrarDetalleModal() {
 } */
 
