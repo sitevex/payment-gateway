@@ -96,9 +96,9 @@ class PasarelaPagoController extends Controller
         // return response()->json($result);
         $result_array = json_decode($result, true);
 
-       // Verificar si la respuesta contiene un errorCode y su valor es 20
+        // Verificar si la respuesta contiene un errorCode y su valor es 20
         if (isset($result_array['errorCode']) && $result_array['errorCode'] === 20) {
-            // Manejar el caso del errorCode 20 específico (transacción no encontrada)
+        // Manejar el caso del errorCode 20 específico (transacción no encontrada)
             return redirect()->route('payphoneMessage')->with('error', $result_array['message']);
         }
         
@@ -134,9 +134,12 @@ class PasarelaPagoController extends Controller
 
         $pasarelaPago->save();
 
-        return redirect()->route('index')->with('success', 'La transacción se ha completado con éxito');
+        return redirect()->route('comprobantePay')->with('success', 'La transacción se ha completado con éxito');
     }
 
+    public function comprobante() {
+        return view('pages.pasarela_pago.comprobante');
+    }
     public function payphoneMessageError() {
         return view('pages.pasarela_pago.message_error');
     }
