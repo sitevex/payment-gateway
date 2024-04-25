@@ -76,6 +76,7 @@ class PasarelaPagoController extends Controller
 
         // Si ya existe un registro con la misma transacción, no hacemos nada
         if ($existingTransaction) {
+            dd('La transacción ya ha sido procesada anteriormente');
             // Puedes redirigir a alguna página de error o simplemente retornar
             return redirect()->route('comprobantePay')->with('error', 'La transacción ya ha sido procesada anteriormente.');
         }
@@ -112,10 +113,10 @@ class PasarelaPagoController extends Controller
             return redirect()->route('comprobantePay')->with('error', $result_array['message']);
         }
 
-        $authorizationCode = null;
+        /* $authorizationCode = null;
         if (isset($result_array['authorizationCode'])) {
             $authorizationCode = $result_array['authorizationCode'];
-        }
+        } */
         
         $pasarelaPago = new PasarelaPago();
         $pasarelaPago->email = $result_array['email'];
