@@ -71,6 +71,16 @@ class PasarelaPagoController extends Controller
         $transaccion = $request->query('id');
         $client = $request->query('clientTransactionId');
 
+        // Verificar si ya existe un registro con la misma transacción
+        $existingTransaction = PasarelaPago::where('transactionId', $transaccion)->first();
+
+        // Si ya existe un registro con la misma transacción, no hacemos nada
+        if ($existingTransaction) {
+            // Puedes redirigir a alguna página de error o simplemente retornar
+            return redirect()->route('comprobantePay')->with('error', 'La transacción ya ha sido procesada anteriormente.');
+        }
+
+
         // Preparar JSON de llamada
         $data_array = array(
             "id" => (int)$transaccion,
@@ -99,7 +109,7 @@ class PasarelaPagoController extends Controller
         // Verificar si la respuesta contiene un errorCode.
         if (isset($result_array['errorCode'])) {
         // Manejar el caso del errorCode 20 específico (transacción no encontrada)
-            return redirect()->route('payphoneMessage')->with('error', $result_array['message']);
+            return redirect()->route('comprobantePay')->with('error', $result_array['message']);
         }
 
         $authorizationCode = null;
