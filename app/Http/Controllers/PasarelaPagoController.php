@@ -76,11 +76,8 @@ class PasarelaPagoController extends Controller
 
         // Si ya existe un registro con la misma transacción, no hacemos nada
         if ($existingTransaction) {
-            dd('La transacción ya ha sido procesada anteriormente');
-            // Puedes redirigir a alguna página de error o simplemente retornar
-            return redirect()->route('comprobantePay')->with('error', 'La transacción ya ha sido procesada anteriormente.');
+            return redirect()->route('comprobantePay')->with('message', 'La transacción ya ha sido procesada anteriormente.');
         }
-
 
         // Preparar JSON de llamada
         $data_array = array(
@@ -109,14 +106,13 @@ class PasarelaPagoController extends Controller
 
         // Verificar si la respuesta contiene un errorCode.
         if (isset($result_array['errorCode'])) {
-        // Manejar el caso del errorCode 20 específico (transacción no encontrada)
-            return redirect()->route('comprobantePay')->with('error', $result_array['message']);
+            return redirect()->route('comprobantePay')->with('message', $result_array['message']);
         }
 
-        /* $authorizationCode = null;
+        $authorizationCode = null;
         if (isset($result_array['authorizationCode'])) {
             $authorizationCode = $result_array['authorizationCode'];
-        } */
+        }
         
         $pasarelaPago = new PasarelaPago();
         $pasarelaPago->email = $result_array['email'];
@@ -150,12 +146,13 @@ class PasarelaPagoController extends Controller
 
         $pasarelaPago->save();
 
-        return redirect()->route('comprobantePay')->with('success', 'La transacción se ha completado con éxito');
+        return redirect()->route('comprobantePay')->with('message', 'La transacción se ha completado con éxito');
     }
 
     public function comprobante() {
         return view('pages.pasarela_pago.comprobante');
     }
+    
     public function payphoneMessageError() {
         return view('pages.pasarela_pago.message_error');
     }
