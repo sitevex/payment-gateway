@@ -32,7 +32,7 @@
                 <div class="d-flex gap-3 align-items-center"></div>
             </div>
         </div>
-        <nav class="navbar navbar-expand-xl" style="background-color: #112860;">
+        <div class="navbar navbar-expand-xl" style="background-color: #112860;">
             <div class="container">
                 <a class="navbar-brand text-center d-flex align-items-center">
                     @include('components.atoms.logo.zc_mayoristas_white')
@@ -61,7 +61,7 @@
                     </li>
                 </ul>
             </div>
-        </nav>
+        </div>
         <nav class="navbar navbar-step navbar-expand-lg backdrop-blur backdrop-filter bg-transparent pt-3">
             <div class="container px-0 px-md-3">
                 <div class="d-flex justify-content-center align-items-center w-100">
@@ -80,7 +80,7 @@
                         <li class="nav-item">
                             <a class="nav-link nav-step cursor-auto" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="Mis pedidos" nav-step="2">
                                 <div class="icon">
-                                    <i class="fa-solid fa-gifts"></i>
+                                    <i class="fa-solid fa-boxes-packing"></i>
                                 </div>
                                 <div class="nav-link-text lh-1">
                                     <small class="fs-xs">Step 2/3</small>
@@ -112,7 +112,6 @@
     <footer></footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <script src="{{ asset('assets/js/app.js') }}"></script>
     <script src="{{asset('assets/js/helper.js')}}"></script>
     @stack('script-app')
 </body>

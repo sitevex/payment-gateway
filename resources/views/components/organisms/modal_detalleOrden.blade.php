@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="{{ $modalId }}" data-bs-backdrop="static" tabindex="-1" aria-labelledby="{{ $modalId }}Label" aria-hidden="true">
     <div class="modal-dialog {{ $modalDialogClass }}">
-        <div class="modal-content">
+        <div class="modal-content border-0">
             <div class="modal-header {{ $modalHeaderClass }}">
                 <div class="d-flex align-items-center mb-2 px-3 text-start w-100">
                     <h1 class="modal-title fs-6 fw-medium" id="{{ $modalId }}Label">{{ $modalTitle }} <b id="numberOrden"></b></h1>

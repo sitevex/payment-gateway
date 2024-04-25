@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="{{ $modalId }}" data-bs-backdrop="static" tabindex="-1" aria-labelledby="{{ $modalId }}Label" aria-hidden="true">
-    <div class="modal-dialog {{ $modalSize }} modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
+    <div class="modal-dialog {{ $modalDialogClass }} ">
+        <div class="modal-content border-0">
             <div class="modal-header {{ $modalHeaderClass }} border-0">
                 <h1 class="modal-title fs-5 fw-bold" id="{{ $modalId }}Label">{{ $modalTitle }}</h1>
                 @if ($showCloseButton)

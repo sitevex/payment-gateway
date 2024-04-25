@@ -4,7 +4,7 @@
 <!-- Importar el componente Modal -->
 @component('components.organisms.modal_mesaje', [
     'modalId' => 'mensajeModal', // ID único para la modal
-    'modalSize' => 'modal-sm', // Tamaño de la modal
+    'modalDialogClass' => 'modal-dialog-centered modal-dialog-scrollable modal-sm', // Tamaño de la modal
     'modalHeaderClass' => 'justify-content-center',
     'modalTitle' => 'Título de la Modal 1', // Título de la modal
     'showCloseButton' => false, // Mostrar el botón de cierre
@@ -18,7 +18,7 @@
 
 @component('components.organisms.modal_error', [
     'modalId' => 'errorModal', // ID único para la modal
-    'modalSize' => 'modal-sm', // Tamaño de la modal
+    'modalDialogClass' => 'modal-dialog-centered modal-dialog-scrollable modal-sm', // Tamaño de la modal
     'modalHeaderClass' => 'justify-content-center',
     'modalTitle' => 'Título de la Modal 1', // Título de la modal
     'showCloseButton' => false, // Mostrar el botón de cierre
@@ -109,7 +109,7 @@
 
 @component('components.organisms.modal_mesaje', [
     'modalId' => 'metodoPagoModal', // ID único para la modal
-    'modalSize' => 'modal-sm', // Tamaño de la modal
+    'modalDialogClass' => 'modal-dialog-centered modal-dialog-scrollable modal-sm', // Tamaño de la modal
     'modalHeaderClass' => 'justify-content-center',
     'modalTitle' => 'Shipping Details', // Título de la modal
     'showCloseButton' => false, // Mostrar el botón de cierre
@@ -298,8 +298,8 @@
 </div>
 @endsection
 @push('script-app')
-<!-- <script src="{{asset('assets/js/helper.js')}}"></script> -->
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="{{ asset('assets/js/app.js') }}"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
 <script>
     // let isValid = true;
     // let errorMessage = "";

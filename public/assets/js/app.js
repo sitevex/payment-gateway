@@ -46,10 +46,23 @@ if (logoutLink) {
     })
 }
 
+// ------------------ Botones modal ------------------
 // ------------------ PayPhone ------------------
 document.querySelector('#btnPayphone').addEventListener('click', function () {
     console.log('test pagar');
     procesoPagoPayPhone();
+});
+
+// ------------------ modal detalleOrden ------------------
+detalleOrdenModal.addEventListener('shown.bs.modal', function (event) {
+    console.log('test detalle');
+    const button = event.relatedTarget;
+    const modo = button.getAttribute('data-modo');
+
+    if (modo === 'datalle') {
+        const id = button.getAttribute('data-id');
+        console.log(id);
+    }
 });
 
 // ------------------ Atrás ------------------
@@ -407,8 +420,6 @@ function datosFactura(pedido) {
     // console.log(pedido.NO_PEDIDO);
     // console.log(pedido.TOTAL);
 }
-
-
 
 function procesoPagoPayPhone() {
     // variables
