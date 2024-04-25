@@ -93,7 +93,7 @@ class PasarelaPagoController extends Controller
         ));
         $result = curl_exec($curl);
         curl_close($curl);
-        return response()->json($result);
+        // return response()->json($result);
         $result_array = json_decode($result, true);
 
         // Verificar si la respuesta contiene un errorCode.
