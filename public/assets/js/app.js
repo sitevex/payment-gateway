@@ -110,7 +110,6 @@ formSteps.forEach(step =>{
 // hide and show the current step by toggleing the class "active"
 function showCurrentStep(){
     formSteps.forEach((step,index) =>{
-        // console.log('------------------------------ data-step -----------------------------------');
         step.classList.toggle ("active", index===currentStep)
         if (index === currentStep){
             // click btn con data-next

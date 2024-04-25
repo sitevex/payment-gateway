@@ -93,13 +93,18 @@ class PasarelaPagoController extends Controller
         ));
         $result = curl_exec($curl);
         curl_close($curl);
-        // return response()->json($result);
+        return response()->json($result);
         $result_array = json_decode($result, true);
 
-        // Verificar si la respuesta contiene un errorCode y su valor es 20
-        if (isset($result_array['errorCode']) && $result_array['errorCode'] === 20) {
+        // Verificar si la respuesta contiene un errorCode.
+        if (isset($result_array['errorCode'])) {
         // Manejar el caso del errorCode 20 específico (transacción no encontrada)
             return redirect()->route('payphoneMessage')->with('error', $result_array['message']);
+        }
+
+        $authorizationCode = null;
+        if (isset($result_array['authorizationCode'])) {
+            $authorizationCode = $result_array['authorizationCode'];
         }
         
         $pasarelaPago = new PasarelaPago();
@@ -116,7 +121,7 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->phoneNumber = $result_array['phoneNumber'];
         $pasarelaPago->statusCode = $result_array['statusCode'];
         $pasarelaPago->transactionStatus = $result_array['transactionStatus'];
-        $pasarelaPago->authorizationCode = $result_array['authorizationCode'];
+        $pasarelaPago->authorizationCode = $authorizationCode;
         $pasarelaPago->messageCode = $result_array['messageCode'];
         $pasarelaPago->transactionId = $result_array['transactionId'];
         $pasarelaPago->document = $result_array['document'];
