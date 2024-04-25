@@ -5,10 +5,7 @@ let navAvatar = document.querySelector('.nav-avatar');
 let numeroIdentificacion = document.getElementById('numeroIdentificacion');
 // ------------------ MUlti step ------------------ 
 const multiStepForm = document.querySelector("[data-multi-step]");
-if (multiStepForm) {
-    const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
-    return formSteps;
-}
+const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
 const navItemSteps  = document.querySelectorAll(".navbar-step .navbar-nav li a.nav-link")
 const progressSteps = document.querySelectorAll(".nav-step");
 const logoutLink = document.getElementById('logout');
@@ -49,8 +46,11 @@ if (logoutLink) {
     })
 }
 
-// ------------------ Realizar compra ------------------
-
+// ------------------ PayPhone ------------------
+document.querySelector('#btnPayphone').addEventListener('click', function () {
+    console.log('test pagar');
+    procesoPagoPayPhone();
+});
 
 // ------------------ Atrás ------------------
 document.querySelectorAll('[data-previous]').forEach(prevBtn => {
@@ -126,8 +126,8 @@ function doActionStep(currentStep) {
             console.log('Metodo de pago');
         break;
         case 3:
-            console.log('ha eligido un centro medico');
-            obtenerFechasDisponibles();
+            console.log('Comprobante');
+            // obtenerFechasDisponibles();
         break;
         case 4:
             console.log('ha Seleccionado fecha y doctor');
@@ -280,6 +280,7 @@ function mostrarOrdenes(data) {
         contentOrders.innerHTML += elemento;
     });
     
+    // ------------------ Realizar compra ------------------
     const btnsMakePurchase = document.querySelectorAll(".btn-make-purchase");
     btnsMakePurchase.forEach(btn => {
         btn.addEventListener('click', function () {
@@ -292,7 +293,7 @@ function mostrarOrdenes(data) {
             datosFactura(pedido);
         });
     });
-
+    // ------------------ Ver detalle ------------------
     const btnsLookDetail = document.querySelectorAll(".btn-look-detail");
     btnsLookDetail.forEach(btn => {
         btn.addEventListener('click', function () {
@@ -407,11 +408,7 @@ function datosFactura(pedido) {
     // console.log(pedido.TOTAL);
 }
 
-// Pay
-document.querySelector('#btnPayphone').addEventListener('click', function () {
-    console.log('test pagar');
-    procesoPagoPayPhone();
-});
+
 
 function procesoPagoPayPhone() {
     // variables
