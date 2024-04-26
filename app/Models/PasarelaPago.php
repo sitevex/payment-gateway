@@ -16,6 +16,13 @@ class PasarelaPago extends Model
     protected $table = 'pag_dig_Respuesta';
 
     /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'transactionId';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
