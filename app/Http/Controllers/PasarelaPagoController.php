@@ -157,7 +157,7 @@ class PasarelaPagoController extends Controller
     }
 
     public function comprobante($transactionId) {
-        $pasarelaPago = PasarelaPago::findOrFail($id);
+        $pasarelaPago = PasarelaPago::findOrFail($transactionId);
         return view('pages.pasarela_pago.comprobante', compact('pasarelaPago'));
     }
     
