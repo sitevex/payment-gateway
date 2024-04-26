@@ -1,3 +1,22 @@
+@extends('layouts.zc_app')
+@section('title','Pago Digital')
+@section('content')
+<div class="row">
+    <section class="bg-white">
+        <div class="row mb-3">
+            <div class="col-12">
+                <h2 class="fw-bold text-blue-dark text-center">Transacción aprobada exitosamente.</h2>
+                <p>valor de 'storeName'</p>
+                <p>numero de 'document'</p>
+                <!-- los otro valores -->
+            </div>
+            <div class="col-12">
+                <h2 class="fw-bold text-blue-dark text-center">The transaction does not exist, verify that the submitted ID is correct.</h2>
+            </div>
+        </div>
+    </section>
+</div>
+@endsection
 <script>
     // Función para enviar la solicitud a la API de PayPhone en segundo plano
     window.addEventListener('load', function () {
@@ -8,30 +27,6 @@
             clientTxId: responseData.clientTransactionId
         };
         // console.log(data);
-        // Realizar la solicitud a la API de PayPhone en segundo plano utilizando Fetch API o Axios
-        /* fetch('https://pay.payphonetodoesposible.com/api/button/V2/Confirm', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => {
-            // Manejar la respuesta de la API de PayPhone según sea necesario
-            if (result.success) {
-                console.log(result);
-                console.log(result.success);
-                // Obtener los datos del resultado para enviar a guarda en base de datos
-            } else {
-                // Mostrar un mensaje de error o realizar otra acción según sea necesario
-                console.error('Error: ', result.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error: ', error);
-        }); */
 
         fetch('https://pay.payphonetodoesposible.com/api/button/V2/Confirm', {
             method: 'POST',
@@ -43,6 +38,13 @@
         })
         .then(response => response.json())
         .then(confirmacion => {
+            if (confirmacion.statusCode === 2) {
+                console.log("Transacción Cancelada: ", confirmacion.message);
+            } else if (confirmacion.statusCode === 3) {
+                console.log("Transacción Aprobada: ", confirmacion.authorizationCode);
+            } else {
+                console.log("Error: ", confirmacion.message);
+            }
             console.log(confirmacion);
             let estado = confirmacion.transactionStatus;
             console.log(estado);
