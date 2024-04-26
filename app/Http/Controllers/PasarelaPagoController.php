@@ -107,7 +107,7 @@ class PasarelaPagoController extends Controller
         // Verificar si la respuesta contiene un errorCode.
         if (isset($result_array['errorCode'])) {
             $errorMessage = $result_array['message'];
-            return redirect()->route('comprobantePay', compact('errorMessage'));
+            return view('pages.pasarela_pago.comprobante', compact('errorMessage'));
         }
 
         $authorizationCode = null;
@@ -148,10 +148,6 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->fill($result_array); // Esto asume que tus campos de la tabla de PasarelaPago coinciden con las claves de $result_array
     
         $pasarelaPago->save();
-        // ->with('message', 'La transacción se ha completado con éxito')
-        // return redirect()->route('comprobantePay', compact('result_array'));
-        // return redirect()->route('comprobantePay')->with('result_array', $result_array);
-        // return view('pages.pasarela_pago.comprobante', compact('result_array'));
         return redirect()->route('comprobantePay', ['transactionId' => $pasarelaPago->transactionId]);
     }
 
