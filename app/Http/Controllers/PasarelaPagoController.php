@@ -76,7 +76,8 @@ class PasarelaPagoController extends Controller
 
         // Si ya existe un registro con la misma transacción, no hacemos nada
         if ($existingTransaction) {
-            return redirect()->route('comprobantePay')->with('message', 'La transacción ya ha sido procesada anteriormente.');
+            dd('La transacción ya ha sido procesada anteriormente.');
+            return redirect()->route('comprobantePay');
         }
 
         // Preparar JSON de llamada
@@ -106,7 +107,8 @@ class PasarelaPagoController extends Controller
 
         // Verificar si la respuesta contiene un errorCode.
         if (isset($result_array['errorCode'])) {
-            return redirect()->route('comprobantePay')->with('message', $result_array['message']);
+            $errorMessage = $result_array['message'];
+            return redirect()->route('comprobantePay', compact('errorMessage'));
         }
 
         $authorizationCode = null;
@@ -145,8 +147,8 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->tipoPasarela = 'payphone';
 
         $pasarelaPago->save();
-
-        return redirect()->route('comprobantePay')->with('message', 'La transacción se ha completado con éxito');
+        // ->with('message', 'La transacción se ha completado con éxito')
+        return redirect()->route('comprobantePay', compact('result_array'));
     }
 
     public function comprobante() {
