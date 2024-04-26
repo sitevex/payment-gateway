@@ -72,13 +72,13 @@ class PasarelaPagoController extends Controller
         $client = $request->query('clientTransactionId');
 
         // Verificar si ya existe un registro con la misma transacción
-        $existingTransaction = PasarelaPago::where('transactionId', $transaccion)->first();
+        // $existingTransaction = PasarelaPago::where('transactionId', $transaccion)->first();
 
         // Si ya existe un registro con la misma transacción, no hacemos nada
-        if ($existingTransaction) {
-            dd('La transacción ya ha sido procesada anteriormente.');
-            return redirect()->route('comprobantePay');
-        }
+        // if ($existingTransaction) {
+        //     dd('La transacción ya ha sido procesada anteriormente.');
+        //     return redirect()->route('comprobantePay');
+        // }
 
         // Preparar JSON de llamada
         $data_array = array(
@@ -145,16 +145,20 @@ class PasarelaPagoController extends Controller
         $pasarelaPago->transactionType = $result_array['transactionType'];
         $pasarelaPago->reference = $result_array['reference'];
         $pasarelaPago->tipoPasarela = 'payphone';
-
+        
+        $pasarelaPago->fill($result_array); // Esto asume que tus campos de la tabla de PasarelaPago coinciden con las claves de $result_array
+    
         $pasarelaPago->save();
         // ->with('message', 'La transacción se ha completado con éxito')
         // return redirect()->route('comprobantePay', compact('result_array'));
-        return redirect()->route('comprobantePay')->with('result_array', $result_array);
-
+        // return redirect()->route('comprobantePay')->with('result_array', $result_array);
+        // return view('pages.pasarela_pago.comprobante', compact('result_array'));
+        return redirect()->route('comprobantePay', ['transactionId' => $pasarelaPago->transactionId]);
     }
 
-    public function comprobante() {
-        return view('pages.pasarela_pago.comprobante');
+    public function comprobante($transactionId) {
+        $pasarelaPago = PasarelaPago::findOrFail($id);
+        return view('pages.pasarela_pago.comprobante', compact('pasarelaPago'));
     }
     
     public function payphoneMessageError() {
