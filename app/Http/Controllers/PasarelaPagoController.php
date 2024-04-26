@@ -72,13 +72,12 @@ class PasarelaPagoController extends Controller
         $client = $request->query('clientTransactionId');
 
         // Verificar si ya existe un registro con la misma transacción
-        // $existingTransaction = PasarelaPago::where('transactionId', $transaccion)->first();
+        $existingTransaction = PasarelaPago::where('transactionId', $transaccion)->first();
 
         // Si ya existe un registro con la misma transacción, no hacemos nada
-        // if ($existingTransaction) {
-        //     dd('La transacción ya ha sido procesada anteriormente.');
-        //     return redirect()->route('comprobantePay');
-        // }
+        if ($existingTransaction) {
+            return view('pages.pasarela_pago.comprobante');
+        }
 
         // Preparar JSON de llamada
         $data_array = array(
