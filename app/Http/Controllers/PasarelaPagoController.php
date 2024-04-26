@@ -148,7 +148,9 @@ class PasarelaPagoController extends Controller
 
         $pasarelaPago->save();
         // ->with('message', 'La transacción se ha completado con éxito')
-        return redirect()->route('comprobantePay', compact('result_array'));
+        // return redirect()->route('comprobantePay', compact('result_array'));
+        return redirect()->route('comprobantePay')->with('result_array', $result_array);
+
     }
 
     public function comprobante() {
