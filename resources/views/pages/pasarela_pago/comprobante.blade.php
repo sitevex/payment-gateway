@@ -56,7 +56,7 @@
 <div class="row mb-2 align-items-center">
     <div class="col-sm-12 col-md-6">
         <p class="mb-1">Comprobante Pago: <span class="fw-bold"></span></p>
-        <p class="mb-1">Cliente: <span class="fw-bold">{{$result_array['optionalParameter4']}}</span></p>
+        <p class="mb-1">Cliente: <span class="fw-bold">{{ $result_array['optionalParameter4'] }}</span></p>
         <p class="mb-1">Convenio: <span class="fw-bold"></span></p>
     </div>
     <div class="col-sm-12 col-md-6 text-start text-md-end">
