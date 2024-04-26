@@ -64,7 +64,7 @@ class PasarelaPagoController extends Controller
         return response()->json($detallePedido);
     }
 
-    public function payphoneTransResp(Request $request) {
+    /* public function payphoneTransResp(Request $request) {
         $response = $request->all();
 
         // Obtener los parámetros de la URL enviados por PayPhone
@@ -149,6 +149,15 @@ class PasarelaPagoController extends Controller
     
         $pasarelaPago->save();
         return redirect()->route('comprobantePay', ['transactionId' => $pasarelaPago->transactionId]);
+    } */
+    
+    // Obtener los parámetros de la URL enviados por PayPhone
+    // $transaccion = $request->query('id');
+    // $client = $request->query('clientTransactionId');
+
+    public function payphoneTransResp(Request $request) {
+        $response = $request->all();
+        return view('pages.pasarela_pago.response', compact('response'));
     }
 
     public function comprobante($transactionId) {
