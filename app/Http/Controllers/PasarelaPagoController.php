@@ -104,7 +104,7 @@ class PasarelaPagoController extends Controller
         curl_close($curl);
         // return response()->json($result);
         $result_array = json_decode($result, true);
-
+        dd($result_array);
         // Verificar si la respuesta contiene un errorCode.
         if (isset($result_array['errorCode'])) {
             $errorMessage = $result_array['message'];
@@ -148,7 +148,7 @@ class PasarelaPagoController extends Controller
 
         $pasarelaPago->save();
         // ->with('message', 'La transacción se ha completado con éxito')
-        return redirect()->route('comprobantePay', compact('result_array'));
+        return redirect()->route('comprobantePay', compact(['result_array' => $result_array]));
     }
 
     public function comprobante() {
