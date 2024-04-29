@@ -41,21 +41,7 @@
                     <li class="nav-item">
                     </li>
                     <li class="nav-item nav-avatar dropdown text-end">
-                        <a class="d-flex align-items-end gap-1 link-body-emphasis text-decoration-none dropdown-toggle dropdown-toggle-avatar cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="avatar avatar-online d-lg-none">
-                                    <span class="avatar-initial rounded-circle bg-avatar" id="user-first-name">A</span>
-                                </div>
-                                <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle d-none" id="user-img-navbar">
-                                <div class="d-none d-lg-flex flex-column lh-1">
-                                    <span class="text-start text-white fs-sm">Hola</span>
-                                    <span class="text-start text-white fs-xs fw-bold" id="user-name-navbar"></span>
-                                </div>
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start text-small">
-                            <li><a class="dropdown-item cursor-pointer" id="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</a></li>
-                        </ul>
+                        
                     </li>
                     <li class="nav-item">
                     </li>

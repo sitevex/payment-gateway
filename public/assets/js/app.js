@@ -1,16 +1,14 @@
 let _nextStep;
 let currentStep = 0;
 let errorMessage = "";
-let navAvatar = document.querySelector('.nav-avatar');
+
 let numeroIdentificacion = document.getElementById('numeroIdentificacion');
 // ------------------ MUlti step ------------------ 
 const multiStepForm = document.querySelector("[data-multi-step]");
 const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
 const navItemSteps  = document.querySelectorAll(".navbar-step .navbar-nav li a.nav-link")
 const progressSteps = document.querySelectorAll(".nav-step");
-const logoutLink = document.getElementById('logout');
-
-navAvatar.style.display = 'none';
+// const logoutLink = document.getElementById('logout');
 
 // ------------------ Login ------------------
 document.querySelector("#btnGetInto").addEventListener('click', async function (e) {
@@ -39,12 +37,15 @@ document.querySelector("#btnGetInto").addEventListener('click', async function (
 });
 
 // ------------------ Logout ------------------
-if (logoutLink) {
+/* if (logoutLink) {
     logoutLink.addEventListener('click', function (event) {
+        console.log('logout');
         event.preventDefault();
         logoutSAPLayer();
     })
-}
+    console.log('logoutLink');
+} */
+
 
 // ------------------ Botones modal ------------------
 // ------------------ PayPhone ------------------
@@ -156,12 +157,10 @@ function doActionStep(currentStep) {
 // Step Login
 async function obtenerUsuario(numeroIdentificacion) {
     showLoader();
-    let userNameNavbar = document.getElementById('user-name-navbar');
-    let firstName = document.getElementById('user-first-name');
-    // let rucInput = document.getElementById('numeroIdentificacion').value.trim();
-    // Aquí puedes enviar el formulario si todo está correcto
-    const url = `/businessPartners?ruc=${numeroIdentificacion}`;
+    let navAvatar = document.querySelector('.nav-avatar');
+    navAvatar.innerHTML = '';
 
+    const url = `/businessPartners?ruc=${numeroIdentificacion}`;
     try {
         const response = await fetch(url);
         if (!response.ok) {
@@ -176,11 +175,39 @@ async function obtenerUsuario(numeroIdentificacion) {
         } else {
             // console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
             let userName = data.value[0].CardName
-            navAvatar.style.display = 'block';
-            userNameNavbar.textContent = userName;
+            let elemento = `
+                <a class="d-flex align-items-end gap-1 link-body-emphasis text-decoration-none dropdown-toggle dropdown-toggle-avatar cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="avatar avatar-online d-lg-none">
+                            <span class="avatar-initial rounded-circle bg-avatar" id="user-first-name">${userName.charAt(0).toUpperCase()}</span>
+                        </div>
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle d-none" id="user-img-navbar">
+                        <div class="d-none d-lg-flex flex-column lh-1">
+                            <span class="text-start text-white fs-sm">Hola</span>
+                            <span class="text-start text-white fs-xs fw-bold" id="user-name-navbar">${userName}</span>
+                        </div>
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start text-small">
+                    <li><a class="dropdown-item cursor-pointer" id="logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión</a></li>
+                </ul>
+            `;
+            navAvatar.innerHTML += elemento;
+            
             cardCode = data.value[0].FederalTaxID
-            firstName.textContent = userName.charAt(0).toUpperCase();
             obtenerPedido(cardCode);
+
+            // ------------------ Logout ------------------
+            if (navAvatar) {
+                navAvatar.addEventListener('click', function (event) {
+                    const target = event.target;
+                    if (target.matches('#logout')) {
+                        event.preventDefault();
+                        logoutSAPLayer();
+                    }
+                });
+            }
+
             return true;
         }
     } catch (error) {
@@ -504,9 +531,9 @@ function mostrarNoExistenOrdenes() {
 
 async function logoutSAPLayer() {
     showLoader();
-    // const url = '';
+    const url = '/logout-sap';
     try {
-        const response = await fetch('/logout-sap', {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

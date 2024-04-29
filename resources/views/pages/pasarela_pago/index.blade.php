@@ -174,7 +174,7 @@
                                     <div class="row g-3 needs-validation" novalidate id="rucForm">
                                         <div class="col-md-12">
                                             <label for="numeroIdentificacion" class="form-label fs-sm d-none">Número de idetificación</label>
-                                            <input type="number" class="form-control form-control-lg" name="numeroIdentificacion" id="numeroIdentificacion" placeholder="Ingresa tu número de identificación (ruc)" required data-error="Número de identificación incorrecto. Por favor, inténtalo de nuevo." />
+                                            <input type="number" class="form-control form-control-lg text-center" name="numeroIdentificacion" id="numeroIdentificacion" placeholder="Ingresa tu número de identificación (ruc)" required data-error="Número de identificación incorrecto. Por favor, inténtalo de nuevo." />
                                             <div class="invalid-feedback">
                                                 Número de identificación incorrecto. Por favor, inténtalo de nuevo.
                                             </div>

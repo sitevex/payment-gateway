@@ -160,6 +160,68 @@ class PasarelaPagoController extends Controller
         return view('pages.pasarela_pago.response', compact('response'));
     }
 
+    public function guardarTransaccionPasarela(Request $request) {
+        // Iniciar transacción de base de datos
+        DB::beginTransaction();
+
+        try {
+            // Guardar la transacción en la base de datos
+            $pasarelaPago = new PasarelaPago();
+            $tipoPasarela = $request->input('tipoPasarela');
+            $pasarelaPago->tipoPasarela = $tipoPasarela;
+
+            if ($tipoPasarela === 'payphone') {
+                $pasarelaPago->email = $request->input('email');
+                $pasarelaPago->cardType = $request->input('cardType');
+                $pasarelaPago->bin = $request->input('bin');
+                $pasarelaPago->lastDigits = $request->input('lastDigits');
+                $pasarelaPago->deferredCode = $request->input('deferredCode');
+                $pasarelaPago->deferred = $request->input('deferred');
+                $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
+                $pasarelaPago->cardBrand = $request->input('cardBrand');
+                $pasarelaPago->amount = $request->input('amount');
+                $pasarelaPago->clientTransactionId = $request->input('clientTransactionId');
+                $pasarelaPago->phoneNumber = $request->input('phoneNumber');
+                $pasarelaPago->statusCode = $request->input('statusCode');
+                $pasarelaPago->transactionStatus = $request->input('transactionStatus');
+                $pasarelaPago->authorizationCode = $authorizationCode;
+                $pasarelaPago->messageCode = $request->input('messageCode');
+                $pasarelaPago->transactionId = $request->input('transactionId');
+                $pasarelaPago->document = $request->input('document');
+                $pasarelaPago->currency = $request->input('currency');
+                $pasarelaPago->optionalParameter1 = $request->input('optionalParameter1');
+                $pasarelaPago->optionalParameter2 = $request->input('optionalParameter2');
+                $pasarelaPago->optionalParameter3 = $request->input('optionalParameter3');
+                $pasarelaPago->optionalParameter4 = $request->input('optionalParameter4');
+                $pasarelaPago->storeName = $request->input('storeName');
+                $pasarelaPago->date = $request->input('date');
+                $pasarelaPago->regionIso = $request->input('regionIso');
+                $pasarelaPago->transactionType = $request->input('transactionType');
+                $pasarelaPago->reference = $request->input('reference');
+                $pasarelaPago->tipoPasarela = 'payphone';
+            } elseif ($tipoPasarela === 'otra_pasarela') {
+                // Lógica para otro tipo de pasarela de pago
+            } elseif ($tipoPasarela === 'tercer_tipo_pasarela') {
+                // Lógica para tercer tipo de pasarela de pago
+            }
+
+            $pasarelaPago->save();
+
+            // Confirmar la transacción de base de datos
+            DB::commit();
+
+            // Enviar una respuesta exitosa
+            return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+        } catch (\Exception $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+
+            // Manejar el error adecuadamente
+            return response()->json(['error' => 'Error al guardar la transacción: ' . $e->getMessage()], 500);
+        }
+        
+    }
+
     public function comprobante($transactionId) {
         $pasarelaPago = PasarelaPago::findOrFail($transactionId);
         return view('pages.pasarela_pago.comprobante', compact('pasarelaPago'));
