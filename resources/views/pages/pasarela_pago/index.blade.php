@@ -45,22 +45,18 @@
         <div class="placeholder-glow w-100">
             <span class="placeholder col-12"></span>
         </div>
-        <ul class="list-group list-group-flush w-100" id="list-orderSummary">
+        <ul class="list-group list-group-flush w-100" id="listOrderSummary">
             <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
-                Subtotal
-                <span id="detalleSubtotal">$2181.80</span>
+                Subtotal <span id="detalleSubtotal"></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
-                Descuento
-                <span id="detalleDescuento">-</span>
+                Descuento <span id="detalleDescuento"></span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center fs-xs fw-bold">
-                Impuesto
-                <span id="detalleImpuesto">-</span>
+                Impuesto <span id="detalleImpuesto"></span>
             </li>
             <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center fs-xs fw-bold">
-                Total a pagar
-                <span id="detalleTotalPagar">$2181.80</span>
+                Total a pagar <span id="detalleTotalPagar"></span>
             </li>
         </ul>
         <button type="button" class="btn btn-lg btn-dark-zc fw-bold w-100"data-bs-dismiss="modal">Aceptar</button>
@@ -73,34 +69,7 @@
                 <div class="placeholder-glow w-100 h-13p">
                     <span class="placeholder col-12 h-100"></span>
                 </div>
-                <div class="list-group list-group-flush w-100" id="list-items-orden">
-                    <a class="list-group-item list-group-item-action d-flex gap-3 px-0 border-0 bg-transparent d-none" aria-current="true">
-                        <img src="https://zcmayoristas.com/zcwebstore/wp-content/uploads/2024/03/DHI-HY-SAV849HAN-E-1-300x300.jpg" alt="twbs" width="62" height="62" class="border bg-white rounded-3 flex-shrink-0">
-                        <div class="d-flex gap-2 w-100 justify-content-between">
-                            <div class="my-auto text-start">
-                                <h6 class="fs-sm fw-medium line-clamp-2 mb-0">Dahua Cámara Ip Dhi-hy-sav849han-e Detector De Humo 5MP</h6>
-                                <p class="fs-xxs line-clamp-1 mb-0 opacity-75">DAHUA</p>
-                            </div>
-                            <div class="d-flex flex-column justify-content-center text-end">
-                                <small class="fs-sm fw-medium text-nowrap">$339.00</small>
-                                <small class="fs-xs text-nowrap">Cant: 15</small>
-                            </div>
-                        </div>
-                    </a>
-                    <a class="list-group-item list-group-item-action d-flex flex-column gap-1 px-0 bg-transparent" aria-current="true">
-                        <div class="my-auto text-start">
-                            <span class="badge text-bg-sail">ORD12345</span>
-                            <h6 class="fs-sm fw-medium line-clamp-2 mb-0">Ruijie Reyee Router Gateway Cloud 4 Ptos Poe + 1giga</h6>
-                            <p class="fs-xxs line-clamp-1 mb-0 opacity-75">RUIJIE</p>
-                        </div>
-                        <div class="d-flex flex-column w-100 justify-content-between lh-sm text-end">
-                            <small class="fs-xs text-nowrap">Cant: 17</small>
-                            <small class="fs-xs fw-medium text-nowrap">Desc: 00</small>
-                            <small class="fs-xs fw-medium text-nowrap">Prec tras/desc: $250.80</small>
-                            <small class="fs-xs fw-medium text-nowrap">Iva: 00</small>
-                            <small class="fs-xs fw-medium text-nowrap">SubTotal: $250.80</small>
-                        </div>
-                    </a>
+                <div class="list-group list-group-flush w-100" id="listItemsOrden">
                 </div>
             </div>
         </div>

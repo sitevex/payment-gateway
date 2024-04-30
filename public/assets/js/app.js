@@ -349,10 +349,10 @@ function mostrarOrdenes(data) {
             let detalleTotalPagar = document.getElementById('detalleTotalPagar');
             
             numberOrden.textContent = itemId;
-            detalleSubtotal.textContent = dataSubtotal;
-            detalleDescuento.textContent = dataDescuento;
-            detalleImpuesto.textContent = dataImpuesto;
-            detalleTotalPagar.textContent = dataTotalPagar;
+            detalleSubtotal.textContent = dataSubtotal !== null && parseFloat(dataSubtotal) !== 0 ? `$ ${dataSubtotal}` : '-';
+            detalleDescuento.textContent = dataDescuento !== null && parseFloat(dataDescuento) !== 0 ? `$ ${dataDescuento}` : '-';
+            detalleImpuesto.textContent = dataImpuesto !== null && parseFloat(dataImpuesto) !== 0 ? `$ ${dataImpuesto}` : '-';
+            detalleTotalPagar.textContent = dataTotalPagar !== null && parseFloat(dataTotalPagar) !== 0 ? `$ ${dataTotalPagar}` : '-';
             
             //console.log(itemId);
             obtenerDetallePedido(itemId);
@@ -363,8 +363,8 @@ function mostrarOrdenes(data) {
 async function obtenerDetallePedido(noPedido){
     showLoader();
     
-    let contentItemsOrden = document.getElementById('list-items-orden');
-    let listOrderSummary = document.getElementById('list-orderSummary');
+    let contentItemsOrden = document.getElementById('listItemsOrden');
+    let listOrderSummary = document.getElementById('listOrderSummary');
     let placeholderGlow = document.querySelectorAll(".placeholder-glow");
     
     contentItemsOrden.innerHTML = '';
@@ -400,7 +400,7 @@ async function obtenerDetallePedido(noPedido){
 }
 
 function mostrarItemsDetalle(data) {
-    let contentItemsOrden = document.getElementById('list-items-orden');
+    let contentItemsOrden = document.getElementById('listItemsOrden');
 
     data.value.forEach(itemsDetalle => {
         // Dividir el nombre del item en palabras

@@ -36,6 +36,7 @@
 
         let responseData = {!! json_encode($response) !!};
         console.log(responseData);
+
         async function confirmarPayPhone(responseData) {
             showLoader();
             let data = {
@@ -168,7 +169,7 @@
                 body: JSON.stringify(data)
             });
             const responseData = await response.json();
-            console.log(responseData.message);
+            console.log(responseData);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -184,4 +185,6 @@
             console.error('Error:', error);
         }); */
     }
+
+    confirmarPayPhone(responseData);
 </script>
