@@ -165,6 +165,12 @@ class PasarelaPagoController extends Controller
         DB::beginTransaction();
 
         try {
+
+            $authorizationCode = null;
+            if ($request->has('authorizationCode')) {
+                $authorizationCode = $request->input('authorizationCode');
+            }
+
             // Guardar la transacción en la base de datos
             $pasarelaPago = new PasarelaPago();
             $tipoPasarela = $request->input('tipoPasarela');

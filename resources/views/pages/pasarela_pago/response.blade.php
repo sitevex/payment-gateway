@@ -5,21 +5,7 @@
     <div class="col-12 col-md-10 col-lg-8">
         <div class="card border-0 shadow-xs-zc">
             <div class="card-body p-4 px-lg-5 pt-lg-4 pb-lg-0">
-                <div class="row g-3" id="contentDetalleTrans">
-                    <div class="col-12 col-md-6 text-start text-md-end order-md-2">
-                        <span class="badge text-bg-sail text-label-date">Fecha de Emisión</span>
-                        <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue">AGO 09, 2024</p>
-                    </div>
-                    <div class="col-12 col-md-6 order-md-1">
-                        <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">279224</span></p>
-                        <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$2.50</span></p>
-                        <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">María Yanina Donoso Samaniego</span></p>
-                        <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">mariadonososamaniego@gmail.com</span></p>
-                    </div>
-                    <div class="col-12 order-md-3">
-                        <h2 class="fw-bold text-blue-dark text-center" id="message"></h2>
-                    </div>
-                </div>
+                <div class="row g-3" id="contentDetalleTrans"></div>
                 <div class="row g-3" id="contentError"></div>
             </div>
             <div class="card-footer bg-transparent border-0 pb-4 text-center">
@@ -36,7 +22,7 @@
     // window.addEventListener('load', function () {
 
         let responseData = {!! json_encode($response) !!};
-        console.log(responseData);
+        // console.log(responseData);
 
         async function confirmarPayPhone(responseData) {
             showLoader();
@@ -45,7 +31,7 @@
                 id: responseData.id,
                 clientTxId: responseData.clientTransactionId
             };
-            console.log(data);
+            // console.log(data);
             try {
                 const url = 'https://pay.payphonetodoesposible.com/api/button/V2/Confirm';
                 const response = await fetch(url, {
@@ -64,7 +50,9 @@
         }
 
         async function procesarConfirmacion(confirmacion) {
+            const contentDetalleTrans = document.getElementById('contentDetalleTrans');
             const contentError = document.getElementById('contentError');
+            contentDetalleTrans.innerHTML = '';
             contentError.innerHTML = '';
             hideLoader();
             console.log(confirmacion);
@@ -99,7 +87,6 @@
 
     function mostrarDetalleTrans(confirmacion) {
         const contentDetalleTrans = document.getElementById('contentDetalleTrans');
-        contentDetalleTrans.innerHTML = '';
         let elemento;
         let mensaje = confirmacion.statusCode === 2 ? 'Tu banco canceló la transacción, por favor comunícate con tu banco.' : confirmacion.statusCode === 3 ? 'Transacción aprobada exitosamente.' : confirmacion.message;
         if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
