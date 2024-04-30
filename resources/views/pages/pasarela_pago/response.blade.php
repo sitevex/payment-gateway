@@ -30,6 +30,7 @@
     </div>
 </div>
 @endsection
+@push('script-app')
 <script>
     // Función para enviar la solicitud a la API de PayPhone en segundo plano
     // window.addEventListener('load', function () {
@@ -188,3 +189,4 @@
 
     confirmarPayPhone(responseData);
 </script>
+@endpush
