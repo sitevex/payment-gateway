@@ -183,7 +183,9 @@ class PasarelaPagoController extends Controller
             $pasarelaPago = new PasarelaPago();
             $tipoPasarela = $request->input('tipoPasarela');
             $pasarelaPago->tipoPasarela = $tipoPasarela;
-
+            $amount = $request->input('amount');
+            $amountFormat = number_format($amount / 100, 2);
+            
             if ($tipoPasarela === 'payphone') {
                 $pasarelaPago->email = $request->input('email');
                 $pasarelaPago->cardType = $request->input('cardType');
@@ -193,7 +195,7 @@ class PasarelaPagoController extends Controller
                 $pasarelaPago->deferred = $request->input('deferred');
                 $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
                 $pasarelaPago->cardBrand = $request->input('cardBrand');
-                $pasarelaPago->amount = $request->input('amount');
+                $pasarelaPago->amount = $amountFormat;
                 $pasarelaPago->clientTransactionId = $request->input('clientTransactionId');
                 $pasarelaPago->phoneNumber = $request->input('phoneNumber');
                 $pasarelaPago->statusCode = $request->input('statusCode');
