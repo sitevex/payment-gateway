@@ -73,6 +73,8 @@
         let elemento;
         let mensaje = confirmacion.statusCode === 2 ? 'Tu banco canceló la transacción, por favor comunícate con tu banco.' : confirmacion.statusCode === 3 ? 'Transacción aprobada exitosamente.' : confirmacion.message;
         if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
+            let amount = confirmacion.amount;
+            let valorTotal = (amount / 100).toFixed(2);
             elemento = `
             <div class="col-12 col-md-6 text-start text-md-end order-md-2">
                 <span class="badge text-bg-sail text-label-date">Fecha de Emisión</span>
@@ -80,7 +82,7 @@
             </div>
             <div class="col-12 col-md-6 order-md-1">
                 <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">${confirmacion.transactionId}</span></p>
-                <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$${Math.round(confirmacion.amount * 100 )}</span></p>
+                <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$${valorTotal}</span></p>
                 <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">${confirmacion.optionalParameter4}</span></p>
                 <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">${confirmacion.email}</span></p>
             </div>
