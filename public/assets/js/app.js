@@ -23,7 +23,7 @@ document.querySelector("#btnGetInto").addEventListener('click', async function (
                 _nextStep = true;
             } else {
                 _nextStep = false;
-                mostrarMensajeModal('Información no encontrada', 'No existe usuario, debe registrarlo.');
+                mostrarMensajeModal('Información no encontrada', 'Revisar tú número de identificación, o comunícate con tú vendedor.');
             }
         } else {
             mostrarMensajeModal('RUC Incorrecto', 'El número de identificación (RUC) ingresado es inválido.');

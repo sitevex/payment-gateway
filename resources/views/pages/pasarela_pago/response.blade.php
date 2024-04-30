@@ -18,72 +18,55 @@
 @endsection
 @push('script-app')
 <script>
-    // Función para enviar la solicitud a la API de PayPhone en segundo plano
-    // window.addEventListener('load', function () {
 
-        let responseData = {!! json_encode($response) !!};
-        // console.log(responseData);
+    let responseData = {!! json_encode($response) !!};
 
-        async function confirmarPayPhone(responseData) {
-            showLoader();
-            let data = {
-                // Datos que necesitas enviar a la API de PayPhone para Confirm
-                id: responseData.id,
-                clientTxId: responseData.clientTransactionId
-            };
-            // console.log(data);
-            try {
-                const url = 'https://pay.payphonetodoesposible.com/api/button/V2/Confirm';
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw'
-                    },
-                    body: JSON.stringify(data)
-                });
-                const confirmacion = await response.json();
-                procesarConfirmacion(confirmacion);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        async function procesarConfirmacion(confirmacion) {
-            const contentDetalleTrans = document.getElementById('contentDetalleTrans');
-            const contentError = document.getElementById('contentError');
-            contentDetalleTrans.innerHTML = '';
-            contentError.innerHTML = '';
-            hideLoader();
-            console.log(confirmacion);
-            if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
-                contentError.hidden=true;
-                mostrarDetalleTrans(confirmacion);
-                await guardarTransacionPayPhone(confirmacion);
-            } else {
-                console.log("Error: ", confirmacion.message);
-                contentError.hidden=false;
-                let elemento = `
-                <div class="col-12">
-                    <h2 class="fw-bold text-blue-dark text-center pt-4" id="message">${confirmacion.message}</h2>
-                </div>
-                `;
-                contentError.innerHTML = elemento;
-            }
-        }
-
+    async function confirmarPayPhone(responseData) {
+        showLoader();
+        let data = {
+            id: responseData.id,
+            clientTxId: responseData.clientTransactionId
+        };
         // console.log(data);
-        /* fetch(url, {
-        })
-        .then(response => response.json())
-        .then(confirmacion => {
-        })
-        .catch(error => {
+        try {
+            const url = 'https://pay.payphonetodoesposible.com/api/button/V2/Confirm';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw'
+                },
+                body: JSON.stringify(data)
+            });
+            const confirmacion = await response.json();
+            procesarConfirmacion(confirmacion);
+        } catch (error) {
             console.error('Error:', error);
-        }); */
-        
+        }
+    }
 
-    // });
+    async function procesarConfirmacion(confirmacion) {
+        const contentDetalleTrans = document.getElementById('contentDetalleTrans');
+        const contentError = document.getElementById('contentError');
+        contentDetalleTrans.innerHTML = '';
+        contentError.innerHTML = '';
+        hideLoader();
+        console.log(confirmacion);
+        if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
+            contentError.hidden=true;
+            mostrarDetalleTrans(confirmacion);
+            await guardarTransacionPayPhone(confirmacion);
+        } else {
+            console.log("Error: ", confirmacion.message);
+            contentError.hidden=false;
+            let elemento = `
+            <div class="col-12">
+                <h2 class="fw-bold text-blue-dark text-center pt-4" id="message">${confirmacion.message}</h2>
+            </div>
+            `;
+            contentError.innerHTML = elemento;
+        }
+    }
 
     function mostrarDetalleTrans(confirmacion) {
         const contentDetalleTrans = document.getElementById('contentDetalleTrans');
@@ -161,17 +144,6 @@
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-
-        
-        /* fetch(url, {
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        }); */
     }
 
     confirmarPayPhone(responseData);
