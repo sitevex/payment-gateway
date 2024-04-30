@@ -80,7 +80,7 @@
             </div>
             <div class="col-12 col-md-6 order-md-1">
                 <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">${confirmacion.transactionId}</span></p>
-                <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$${confirmacion.amount}</span></p>
+                <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$${Math.round(confirmacion.amount * 100 )}</span></p>
                 <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">${confirmacion.optionalParameter4}</span></p>
                 <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">${confirmacion.email}</span></p>
             </div>

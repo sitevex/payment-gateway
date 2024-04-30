@@ -166,6 +166,13 @@ class PasarelaPagoController extends Controller
         DB::beginTransaction();
 
         try {
+            $transaccionId = $request->input('transactionId');
+            // Verificar si ya existe un registro con la misma transacción
+            $existingTransaction = PasarelaPago::where('transactionId', $transaccionId)->first();
+            // Si ya existe un registro con la misma transacción, no hacemos nada
+            if ($existingTransaction) {
+                return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+            }
 
             $authorizationCode = null;
             if ($request->has('authorizationCode')) {
@@ -212,6 +219,7 @@ class PasarelaPagoController extends Controller
                 // Lógica para tercer tipo de pasarela de pago
             }
 
+            // $pasarelaPago->fill($result_array);
             $pasarelaPago->save();
 
             // Confirmar la transacción de base de datos
