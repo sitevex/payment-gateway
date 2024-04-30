@@ -78,7 +78,7 @@
             elemento = `
             <div class="col-12 col-md-6 text-start text-md-end order-md-2">
                 <span class="badge text-bg-sail text-label-date">Fecha de Emisión</span>
-                <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue">${confirmacion.date}</p>
+                <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue">${formatearFechaYHora(confirmacion.date)}</p>
             </div>
             <div class="col-12 col-md-6 order-md-1">
                 <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">${confirmacion.transactionId}</span></p>

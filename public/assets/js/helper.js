@@ -127,6 +127,30 @@ function formatearFecha(fechaString) {
     return fechaFormateada;
 }
 
+function formatearFechaYHora(fechaString) {
+    // Crear un objeto Date a partir de la cadena de fecha
+    let fecha = new Date(fechaString);
+
+    // Obtener los componentes individuales de la fecha
+    let dia = fecha.getDate();
+    let mes = fecha.toLocaleString('default', { month: 'short' }).toUpperCase();
+    let anio = fecha.getFullYear();
+    let hora = fecha.getHours();
+    let minutos = fecha.getMinutes();
+    let am_pm = hora >= 12 ? 'PM' : 'AM';
+
+    // Formatear los minutos con dos dígitos
+    minutos = minutos < 10 ? '0' + minutos : minutos;
+
+    // Formatear la hora en formato de 12 horas
+    hora = hora % 12 || 12;
+
+    // Construir la cadena de fecha formateada
+    let fechaFormateada = `${mes} ${dia}, ${anio} ${hora}:${minutos} ${am_pm}`;
+
+    return fechaFormateada;
+}
+
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
