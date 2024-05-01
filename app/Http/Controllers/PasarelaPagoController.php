@@ -101,7 +101,7 @@ class PasarelaPagoController extends Controller
             'U_transactionType' => $request->input('transactionType'),
             'U_reference' => $request->input('reference'),
             'U_tipoPasarela' => $request->input('tipoPasarela'),
-            'U_codigoSap' => $request->input('codigoSap'),
+            // 'U_codigoSap' => $request->input('codigoSap'),
             'U_amount' => $request->input('amount')
         ];
 
