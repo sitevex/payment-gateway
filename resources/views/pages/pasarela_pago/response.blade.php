@@ -54,7 +54,7 @@
         console.log(confirmacion);
         if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
             contentError.hidden=true;
-            mostrarDetalleTrans(confirmacion);
+            await registerTransConfirmB1S(confirmacion);
             await guardarTransacionPayPhone(confirmacion);
         } else {
             console.log("Error: ", confirmacion.message);
@@ -68,36 +68,55 @@
         }
     }
 
-    function mostrarDetalleTrans(confirmacion) {
-        const contentDetalleTrans = document.getElementById('contentDetalleTrans');
-        let elemento;
-        let mensaje = confirmacion.statusCode === 2 ? 'Tu banco canceló la transacción, por favor comunícate con tu banco.' : confirmacion.statusCode === 3 ? 'Transacción aprobada exitosamente.' : confirmacion.message;
-        if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
-            let amount = confirmacion.amount;
-            let valorTotal = (amount / 100).toFixed(2);
-            elemento = `
-            <div class="col-12 col-md-6 text-start text-md-end order-md-2">
-                <span class="badge text-bg-sail text-label-date">Fecha de Emisión</span>
-                <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue">${formatearFechaYHora(confirmacion.date)}</p>
-            </div>
-            <div class="col-12 col-md-6 order-md-1">
-                <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">${confirmacion.transactionId}</span></p>
-                <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$${valorTotal}</span></p>
-                <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">${confirmacion.optionalParameter4}</span></p>
-                <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">${confirmacion.email}</span></p>
-            </div>
-            <div class="col-12 order-md-3">
-                <h2 class="fw-bold text-blue-dark text-center" id="message">${mensaje}</h2>
-            </div>
-            `;
-        } else {
-            elemento = `
-            <div class="col-12">
-                <h2 class="fw-bold text-blue-dark text-center" id="message">${mensaje}</h2>
-            </div>
-            `;
+    async function registerTransConfirmB1S(confirmacion) {
+        const data = {
+            email: confirmacion.email,
+            cardType: confirmacion.cardType,
+            bin: confirmacion.bin,
+            lastDigits: confirmacion.lastDigits,
+            deferredCode: confirmacion.deferredCode,
+            deferred: confirmacion.deferred,
+            cardBrandCode: confirmacion.cardBrandCode,
+            cardBrand: confirmacion.cardBrand,
+            amount: confirmacion.amount,
+            clientTransactionId: confirmacion.clientTransactionId,
+            phoneNumber: confirmacion.phoneNumber,
+            statusCode: confirmacion.statusCode,
+            transactionStatus: confirmacion.transactionStatus,
+            authorizationCode: confirmacion.authorizationCode,
+            messageCode: confirmacion.messageCode,
+            transactionId: confirmacion.transactionId,
+            document: confirmacion.document,
+            currency: confirmacion.currency,
+            optionalParameter1: confirmacion.optionalParameter1,
+            optionalParameter2: confirmacion.optionalParameter2,
+            optionalParameter3: confirmacion.optionalParameter3,
+            optionalParameter4: confirmacion.optionalParameter4,
+            storeName: confirmacion.storeName,
+            date: confirmacion.date,
+            regionIso: confirmacion.regionIso,
+            transactionType: confirmacion.transactionType,
+            reference: confirmacion.reference,
+            tipoPasarela: 'payphone'
         }
-        contentDetalleTrans.innerHTML = elemento;
+        try {
+            const url = '/registro-confirmacion';
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify(data)
+            });
+            if (!response.ok) {
+                throw new Error('Error al procesar la transacción. Por favor, inténtelo de nuevo.');
+            }
+            const responseData = await response.json();
+            console.log(responseData);
+        } catch (error) {
+            console.error('Error al enviar la solicitud:', error);
+        }
     }
 
     async function guardarTransacionPayPhone(confirmacion) {
@@ -143,9 +162,42 @@
             });
             const responseData = await response.json();
             console.log(responseData);
+            mostrarDetalleTrans(confirmacion);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+    }
+
+    function mostrarDetalleTrans(confirmacion) {
+        const contentDetalleTrans = document.getElementById('contentDetalleTrans');
+        let elemento;
+        let mensaje = confirmacion.statusCode === 2 ? 'Tu banco canceló la transacción, por favor comunícate con tu banco.' : confirmacion.statusCode === 3 ? 'Transacción aprobada exitosamente.' : confirmacion.message;
+        if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
+            let amount = confirmacion.amount;
+            let valorTotal = (amount / 100).toFixed(2);
+            elemento = `
+            <div class="col-12 col-md-6 text-start text-md-end order-md-2">
+                <span class="badge text-bg-sail text-label-date">Fecha de Emisión</span>
+                <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue">${formatearFechaYHora(confirmacion.date)}</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-1">
+                <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">${confirmacion.transactionId}</span></p>
+                <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$ ${valorTotal}</span></p>
+                <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">${confirmacion.optionalParameter4}</span></p>
+                <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">${confirmacion.email}</span></p>
+            </div>
+            <div class="col-12 order-md-3">
+                <h2 class="fw-bold text-blue-dark text-center" id="message">${mensaje}</h2>
+            </div>
+            `;
+        } else {
+            elemento = `
+            <div class="col-12">
+                <h2 class="fw-bold text-blue-dark text-center" id="message">${mensaje}</h2>
+            </div>
+            `;
+        }
+        contentDetalleTrans.innerHTML = elemento;
     }
 
     confirmarPayPhone(responseData);

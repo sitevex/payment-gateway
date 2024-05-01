@@ -415,9 +415,9 @@ function mostrarItemsDetalle(data) {
             <div class="d-flex flex-column col-5 col-md-3 lh-sm ms-auto">
                 <small class="fs-xs text-nowrap d-flex justify-content-between">Cant: <b>${itemsDetalle.CANTIDAD}</b></small>
                 <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Desc: <b>${itemsDetalle.DESCUENTO_LIN}</b></small>
-                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Prec tras/desc: <b>$${itemsDetalle.PRECIO_DESCUENTO}</b></small>
+                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Prec tras/desc: <b>$ ${itemsDetalle.PRECIO_DESCUENTO}</b></small>
                 <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">Iva: <b>${itemsDetalle.IMPUESTO_LIN}</b></small>
-                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">SubTotal: <b>$${itemsDetalle.TOTAL_ARTICULO}</b></small>
+                <small class="fs-xs fw-medium text-nowrap d-flex justify-content-between">SubTotal: <b>$ ${itemsDetalle.TOTAL_ARTICULO}</b></small>
             </div>
         </div>
         `;

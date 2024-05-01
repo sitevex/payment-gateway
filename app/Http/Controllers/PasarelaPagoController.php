@@ -65,100 +65,49 @@ class PasarelaPagoController extends Controller
         return response()->json($detallePedido);
     }
 
-    /* public function payphoneTransResp(Request $request) {
-        $response = $request->all();
-
-        // Obtener los parámetros de la URL enviados por PayPhone
-        $transaccion = $request->query('id');
-        $client = $request->query('clientTransactionId');
-
-        // Verificar si ya existe un registro con la misma transacción
-        $existingTransaction = PasarelaPago::where('transactionId', $transaccion)->first();
-
-        // Si ya existe un registro con la misma transacción, no hacemos nada
-        if ($existingTransaction) {
-            return view('pages.pasarela_pago.comprobante');
-        }
-
-        // Preparar JSON de llamada
-        $data_array = array(
-            "id" => (int)$transaccion,
-            "clientTxId" => $client
-        );
-
-        $data = json_encode($data_array);
-
-        // Realizar la llamada a la API de Payphone
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "https://pay.payphonetodoesposible.com/api/button/V2/Confirm");
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        curl_setopt_array($curl, array(
-            CURLOPT_HTTPHEADER => array(
-                "Authorization: Bearer oyDuDjdVeaFun4bXHuCcTuj4QDUCeduArGriIlgbNxOeURWpKP4e-K2XM0h9PXEQ7ktg0qAA7weVE_tFnoRG1vEZHm5-hsNjoBJqcqPjeXmWj1mOkFM5f7PeZx6aZ3fX5-9wrVMO1-LEvqCMzpvVwSyE0QfLap_chx7CnkoCBKNMep1sfZZ9waQVWMQkXDBAVHrm84_s1T2BySj29uXJohNnV38U1HMmrdH3swUXovpzQU4c_EF7qygUf8baIF-4ZJWRqARUjE63_IHmyXio5P744NwJLzL4SDf3fCYyfsHSYHZ72J4M16EwqONzwBSGC0IDYw", 
-                "Content-Type:application/json"
-            ),
-            CURLOPT_RETURNTRANSFER => 1
-        ));
-        $result = curl_exec($curl);
-        curl_close($curl);
-        // return response()->json($result);
-        $result_array = json_decode($result, true);
-        // dd($result_array);
-        // Verificar si la respuesta contiene un errorCode.
-        if (isset($result_array['errorCode'])) {
-            $errorMessage = $result_array['message'];
-            return view('pages.pasarela_pago.comprobante', compact('errorMessage'));
-        }
-
-        $authorizationCode = null;
-        if (isset($result_array['authorizationCode'])) {
-            $authorizationCode = $result_array['authorizationCode'];
-        }
-        
-        $pasarelaPago = new PasarelaPago();
-        $pasarelaPago->email = $result_array['email'];
-        $pasarelaPago->cardType = $result_array['cardType'];
-        $pasarelaPago->bin = $result_array['bin'];
-        $pasarelaPago->lastDigits = $result_array['lastDigits'];
-        $pasarelaPago->deferredCode = $result_array['deferredCode'];
-        $pasarelaPago->deferred = $result_array['deferred'];
-        $pasarelaPago->cardBrandCode = $result_array['cardBrandCode'];
-        $pasarelaPago->cardBrand = $result_array['cardBrand'];
-        $pasarelaPago->amount = $result_array['amount'];
-        $pasarelaPago->clientTransactionId = $result_array['clientTransactionId'];
-        $pasarelaPago->phoneNumber = $result_array['phoneNumber'];
-        $pasarelaPago->statusCode = $result_array['statusCode'];
-        $pasarelaPago->transactionStatus = $result_array['transactionStatus'];
-        $pasarelaPago->authorizationCode = $authorizationCode;
-        $pasarelaPago->messageCode = $result_array['messageCode'];
-        $pasarelaPago->transactionId = $result_array['transactionId'];
-        $pasarelaPago->document = $result_array['document'];
-        $pasarelaPago->currency = $result_array['currency'];
-        $pasarelaPago->optionalParameter1 = $result_array['optionalParameter1'];
-        $pasarelaPago->optionalParameter2 = $result_array['optionalParameter2'];
-        $pasarelaPago->optionalParameter3 = $result_array['optionalParameter3'];
-        $pasarelaPago->optionalParameter4 = $result_array['optionalParameter4'];
-        $pasarelaPago->storeName = $result_array['storeName'];
-        $pasarelaPago->date = $result_array['date'];
-        $pasarelaPago->regionIso = $result_array['regionIso'];
-        $pasarelaPago->transactionType = $result_array['transactionType'];
-        $pasarelaPago->reference = $result_array['reference'];
-        $pasarelaPago->tipoPasarela = 'payphone';
-        
-        $pasarelaPago->fill($result_array); // Esto asume que tus campos de la tabla de PasarelaPago coinciden con las claves de $result_array
-    
-        $pasarelaPago->save();
-        return redirect()->route('comprobantePay', ['transactionId' => $pasarelaPago->transactionId]);
-    } */
-    
-    // Obtener los parámetros de la URL enviados por PayPhone
-    // $transaccion = $request->query('id');
-    // $client = $request->query('clientTransactionId');
-
     public function payphoneTransResp(Request $request) {
         $response = $request->all();
         return view('pages.pasarela_pago.response', compact('response'));
+    }
+
+    public function registroPayB1S(Request $request){
+        $dataTransaction = [
+            'Code' => $request->input('document'),
+            'Name' => $request->input('storeName'),
+            'U_email' => $request->input('email'),
+            'U_cardType' => $request->input('cardType'),
+            'U_bin' => $request->input('bin'),
+            'U_lastDigits' => $request->input('lastDigits'),
+            'U_deferredCode' => $request->input('deferredCode'),
+            'U_deferred' => $request->input('deferred'),
+            'U_cardBrandCode' => $request->input('cardBrandCode'),
+            'U_cardBrand' => $request->input('cardBrand'),
+            'U_clientTransactionId' => $request->input('clientTransactionId'),
+            'U_phoneNumber' => $request->input('phoneNumber'),
+            'U_statusCode' => $request->input('statusCode'),
+            'U_transactionStatus' => $request->input('transactionStatus'),
+            'U_authorizationCode' => $request->input('authorizationCode'),
+            'U_messageCode' => $request->input('messageCode'),
+            'U_transactionId' => $request->input('transactionId'),
+            'U_document' => $request->input('document'),
+            'U_currency' => $request->input('currency'),
+            'U_optionalParameter1' => $request->input('optionalParameter1'),
+            'U_optionalParameter2' => $request->input('optionalParameter2'),
+            'U_optionalParameter3' => $request->input('optionalParameter3'),
+            'U_optionalParameter4' => $request->input('optionalParameter4'),
+            'U_storeName' => $request->input('storeName'),
+            'U_date' => $request->input('date'),
+            'U_regionIso' => $request->input('regionIso'),
+            'U_transactionType' => $request->input('transactionType'),
+            'U_reference' => $request->input('reference'),
+            'U_tipoPasarela' => $request->input('tipoPasarela'),
+            'U_codigoSap' => $request->input('codigoSap'),
+            'U_amount' => $request->input('amount')
+        ];
+
+        $createdTransaction = $this->serviceLayer->postRequest('/U_LA_PAGO_DIGITAL', $dataTransaction);
+        // return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+        return response()->json($createdTransaction);
     }
 
     public function guardarTransaccionPasarela(Request $request) {
@@ -244,10 +193,6 @@ class PasarelaPagoController extends Controller
         return view('pages.pasarela_pago.comprobante', compact('pasarelaPago'));
     }
     
-    public function payphoneMessageError() {
-        return view('pages.pasarela_pago.message_error');
-    }
-
     public function logoutSap() {
         $response = $this->serviceLayer->logoutB1SLayer();
 
