@@ -107,7 +107,7 @@ class PasarelaPagoController extends Controller
 
         $createdTransaction = $this->serviceLayer->postRequest('/U_LA_PAGO_DIGITAL', $dataTransaction);
         // return response()->json(['message' => 'Transacción guardada con éxito'], 200);
-        return response()->json($createdTransaction);
+        // return response()->json($createdTransaction);
     }
 
     public function guardarTransaccionPasarela(Request $request) {

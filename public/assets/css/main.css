@@ -59,7 +59,7 @@ body {
     place-items: center;
     z-index: 99999999;
 }
-
+  
 .loader {
     width: 48px;
     height: 48px;
