@@ -71,6 +71,10 @@ class PasarelaPagoController extends Controller
     }
 
     public function registroPayB1S(Request $request){
+        $codigoEstado = $request->input('statusCode');
+        $amount = $request->input('amount');
+        $amountFormat = number_format($amount / 100, 2);
+
         $dataTransaction = [
             'Code' => $request->input('document'),
             'Name' => $request->input('storeName'),
@@ -102,12 +106,16 @@ class PasarelaPagoController extends Controller
             'U_reference' => $request->input('reference'),
             'U_tipoPasarela' => $request->input('tipoPasarela'),
             // 'U_codigoSap' => $request->input('codigoSap'),
-            'U_amount' => $request->input('amount')
+            'U_amount' => $amountFormat
         ];
 
-        $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
-        // return response()->json(['message' => 'Transacción guardada con éxito'], 200);
-        // return response()->json($createdTransaction);
+        if ($codigoEstado === 3) {
+            $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
+            // return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+            return response()->json($createdTransaction);
+        } else {
+            return response()->json(['message' => 'La transacción fue cancelada'], 200);
+        }
     }
 
     public function guardarTransaccionPasarela(Request $request) {

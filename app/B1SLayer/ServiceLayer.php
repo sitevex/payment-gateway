@@ -111,7 +111,6 @@ class ServiceLayer
             'Cookie' => 'B1SESSION=' . $this->sessionId,
         ])
         ->post($url, $data);
-        dd($response);
         return $response->json();
     }
 
