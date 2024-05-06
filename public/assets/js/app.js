@@ -505,11 +505,12 @@ function procesoPagoPayPhone() {
 function checkoutDaf() {
     const url = 'https://test.oppwa.com/v1/checkouts';
     const data = {
-        entityId: '',
+        entityId: 'entityId=8a829418533cf31d01533d06f2ee06fa',
         amount: '2.00',
         paymentType: 'DB'
     };
-     return fetch(url, {
+
+    return fetch(url, {
         method: 'POST',
         headers: {
             'Authorization': 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
