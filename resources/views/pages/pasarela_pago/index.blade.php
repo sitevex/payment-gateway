@@ -254,6 +254,9 @@
                                         </li>
                                     </ul>
                                 </div>
+                                <div class="col-12">
+                                    <!-- Formulario Pasarela de pago Datafast -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -268,6 +271,7 @@
 @endsection
 @push('script-app')
 <script src="{{ asset('assets/js/app.js') }}"></script>
+<script type="text/javascript" src="https://www.datafast.com.ec/js/dfAdditionalValidations1.js"></script>
 <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
 <script>
     // let isValid = true;
