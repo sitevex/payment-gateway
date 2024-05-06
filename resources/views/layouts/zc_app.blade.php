@@ -101,4 +101,5 @@
     <script src="{{asset('assets/js/helper.js')}}"></script>
     @stack('script-app')
 </body>
+<script type="text/javascript" src="https://www.datafast.com.ec/js/dfAdditionalValidations1.js"></script>
 </html>

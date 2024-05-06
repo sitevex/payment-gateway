@@ -330,6 +330,7 @@ function mostrarOrdenes(data) {
             // scrollTop();
             checkAndContinue(itemId);
             datosFactura(pedido);
+            checkoutDaf();
         });
     });
     // ------------------ Ver detalle ------------------
@@ -499,6 +500,34 @@ function procesoPagoPayPhone() {
         alert("Error en la llamada:" + error.message);
     });
 
+}
+
+function checkoutDaf() {
+    const url = 'https://test.oppwa.com/v1/checkouts';
+    const data = {
+        entityId: '',
+        amount: '2.00',
+        paymentType: 'DB'
+    };
+     return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(data)
+     })
+     .then(response => response.json())
+     .then(data => {
+        if (data.id) {
+            console.log(data.id);
+        } else {
+            throw new Error('No se pudo obtener el ID de checkout de Datafast');
+        }
+     })
+     .catch(error => {
+        console.error('Error al obtener el ID de checkout', error);
+     });
 }
 
 function mostrarNoExistenOrdenes() {
