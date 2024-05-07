@@ -115,7 +115,13 @@
             }
             const responseData = await response.json();
             console.log(responseData);
-            messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.error.message.value });
+            if (responseData.error) {
+                messageb1s.value = JSON.stringify({ code: responseData.error.code, value: responseData.error.message.value });
+            } else {
+                messageb1s.value = 'sin valor';
+            }
+
+            // messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.error.message.value });
             hideLoader();
             await guardarTransacionPayPhone(confirmacion);
         } catch (error) {

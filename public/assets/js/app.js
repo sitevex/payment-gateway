@@ -297,7 +297,6 @@ function mostrarOrdenes(data) {
             _nextStep[itemId] = true;
             checkAndContinue(itemId);
             datosFactura(pedido);
-            processPayment(pedido);
         });
     });
     // ------------------ Ver detalle ------------------
