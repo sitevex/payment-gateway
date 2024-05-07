@@ -7,10 +7,10 @@
             <div class="card-body p-4 px-lg-5 pt-lg-4 pb-lg-0">
                 <div class="row g-3" id="contentDetalleTrans"></div>
                 <div class="row g-3" id="contentError"></div>
+                <input type="hidden" name="messageb1s" id="messageb1s" />
             </div>
             <div class="card-footer bg-transparent border-0 pb-4 text-center">
                 <a href="{{ route('index') }}" class="btn btn-lg btn-dark-zc">Voler a inicio</a>
-                <a href="#!" class="btn btn-lg btn-dark-zc d-none">Imprimir</a>
             </div>
         </div>
     </div>
@@ -39,6 +39,7 @@
                 body: JSON.stringify(data)
             });
             const confirmacion = await response.json();
+            hideLoader();
             procesarConfirmacion(confirmacion);
         } catch (error) {
             console.error('Error:', error);
@@ -50,12 +51,10 @@
         const contentError = document.getElementById('contentError');
         contentDetalleTrans.innerHTML = '';
         contentError.innerHTML = '';
-        hideLoader();
         console.log(confirmacion);
         if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
             contentError.hidden=true;
             await registerTransConfirmB1S(confirmacion);
-            
         } else {
             console.log("Error: ", confirmacion.message);
             contentError.hidden=false;
@@ -69,6 +68,8 @@
     }
 
     async function registerTransConfirmB1S(confirmacion) {
+        let messageb1s = document.getElementById('messageb1s');
+        showLoader();
         const data = {
             email: confirmacion.email,
             cardType: confirmacion.cardType,
@@ -114,6 +115,8 @@
             }
             const responseData = await response.json();
             console.log(responseData);
+            messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.message.value });
+            hideLoader();
             await guardarTransacionPayPhone(confirmacion);
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
@@ -121,6 +124,8 @@
     }
 
     async function guardarTransacionPayPhone(confirmacion) {
+        let messageb1s = document.getElementById('messageb1s');
+        showLoader();
         let data = {
             email: confirmacion.email,
             cardType: confirmacion.cardType,
@@ -149,6 +154,7 @@
             regionIso: confirmacion.regionIso,
             transactionType: confirmacion.transactionType,
             reference: confirmacion.reference,
+            codigoSap: messageb1s.value,
             tipoPasarela: 'payphone'
         }
         try {
@@ -163,6 +169,7 @@
             });
             const responseData = await response.json();
             console.log(responseData);
+            hideLoader();
             mostrarDetalleTrans(confirmacion);
         } catch (error) {
             console.error('Error fetching data:', error);

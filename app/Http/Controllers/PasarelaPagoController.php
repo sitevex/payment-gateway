@@ -170,6 +170,7 @@ class PasarelaPagoController extends Controller
                 $pasarelaPago->regionIso = $request->input('regionIso');
                 $pasarelaPago->transactionType = $request->input('transactionType');
                 $pasarelaPago->reference = $request->input('reference');
+                $pasarelaPago->codigoSap = $request->input('codigoSap');
                 $pasarelaPago->tipoPasarela = 'payphone';
             } elseif ($tipoPasarela === 'otra_pasarela') {
                 // Lógica para otro tipo de pasarela de pago
