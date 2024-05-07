@@ -254,13 +254,6 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="col-12">
-                                    <div class="card" style="width: 18rem;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Formulario Pasarela de pago Datafast</h5>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
