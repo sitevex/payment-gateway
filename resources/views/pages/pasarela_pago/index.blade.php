@@ -239,7 +239,7 @@
                                                 <img src="{{ asset('assets/img/logo/payphone_white.png')}}" class="card-img" width="128" alt="payphone">
                                             </button>
                                         </div>
-                                        <div class="col-5 text-center">
+                                        <div class="col-5 text-center d-none">
                                             <button type="button" class="btn btn-placetopay form-check" id="btnPlaceToPay">
                                                 <img src="{{ asset('assets/img/logo/place_to_play.png')}}" class="card-img" width="128" alt="placetopay">
                                             </button>
@@ -255,7 +255,6 @@
                                     </ul>
                                 </div>
                                 <div class="col-12">
-                                    <!-- Formulario Pasarela de pago Datafast -->
                                     <div class="card" style="width: 18rem;">
                                         <div class="card-body">
                                             <h5 class="card-title">Formulario Pasarela de pago Datafast</h5>
@@ -276,96 +275,4 @@
 @endsection
 @push('script-app')
 <script src="{{ asset('assets/js/app.js') }}"></script>
-<!-- <script type="text/javascript" src="https://www.datafast.com.ec/js/dfAdditionalValidations1.js"></script> -->
-<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
-<script>
-    // let isValid = true;
-    // let errorMessage = "";
-
-    // Evento para validar el formulario al enviar
-    /* const form = document.getElementById('rucForm');
-    form.addEventListener('submit', async function(event) {
-        event.preventDefault();
-        // let rucInput = document.getElementById('numeroIdentificacion').value.trim();
-        // let isValid = true;
-        // let errorMessage = "";
-
-        if (rucInput === '') {
-            mostrarMensajeModal('Campo requerido', 'Por favor, ingresa tu número de identificación (RUC).');
-            isValid = false;
-            errorMessage = 'Por favor, ingresa tu número de identificación (RUC).';
-            // return;
-        }
-
-        else if (!(/^\d+$/.test(rucInput))) {
-            mostrarMensajeModal('Formato Incorrecto', 'El número de identificación debe contener solo números.');
-            isValid =  false;
-            errorMessage = 'El número de identificación debe contener solo números';
-            // return;
-        }
-
-        else if (!validarRuc(rucInput)) {
-            mostrarMensajeModal('RUC Incorrecto', 'El número de identificación (RUC) ingresado es inválido.');
-            isValid = false;
-            errorMessage = 'El número de identificación (RUC) ingresado es inválido.';
-            // return;
-        }
-
-        if (!isValid) {
-            let errorDiv = document.getElementById('numeroIdentificacion').closest('.col-md-12').querySelector('.invalid-feedback');
-            errorDiv.textContent = errorMessage;
-            errorDiv.style.display = 'block';
-            return;
-        }
-
-        // Aquí puedes enviar el formulario si todo está correcto
-        const url = `/index?ruc=${rucInput}`;
-
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
-            // Redirigir a la nueva vista con los datos
-            // window.location.href = '/vista/businessPartners';
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-        
-    }); */
-
-    // Evento para cerrar el modal
-    /* document.getElementById('mensajeModal').addEventListener('hidden.bs.modal', function() {
-        document.getElementById('rucForm').reset();
-        document.getElementById('numeroIdentificacion').classList.remove('is-valid', 'is-invalid');
-    }); */
-
-    // Evento para limpiar clases de validación cuando se escribe en el campo
-    /* document.getElementById('numeroIdentificacion').addEventListener('input', function() {
-        this.classList.remove('is-valid', 'is-invalid');
-    }); */
-
-    // Función para ocultar el mensaje de error al corregir el campo
-    /* document.getElementById('numeroIdentificacion').addEventListener('input', function() {
-        let errorDiv = this.closest('.col-md-12').querySelector('.invalid-feedback');
-        errorDiv.textContent = 'Por favor, ingresa tu número de identificación (RUC).';
-        errorDiv.style.display = 'none';
-    }); */
-
-    // Función para mostrar el modal con el mensaje
-    /* function mostrarMensajeModal(titulo, mensaje) {
-        let modalTitle = document.querySelector('#mensajeModal .modal-title');
-        let modalBody = document.querySelector('#mensajeModal .modal-body');
-
-        modalTitle.textContent = titulo;
-        modalBody.innerHTML = '<p>' + mensaje + '</p>';
-
-        let modal = new bootstrap.Modal(document.getElementById('mensajeModal'));
-        modal.show();
-    } */
-
-</script>
 @endpush

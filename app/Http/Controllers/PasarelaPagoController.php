@@ -111,7 +111,6 @@ class PasarelaPagoController extends Controller
 
         if ($codigoEstado === 3) {
             $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
-            // return response()->json(['message' => 'Transacción guardada con éxito'], 200);
             return response()->json($createdTransaction);
         } else {
             return response()->json(['message' => 'La transacción fue cancelada'], 200);
@@ -196,11 +195,6 @@ class PasarelaPagoController extends Controller
         
     }
 
-    public function comprobante($transactionId) {
-        $pasarelaPago = PasarelaPago::findOrFail($transactionId);
-        return view('pages.pasarela_pago.comprobante', compact('pasarelaPago'));
-    }
-    
     public function logoutSap() {
         $response = $this->serviceLayer->logoutB1SLayer();
 

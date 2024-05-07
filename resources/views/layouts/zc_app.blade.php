@@ -6,10 +6,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>ZC Mayoristas: @yield('title')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet"> -->
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
@@ -23,7 +19,7 @@
             <span class="loader"></span>
         </div>
     </div>
-    <header class="backdrop-blur-sm sticky-top" id="header">   <!-- position-sticky -->
+    <header class="backdrop-blur-sm sticky-top" id="header">
         <div class="navbar-top bg-body-tertiary">
             <div class="d-flex justify-content-between align-items-center">
                 <!-- navbar top left -->
@@ -41,7 +37,6 @@
                     <li class="nav-item">
                     </li>
                     <li class="nav-item nav-avatar dropdown text-end">
-                        
                     </li>
                     <li class="nav-item">
                     </li>
@@ -98,8 +93,8 @@
     <footer></footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="{{asset('assets/js/helper.js')}}"></script>
     @stack('script-app')
 </body>
-<script type="text/javascript" src="https://www.datafast.com.ec/js/dfAdditionalValidations1.js"></script>
 </html>

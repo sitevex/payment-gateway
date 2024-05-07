@@ -55,7 +55,7 @@
         if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
             contentError.hidden=true;
             await registerTransConfirmB1S(confirmacion);
-            await guardarTransacionPayPhone(confirmacion);
+            
         } else {
             console.log("Error: ", confirmacion.message);
             contentError.hidden=false;
@@ -114,6 +114,7 @@
             }
             const responseData = await response.json();
             console.log(responseData);
+            await guardarTransacionPayPhone(confirmacion);
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
         }

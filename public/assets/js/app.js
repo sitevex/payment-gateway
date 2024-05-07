@@ -1,6 +1,7 @@
 let _nextStep;
 let currentStep = 0;
 let errorMessage = "";
+let checkoutId = '';
 
 let numeroIdentificacion = document.getElementById('numeroIdentificacion');
 // ------------------ MUlti step ------------------ 
@@ -8,12 +9,10 @@ const multiStepForm = document.querySelector("[data-multi-step]");
 const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
 const navItemSteps  = document.querySelectorAll(".navbar-step .navbar-nav li a.nav-link")
 const progressSteps = document.querySelectorAll(".nav-step");
-// const logoutLink = document.getElementById('logout');
 
 // ------------------ Login ------------------
 document.querySelector("#btnGetInto").addEventListener('click', async function (e) {
     let rucInput = numeroIdentificacion.value;
-    // console.log(rucInput);
     if (rucInput !== '') {
         let rucValida = validarRuc(rucInput);
         if (rucValida) {
@@ -36,33 +35,18 @@ document.querySelector("#btnGetInto").addEventListener('click', async function (
     checkAndContinue();
 });
 
-// ------------------ Logout ------------------
-/* if (logoutLink) {
-    logoutLink.addEventListener('click', function (event) {
-        console.log('logout');
-        event.preventDefault();
-        logoutSAPLayer();
-    })
-    console.log('logoutLink');
-} */
-
-
-// ------------------ Botones modal ------------------
 // ------------------ PayPhone ------------------
 document.querySelector('#btnPayphone').addEventListener('click', function () {
-    console.log('test pagar');
     procesoPagoPayPhone();
 });
 
 // ------------------ modal detalleOrden ------------------
 detalleOrdenModal.addEventListener('shown.bs.modal', function (event) {
-    console.log('test detalle');
     const button = event.relatedTarget;
     const modo = button.getAttribute('data-modo');
 
     if (modo === 'datalle') {
         const id = button.getAttribute('data-id');
-        console.log(id);
     }
 });
 
@@ -101,19 +85,15 @@ function getCurrentStep() {
 
 formSteps.forEach(step =>{
     step.addEventListener("animationend", (e) =>{
-        // remove hide una vez completado la info
         formSteps[currentStep].classList.remove("hide")
-        // agrega y quita el hide[adelante] cuando click data-previous atras linea clave 
         e.target.classList.toggle("hide", e.target.classList.contains("active"))
     })
 });
 
-// hide and show the current step by toggleing the class "active"
 function showCurrentStep(){
     formSteps.forEach((step,index) =>{
         step.classList.toggle ("active", index===currentStep)
         if (index === currentStep){
-            // click btn con data-next
             step.classList.remove("hide")
         }
     });
@@ -121,7 +101,7 @@ function showCurrentStep(){
 
 function updateProgressbar() {
     progressSteps.forEach((progressStep, idx) => {
-        if (idx < currentStep) {    // idx < currentStep + 1
+        if (idx < currentStep) {
             progressStep.classList.add("done");
         } else {
             progressStep.classList.remove("done");
@@ -140,15 +120,6 @@ function doActionStep(currentStep) {
         break;
         case 3:
             console.log('Comprobante');
-            // obtenerFechasDisponibles();
-        break;
-        case 4:
-            console.log('ha Seleccionado fecha y doctor');
-            mostrarInfoCita();
-        break;
-        case 5:
-            console.log('Su cita fue agenada con exito.');
-            confirmarCita();
         break;
     }
 }
@@ -173,7 +144,6 @@ async function obtenerUsuario(numeroIdentificacion) {
         if (data.value.length === 0) {
             return false;
         } else {
-            // console.log(data); // Aquí puedes hacer algo con los datos, como mostrarlos en la página
             let userName = data.value[0].CardName
             let elemento = `
                 <a class="d-flex align-items-end gap-1 link-body-emphasis text-decoration-none dropdown-toggle dropdown-toggle-avatar cursor-pointer" data-bs-toggle="dropdown" aria-expanded="false">
@@ -254,8 +224,6 @@ function mostrarOrdenes(data) {
     let contentOrders = document.querySelector('.content-orders');
     contentOrders.hidden=false;
 
-    // Recorrer cada ítem en data.value y crear una card para cada uno
-    // console.log(data);
     data.value.forEach(item  => {
         let elemento = `
         <div class="col-sm-10 col-md-6 col-lg-4 col-xxl-3">
@@ -327,10 +295,9 @@ function mostrarOrdenes(data) {
             let pedido = JSON.parse(btn.getAttribute('data-pedido'));
 
             _nextStep[itemId] = true;
-            // scrollTop();
             checkAndContinue(itemId);
             datosFactura(pedido);
-            checkoutDaf();
+            processPayment(pedido);
         });
     });
     // ------------------ Ver detalle ------------------
@@ -355,7 +322,6 @@ function mostrarOrdenes(data) {
             detalleImpuesto.textContent = dataImpuesto !== null && parseFloat(dataImpuesto) !== 0 ? `$ ${dataImpuesto}` : '-';
             detalleTotalPagar.textContent = dataTotalPagar !== null && parseFloat(dataTotalPagar) !== 0 ? `$ ${dataTotalPagar}` : '-';
             
-            //console.log(itemId);
             obtenerDetallePedido(itemId);
         });
     });
@@ -372,7 +338,7 @@ async function obtenerDetallePedido(noPedido){
     listOrderSummary.hidden=true;
 
     placeholderGlow.forEach(element => {
-        element.style.display = 'block'; // O puedes usar element.classList.add('hidden');
+        element.style.display = 'block';
     });
 
     const url = `/detalle-ordenes?noPedido=${noPedido}`;
@@ -390,7 +356,7 @@ async function obtenerDetallePedido(noPedido){
         } else {
             listOrderSummary.hidden=false;
             placeholderGlow.forEach(element => {
-                element.style.display = 'none'; // O puedes usar element.classList.add('hidden');
+                element.style.display = 'none';
             });
             mostrarItemsDetalle(data);
         }
@@ -404,7 +370,6 @@ function mostrarItemsDetalle(data) {
     let contentItemsOrden = document.getElementById('listItemsOrden');
 
     data.value.forEach(itemsDetalle => {
-        // Dividir el nombre del item en palabras
         let nombreMarca = itemsDetalle.NAME_ITEM.split(' ');
         let elemento = `
         <div class="list-group-item list-group-item-action list-group-items-details px-0 bg-transparent" aria-current="true">
@@ -443,13 +408,9 @@ function datosFactura(pedido) {
     document.getElementById('impuestoFact').value = pedido.IMPUESTO;
     document.getElementById('totalPagarFact').value = pedido.TOTAL;
     totalPagarLabel.textContent = '$ ' + pedido.TOTAL;
-    
-    // console.log(pedido.NO_PEDIDO);
-    // console.log(pedido.TOTAL);
 }
 
 function procesoPagoPayPhone() {
-    // variables
     let documentId = noPedidoFact.value;
     let subtotal = subTotalPagarFact.value;
     let impuesto = impuestoFact.value;
@@ -459,13 +420,9 @@ function procesoPagoPayPhone() {
     let reference = referenceFact.value;
     subtotal = Math.round(subtotal*100);
     impuesto = Math.round(impuesto*100);
-    // valorPagar = Math.round(valorPagar*100);
-    valorPagar = Math.round(2*100);
-    // console.log(transactionId + identificadorUnico);
+    valorPagar = Math.round(valorPagar*100);
     let parametros = {
         amountWithoutTax: valorPagar,
-        // amountWithTax: impuesto,
-        // tax: 15,
         amount: valorPagar,
         currency: "USD",
         clientTransactionId: transactionId + identificadorUnico,
@@ -475,7 +432,6 @@ function procesoPagoPayPhone() {
         cancellationUrl: "https://pagodigital.zcmayoristas.com/response"
     };
 
-    // console.log(parametros);
     parametros['Referer'] = document.referrer;
 
     fetch('https://pay.payphonetodoesposible.com/api/button/Prepare', {
@@ -502,35 +458,6 @@ function procesoPagoPayPhone() {
 
 }
 
-function checkoutDaf() {
-    const url = 'https://test.oppwa.com/v1/checkouts';
-    const data = {
-        entityId: '8acda4c77ba05ed8017bc0920f7203de',
-        amount: '2.00',
-        paymentType: 'DB'
-    };
-
-    return fetch(url, {
-        method: 'POST',
-        headers: {
-            'Authorization': 'Bearer OGFjZGE0Yzc3YmEwNWVkODAxN2JjMDkxNDI1YjAzZDF8V0gyZ0RzQXpCQg==',
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams(data)
-     })
-     .then(response => response.json())
-     .then(data => {
-        if (data.id) {
-            console.log(data.id);
-        } else {
-            throw new Error('No se pudo obtener el ID de checkout de Datafast');
-        }
-     })
-     .catch(error => {
-        console.error('Error al obtener el ID de checkout', error);
-     });
-}
-
 function mostrarNoExistenOrdenes() {
     let contentOrders = document.querySelector('.content-orders');
     contentOrders.hidden=true
@@ -546,7 +473,8 @@ function mostrarNoExistenOrdenes() {
                         <h4 class="fw-bold text-white">No Tienes  <span class="gradient-text">Productos </span></h4>
                         <h1 class="fw-black text-white">PARA COMPRAR</h1>
                         <p class="fs-sm mb-4 text-white">En ZCMayoristas tenemos todo lo que necesitas <br> para tus proyectos de tecnología y seguridad.</p>
-                        <a class="btn btn-lg button-33 banner-button" href="#!">Compra ahora</a>
+                        <p class="fs-sm mb-4 text-white">Comunicate con tú vendedor.</p>
+                        <a class="btn btn-lg button-33 banner-button d-none" href="https://zcmayoristas.com/zcwebstore/">Compra ahora</a>
                     </div>
                     <div class="col-12 col-md-5">
                         <img src="assets/img/banner/producto_3.png" class="img-fluid d-block overflow-hidden position-sticky z-1" width="512" alt="producto_zc" />
@@ -575,10 +503,8 @@ async function logoutSAPLayer() {
             throw new Error('Error al cerrar sesión. Por favor, inténtelo de nuevo.');
         }
         hideLoader();
-        // Recargar la página actual después de cerrar sesión
         window.location.reload();
     } catch (error) {
         console.error(error.message);
-        // Manejar el error apropiadamente, por ejemplo, mostrar un mensaje al usuario
     }
 }

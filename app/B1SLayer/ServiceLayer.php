@@ -41,44 +41,12 @@ class ServiceLayer
         ];
         
         $response = Http::post($url, $data);
-        // dd($response);
         if ($response->successful()) {
             $this->sessionId = $response['SessionId'];
         } else {
             $this->sessionId = null;
         }
     }
-
-    /* public function authenticate($data = []) 
-    {
-        $url = $this->baseUrl . 'Login';
-        $requestData = [
-            'CompanyDB' => $this->companyDB,
-            'UserName' => $this->username,
-            'Password' => $this->password,
-        ];
-
-        // Verificar si $data es un string y convertirlo a un array si es necesario
-        if (!empty($data) && is_string($data)) {
-            parse_str($data, $parsedData);
-            $data = $parsedData;
-        }
-
-        // Comprobar si $data es un array antes de combinarlo con $requestData
-        if (is_array($data)) {
-            $requestData = array_merge($requestData, $data);
-        }
-        
-        $response = Http::post($url, $requestData);
-
-        if ($response->successful()) {
-            $this->sessionId = $response['SessionId'];
-            return true;
-        } else {
-            $this->sessionId = null;
-            return false;
-        }
-    } */
 
     public function getRequest($resource, $id = null) 
     {
@@ -117,7 +85,6 @@ class ServiceLayer
     public function logoutB1SLayer() {
         $url = $this->baseUrl . 'Logout';
         $response = Http::withHeaders([
-            // 'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Cookie' => 'B1SESSION=' . $this->sessionId,
         ])

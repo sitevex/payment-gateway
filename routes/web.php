@@ -11,10 +11,9 @@ Route::get('/', function () {
 Route::get('/businessPartners', [PasarelaPagoController::class, 'businessPartners'])->name('businessPartners');
 Route::get('/lista-pedido', [PasarelaPagoController::class, 'listaPedido'])->name('listaPedido');
 Route::get('/detalle-ordenes', [PasarelaPagoController::class, 'obtenerDetallePedido'])->name('detalleOrdenes');
+# Payphone
 Route::get('/response', [PasarelaPagoController::class, 'payphoneTransResp'])->name('payphoneTransResp');
 Route::post('/registro-confirmacion', [PasarelaPagoController::class, 'registroPayB1S'])->name('registroPagoB1S');
 Route::post('/guardar-transaccion', [PasarelaPagoController::class, 'guardarTransaccionPasarela'])->name('guardarTransaccion');
-Route::get('/comprobante/{transactionId}', [PasarelaPagoController::class, 'comprobante'])->name('comprobantePay');
+# Login
 Route::post('/logout-sap', [PasarelaPagoController::class, 'logoutSap'])->name('logoutSap');
-
-// Route::get('/message', [PasarelaPagoController::class, 'payphoneMessageError'])->name('payphoneMessage');
