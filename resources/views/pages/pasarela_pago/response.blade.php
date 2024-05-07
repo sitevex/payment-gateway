@@ -115,7 +115,7 @@
             }
             const responseData = await response.json();
             console.log(responseData);
-            messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.message.value });
+            messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.error.message.value });
             hideLoader();
             await guardarTransacionPayPhone(confirmacion);
         } catch (error) {
