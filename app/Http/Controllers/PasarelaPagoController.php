@@ -70,6 +70,40 @@ class PasarelaPagoController extends Controller
         return view('pages.pasarela_pago.response', compact('response'));
     }
 
+    public function processCheckoutDatafast(Request $request) {
+
+        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $amount = $request->amount;
+        $paymentType = 'DB';
+        
+        $url = "https://test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
+        
+        $headers = [
+            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+        ];
+
+        // Realizar la solicitud HTTP
+        try {
+            $response = Http::withHeaders($headers)->post($url);
+            
+            // Verificar si la solicitud fue exitosa
+            if ($response->successful()) {
+                $responseData = $response->json();
+                // Guardar el id en la sesión
+                session(['checkoutId' => $responseData['id']]);
+                return redirect()->back();
+
+                // return $response->json();
+            } else {
+                return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
+            }
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción
+            return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
+        }
+        
+    }
+
     public function registroPayB1S(Request $request){
         $codigoEstado = $request->input('statusCode');
         $amount = $request->input('amount');

@@ -297,6 +297,7 @@ function mostrarOrdenes(data) {
             _nextStep[itemId] = true;
             checkAndContinue(itemId);
             datosFactura(pedido);
+            processDatafast(pedido);
         });
     });
     // ------------------ Ver detalle ------------------
@@ -455,6 +456,29 @@ function procesoPagoPayPhone() {
         alert("Error en la llamada:" + error.message);
     });
 
+}
+
+function processDatafast(pedido) {
+    const url = '/process-payment-datafast';
+    let data = {
+        amount: pedido.TOTAL
+    };
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        // console.log(data);
+    })
+    .catch(error => {
+        // console.error('Error:', error);
+    });
 }
 
 function mostrarNoExistenOrdenes() {

@@ -55,6 +55,7 @@
         if (confirmacion.statusCode === 2 || confirmacion.statusCode === 3) {
             contentError.hidden=true;
             await registerTransConfirmB1S(confirmacion);
+            await guardarTransacionPayPhone(confirmacion);
         } else {
             console.log("Error: ", confirmacion.message);
             contentError.hidden=false;
@@ -118,12 +119,12 @@
             if (responseData.error) {
                 messageb1s.value = JSON.stringify({ code: responseData.error.code, value: responseData.error.message.value });
             } else {
-                messageb1s.value = 'sin valor';
+                messageb1s.value = 'sin mensaje de sap';
             }
 
             // messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.error.message.value });
             hideLoader();
-            await guardarTransacionPayPhone(confirmacion);
+            
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
         }

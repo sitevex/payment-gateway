@@ -33,6 +33,9 @@
     border-radius: 100%;
     box-shadow: 0 0 0 2px var(--zc-bg-madison);
 }
+.border-blue-zc{
+    border-color: var(--zc-bg-madison) !important;
+}
 .backdrop-blur{
     -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);

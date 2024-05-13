@@ -196,7 +196,10 @@
                 </div>
                 <div class="row justify-content-center gap-lg-3">
                     <div class="col-12 col-md-6 col-lg-4">
-                        <h6 class="fw-bold mb-3">Datos de Facturación</h6>
+                        <h6 class="fw-bold mb-3">
+                            <span class="badge f-xs bg-white text-dark shadow-sm-zc rounded-circle me-2">1</span>
+                            Datos de Facturación
+                        </h6>
                         <div class="card border-0 shadow-zc rounded-4">
                             <div class="card-body p-4">
                                 <div class="row gap-3">
@@ -228,11 +231,31 @@
                         <p class="fs-xs text-dark px-4 pt-2">(*) Campos obligatorios</p>
                     </div>
                     <div class="col-12 col-md-6 col-lg-4">
-                        <h6 class="fw-bold mb-3">Pago</h6>
+                        <h6 class="fw-bold mb-3">
+                            <span class="badge f-xs bg-white text-dark shadow-sm-zc rounded-circle me-2">2</span>
+                            Pago
+                        </h6>
                         <div class="card border-0 shadow-zc rounded-4">
                             <div class="card-body">
-                                <div class="col-12">
-                                    <h6 class="fs-sm fw-bold mb-3">Realiza tus pagos con:</h6>
+                                <div class="col-md-12 mb-3">
+                                    <ul class="list-group">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center border-blue-zc fs-sm fw-bold">
+                                            Total a pagar:
+                                            <span class="text-dark-zc" id="totalPagarLabel"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-12 mb-1">
+                                    <div class="payment-form">
+                                        @if(session('checkoutId'))
+                                        <script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={{ session('checkoutId') }}"></script>
+                                        <form action ="https://test.oppwa.com/v1/checkouts/{{ session('checkoutId') }}" class="paymentWidgets" data-brands="VISA MASTER DINERS DISCOVER AMEX">
+                                        </form>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <h6 class="fs-sm fw-bold mb-3">Puedes realiza tus pagos con:</h6>
                                     <div class="row payment-cart-type d-flex justify-content-center mb-3">
                                         <div class="col-5 text-center">
                                             <button type="button" class="btn btn-payphone form-check" id="btnPayphone">
@@ -245,14 +268,6 @@
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <ul class="list-group">
-                                        <li class="list-group-item d-flex justify-content-between align-items-center fs-sm fw-bold">
-                                            Total a pagar:
-                                            <span class="text-dark-zc" id="totalPagarLabel"></span>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
