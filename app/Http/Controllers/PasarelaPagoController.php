@@ -88,12 +88,12 @@ class PasarelaPagoController extends Controller
             
             // Verificar si la solicitud fue exitosa
             if ($response->successful()) {
-                $responseData = $response->json();
+                // $responseData = $response->json();
                 // Guardar el id en la sesión
-                session(['checkoutId' => $responseData['id']]);
-                return redirect()->back();
+                // session(['checkoutId' => $responseData['id']]);
+                // return redirect()->back();
 
-                // return $response->json();
+                return $response->json();
             } else {
                 return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
             }

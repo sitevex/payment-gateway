@@ -17,7 +17,7 @@ document.querySelector("#btnGetInto").addEventListener('click', async function (
         let rucValida = validarRuc(rucInput);
         if (rucValida) {
             let userData = await obtenerUsuario(rucInput);
-            console.log(userData);
+            // console.log(userData);
             if (userData) {
                 _nextStep = true;
             } else {
@@ -458,27 +458,51 @@ function procesoPagoPayPhone() {
 
 }
 
-function processDatafast(pedido) {
-    const url = '/process-payment-datafast';
+async function processDatafast(pedido) {
+    showLoader();
     let data = {
         amount: pedido.TOTAL
     };
+    
+    const url = '/process-payment-datafast';
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok.');
+        }
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {
-        // console.log(data);
-    })
-    .catch(error => {
-        // console.error('Error:', error);
-    });
+        const responseData = await response.json();
+        hideLoader();
+        // console.log(responseData);
+        datafastForm(responseData);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+}
+
+function datafastForm(responseData) {
+    const datafastPaymentForm = document.querySelector('.datafastPayment-form');
+    const checkoutIdDatafast = responseData.id;
+    
+    const scriptElement = document.createElement('script');
+    scriptElement.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;
+
+    const formElement = document.createElement('form');
+    formElement.action = `https://test.oppwa.com/v1/checkouts/${checkoutIdDatafast}`;
+    formElement.classList.add('paymentWidgets');
+    formElement.dataset.brands = 'VISA MASTER DINERS DISCOVER AMEX';
+
+    datafastPaymentForm.innerHTML = '';
+    datafastPaymentForm.appendChild(scriptElement);
+    datafastPaymentForm.appendChild(formElement);    
 }
 
 function mostrarNoExistenOrdenes() {
