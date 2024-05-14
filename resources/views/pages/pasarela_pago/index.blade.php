@@ -293,7 +293,7 @@
             '</div>';
             $('form.wpwl-form-card').find('.wpwl-button').before(numberOfInstallmentsHtml); */
             var tipocredito =
-            '<div class="wpwl-wrapper wpwl-wrapper-custom" style="display:inline-block">'+ 'Tipo de crédito: <select name="customParameters[SHOPPER_TIPOCREDITO]"><option value="00|0">Corriente</option>'+
+            '<div class="wpwl-wrapper wpwl-wrapper-custom w-100" style="display:inline-block">'+ 'Tipo de crédito: <select class="form-select form-select-sm" name="customParameters[SHOPPER_TIPOCREDITO]"><option value="00|0">Corriente</option>'+
             '<option value="02|3">Diferido con Interés 3</option>'+
             '<option value="02|6">Diferido con Interés 6</option>'+
             '<option value="02|12">Diferido con Interés 12</option>'+

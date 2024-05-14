@@ -135,6 +135,8 @@
 button.wpwl-button.wpwl-button-pay {
     width: 100%;
     margin-top: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
 }
 /* Botones simples */
 .btn-primary-zc {
