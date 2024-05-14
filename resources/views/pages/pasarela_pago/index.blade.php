@@ -194,7 +194,7 @@
                     <h3 class="fw-bold mb-0">Método de Pago</h3>
                     <p>Elige tu forma de Pago</p>
                 </div>
-                <div class="row justify-content-center gap-lg-3">
+                <div class="row justify-content-center gx-lg-0 gap-lg-3">
                     <div class="col-12 col-md-6 col-lg-4">
                         <h6 class="fw-bold mb-3">
                             <span class="badge f-xs bg-white text-dark shadow-sm-zc rounded-circle me-2">1</span>
@@ -283,4 +283,33 @@
 @endsection
 @push('script-app')
 <script src="{{ asset('assets/js/app.js') }}"></script>
+
+<script type="text/javascript">
+    var wpwlOptions = {
+        onReady: function() {
+            /* var numberOfInstallmentsHtml ='<div class="wpwl-label wpwl-label-custom" style="display:inline-block">Diferidos:</div>' +
+            '<div class="wpwl-wrapper wpwl-wrapper-custom" style="display:inline-block">' +
+            '<select name="recurring.numberOfInstallments"><option value="0">0</option><option value="3">3</option><option value="6">6</option><option value="9">9</option></select>' +
+            '</div>';
+            $('form.wpwl-form-card').find('.wpwl-button').before(numberOfInstallmentsHtml); */
+            var tipocredito =
+            '<div class="wpwl-wrapper wpwl-wrapper-custom" style="display:inline-block">'+ 'Tipo de crédito: <select name="customParameters[SHOPPER_TIPOCREDITO]"><option value="00|0">Corriente</option>'+
+            '<option value="02|3">Diferido con Interés 3</option>'+
+            '<option value="02|6">Diferido con Interés 6</option>'+
+            '<option value="02|12">Diferido con Interés 12</option>'+
+            '<option value="03|3">Diferido sin Interés 3</option>'+
+            '<option value="03|6">Diferido sin Interés 6</option>'+
+            '<option value="03|12">Diferido sin Interés 12</option>'+
+            '</div>'
+            $('form.wpwl-form-card').find('.wpwl-button').before(tipocredito);
+
+            var datafast= '<br/><br><img src='+'"https://www.datafast.com.ec/images/verified.png" style='+'"display:block;margin:0 auto; width:100%;">';
+            $('form.wpwl-form-card').find('.wpwl-button').before(datafast);
+
+        },
+        style: "card",
+        locale: "es",
+        labels: {cvv: "CVV", cardHolder: "Nombre(Igual que en la tarjeta)", insertCode:"Ingrese el codigo"}
+    }
+</script>
 @endpush
