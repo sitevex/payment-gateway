@@ -76,7 +76,7 @@ class PasarelaPagoController extends Controller
         $amount = $request->amount;
         $paymentType = 'DB';
         
-        $url = "https://test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
+        $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
         
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
@@ -102,6 +102,32 @@ class PasarelaPagoController extends Controller
             return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
         }
         
+    }
+
+    public function transactionDetails(Request $request, $checkoutId) {
+        // return response()->json($request->resourcePath);
+        // dd($request);
+        // dd($request);
+        $url = "https://teAst.oppwa.com/{$request->resourcePath}";
+        $url .= "?entityId=8a829418533cf31d01533d06f2ee06fa"; // Asegúrate de tener el entityId correcto
+        
+        // return $url;
+        $headers = [
+            'Authorization:Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA=='
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Esto debería ser true en producción
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $responseData = curl_exec($ch);
+        if(curl_errno($ch)){
+            return curl_error($ch);
+        }
+        curl_close($ch);
+        return $responseData;
     }
 
     public function registroPayB1S(Request $request){
@@ -228,6 +254,10 @@ class PasarelaPagoController extends Controller
             return response()->json(['error' => 'Error al guardar la transacción: ' . $e->getMessage()], 500);
         }
         
+    }
+
+    public function comprobateDetalle(Request $request) {
+        return view('pages.pasarela_pago.comprobante');
     }
 
     public function logoutSap() {

@@ -17,5 +17,8 @@ Route::post('/registro-confirmacion', [PasarelaPagoController::class, 'registroP
 Route::post('/guardar-transaccion', [PasarelaPagoController::class, 'guardarTransaccionPasarela'])->name('guardarTransaccion');
 # Datafast
 Route::post('/process-payment-datafast', [PasarelaPagoController::class, 'processCheckoutDatafast'])->name('processPaymentDatafast');
+Route::get('/v1/checkouts/{checkoutId}', [PasarelaPagoController::class, 'transactionDetails'])->name('transactionDetails');
+
+Route::get('/comprobante', [PasarelaPagoController::class, 'comprobateDetalle'])->name('comprobante');
 # Login
 Route::post('/logout-sap', [PasarelaPagoController::class, 'logoutSap'])->name('logoutSap');

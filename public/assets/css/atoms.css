@@ -127,9 +127,8 @@
 .shadow-xs-zc{
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-.wpwl-label,
-.wpwl-wrapper {
-    font-size: 14px;
+.wpwl-label {
+    font-size: 12px;
     font-weight: 650;
 }
 button.wpwl-button.wpwl-button-pay {
@@ -188,7 +187,9 @@ button.wpwl-button.wpwl-button-pay {
     --bs-btn-disabled-bg: #fffcc1;
     --bs-btn-disabled-border-color: transparent;
 }
-
+.form-select:focus{
+    box-shadow: none;
+}
 /* .circle-outer {
     position: absolute;
     width: 370px;

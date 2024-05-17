@@ -483,6 +483,7 @@ async function processDatafast(pedido) {
         // console.log(responseData);
         datafastForm(responseData);
     } catch (error) {
+        hideLoader();
         console.error('Error:', error);
     }
 
@@ -496,7 +497,7 @@ function datafastForm(responseData) {
     scriptElement.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;
 
     const formElement = document.createElement('form');
-    formElement.action = `https://test.oppwa.com/v1/checkouts/${checkoutIdDatafast}`;
+    formElement.action = `/v1/checkouts/${checkoutIdDatafast}`;
     formElement.classList.add('paymentWidgets');
     formElement.dataset.brands = 'VISA MASTER DINERS DISCOVER AMEX';
 
