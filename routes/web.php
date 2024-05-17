@@ -15,7 +15,7 @@ Route::get('/detalle-ordenes', [PasarelaPagoController::class, 'obtenerDetallePe
 Route::get('/response', [PasarelaPagoController::class, 'payphoneTransResp'])->name('payphoneTransResp');
 Route::post('/registro-confirmacion', [PasarelaPagoController::class, 'registroPayB1S'])->name('registroPagoB1S');
 Route::post('/guardar-transaccion', [PasarelaPagoController::class, 'guardarTransaccionPasarela'])->name('guardarTransaccion');
-# Datafast
+# Datafast  
 Route::post('/process-payment-datafast', [PasarelaPagoController::class, 'processCheckoutDatafast'])->name('processPaymentDatafast');
 Route::get('/v1/checkouts/{checkoutId}', [PasarelaPagoController::class, 'transactionDetails'])->name('transactionDetails');
 

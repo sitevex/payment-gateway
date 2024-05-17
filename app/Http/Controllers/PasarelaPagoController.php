@@ -107,8 +107,8 @@ class PasarelaPagoController extends Controller
     public function transactionDetails(Request $request, $checkoutId) {
         // return response()->json($request->resourcePath);
         // dd($request);
-        // dd($request);
-        $url = "https://teAst.oppwa.com/{$request->resourcePath}";
+        // dd($request); 
+        $url = "https://teAst.oppwa.com/{$request->resourcePath}"; 
         $url .= "?entityId=8a829418533cf31d01533d06f2ee06fa"; // Asegúrate de tener el entityId correcto
         
         // return $url;
