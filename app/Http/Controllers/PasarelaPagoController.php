@@ -76,7 +76,7 @@ class PasarelaPagoController extends Controller
         $amount = $request->amount;
         $paymentType = 'DB';
         
-        $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
+        $url = "https://test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
         
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
@@ -104,30 +104,30 @@ class PasarelaPagoController extends Controller
         
     }
 
-    public function transactionDetails(Request $request, $checkoutId) {
-        // return response()->json($request->resourcePath);
-        // dd($request);
-        // dd($request); 
-        $url = "https://teAst.oppwa.com/{$request->resourcePath}"; 
-        $url .= "?entityId=8a829418533cf31d01533d06f2ee06fa"; // Asegúrate de tener el entityId correcto
-        
-        // return $url;
+    public function transactionDetails(Request $request) {
+        // Extraer el resourcePath del request
+        $resourcePath = $request->resourcePath;
+
+        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $url = "https://test.oppwa.com{$request->resourcePath}?entityId={$entityId}"; 
         $headers = [
-            'Authorization:Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA=='
+            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Esto debería ser true en producción
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $responseData = curl_exec($ch);
-        if(curl_errno($ch)){
-            return curl_error($ch);
+        // Realizar la solicitud HTTP
+        try {
+            $response = Http::withHeaders($headers)->get($url);
+            // Verificar si la solicitud fue exitosa
+            if ($response->successful()) {
+                return $response->json();
+            } else {
+                return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
+            }
+        } catch (\Exception $e) {
+            // Manejar cualquier excepción
+            return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
         }
-        curl_close($ch);
-        return $responseData;
+
     }
 
     public function registroPayB1S(Request $request){
