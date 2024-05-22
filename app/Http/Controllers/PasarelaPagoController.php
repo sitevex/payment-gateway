@@ -76,7 +76,7 @@ class PasarelaPagoController extends Controller
         $amount = $request->amount;
         $paymentType = 'DB';
         
-        $url = "https://test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
+        $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
         
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
@@ -109,7 +109,7 @@ class PasarelaPagoController extends Controller
         $resourcePath = $request->resourcePath;
 
         $entityId = '8a829418533cf31d01533d06f2ee06fa';
-        $url = "https://test.oppwa.com{$request->resourcePath}?entityId={$entityId}"; 
+        $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}"; 
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
