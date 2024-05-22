@@ -494,7 +494,7 @@ function datafastForm(responseData) {
     const checkoutIdDatafast = responseData.id;
     
     const scriptElement = document.createElement('script');
-    scriptElement.src = `https://eu-prod-oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;
+    scriptElement.src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;
 
     const formElement = document.createElement('form'); 
     formElement.action = `/v1/checkouts`;

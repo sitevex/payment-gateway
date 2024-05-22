@@ -72,14 +72,14 @@ class PasarelaPagoController extends Controller
 
     public function processCheckoutDatafast(Request $request) {
 
-        $entityId = '8acda4c77ba05ed8017bc0920f7203de';
+        $entityId = '8a829418533cf31d01533d06f2ee06fa';
         $amount = $request->amount;
         $paymentType = 'DB';
         
-        $url = "https://eu-prod-oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
+        $url = "https://test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
         
         $headers = [
-            'Authorization' => 'Bearer OGFjZGE0Yzc3YmEwNWVkODAxN2JjMDkxNDI1YjAzZDF8V0gyZ0RzQXpCQg',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
 
         // Realizar la solicitud HTTP
@@ -108,10 +108,10 @@ class PasarelaPagoController extends Controller
         // Extraer el resourcePath del request
         $resourcePath = $request->resourcePath;
 
-        $entityId = '8acda4c77ba05ed8017bc0920f7203de';
-        $url = "https://eu-prod-oppwa.com{$request->resourcePath}?entityId={$entityId}"; 
+        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $url = "https://test.oppwa.com{$request->resourcePath}?entityId={$entityId}"; 
         $headers = [
-            'Authorization' => 'Bearer OGFjZGE0Yzc3YmEwNWVkODAxN2JjMDkxNDI1YjAzZDF8V0gyZ0RzQXpCQg',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
 
         // Realizar la solicitud HTTP
