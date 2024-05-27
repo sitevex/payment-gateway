@@ -1,3 +1,4 @@
+const urlBase = window.location.href;
 const csrfToken = document.head.querySelector('meta[name="csrf-token"]').getAttribute('content');
 /* function validarRuc(ruc) {
     // Eliminar espacios en blanco y guiones

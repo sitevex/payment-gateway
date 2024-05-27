@@ -75,8 +75,8 @@ class PasarelaPagoController extends Controller
         $entityId = '8a829418533cf31d01533d06f2ee06fa';
         $amount = $request->amount;
         $paymentType = 'DB';
-        
-        $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}";
+        $currency = 'USD';
+        $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}&currency={$currency}";
         
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
@@ -92,7 +92,6 @@ class PasarelaPagoController extends Controller
                 // Guardar el id en la sesión
                 // session(['checkoutId' => $responseData['id']]);
                 // return redirect()->back();
-
                 return $response->json();
             } else {
                 return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
@@ -107,19 +106,22 @@ class PasarelaPagoController extends Controller
     public function transactionDetails(Request $request) {
         // Extraer el resourcePath del request
         $resourcePath = $request->resourcePath;
-
         $entityId = '8a829418533cf31d01533d06f2ee06fa';
-        $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}"; 
+        $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";
+        
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
-
+        // return response()->json($url);
         // Realizar la solicitud HTTP
         try {
             $response = Http::withHeaders($headers)->get($url);
             // Verificar si la solicitud fue exitosa
             if ($response->successful()) {
-                return $response->json();
+                // return $response->json();
+                $responseData = $response->json();
+                session(['transactionDetails' => $responseData]);
+                return redirect()->route('showTransactionDetails');
             } else {
                 return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
             }
@@ -128,6 +130,15 @@ class PasarelaPagoController extends Controller
             return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
         }
 
+    }
+    
+    public function showTransactionDetails() {
+        $transactionDetails = session('transactionDetails');
+        if ($transactionDetails) {
+            return view('pages.pasarela_pago.transactionDetails', ['transactionDetails' => $transactionDetails]);
+        } else {
+            return response()->json(['error' => 'No se encontraron detalles de la transacción'], 404);
+        }
     }
 
     public function registroPayB1S(Request $request){

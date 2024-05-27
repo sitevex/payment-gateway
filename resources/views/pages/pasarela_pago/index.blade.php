@@ -247,11 +247,6 @@
                                 </div>
                                 <div class="col-md-12 mb-1">
                                     <div class="datafastPayment-form">
-                                        {{-- @if(session('checkoutId'))
-                                        <script src="https://test.oppwa.com/v1/paymentWidgets.js?checkoutId={{ session('checkoutId') }}"></script>
-                                        <form action ="https://test.oppwa.com/v1/checkouts/{{ session('checkoutId') }}" class="paymentWidgets" data-brands="VISA MASTER DINERS DISCOVER AMEX">
-                                        </form>
-                                        @endif --}}
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3">

@@ -18,6 +18,7 @@ Route::post('/guardar-transaccion', [PasarelaPagoController::class, 'guardarTran
 # Datafast  
 Route::post('/process-payment-datafast', [PasarelaPagoController::class, 'processCheckoutDatafast'])->name('processPaymentDatafast');
 Route::get('/v1/checkouts', [PasarelaPagoController::class, 'transactionDetails'])->name('transactionDetails');
+Route::get('/show-transaction-details', [PasarelaPagoController::class, 'showTransactionDetails'])->name('showTransactionDetails');
 
 Route::get('/comprobante', [PasarelaPagoController::class, 'comprobateDetalle'])->name('comprobante');
 # Login

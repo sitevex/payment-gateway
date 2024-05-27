@@ -1,5 +1,5 @@
 @extends('layouts.zc_app')
-@section('title','Pago Digital')
+@section('title','Comprobante')
 @section('content')
 <div class="row justify-content-center mb-5">
     <div class="col-12 col-md-10 col-lg-8">

@@ -497,7 +497,7 @@ function datafastForm(responseData) {
     scriptElement.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;
 
     const formElement = document.createElement('form'); 
-    formElement.action = `/v1/checkouts`;
+    formElement.action = `${urlBase}/v1/checkouts`;
     formElement.classList.add('paymentWidgets'); 
     formElement.dataset.brands = 'VISA MASTER DINERS DISCOVER AMEX';
 
