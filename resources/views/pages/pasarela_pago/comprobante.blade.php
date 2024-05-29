@@ -1,12 +1,12 @@
 @extends('layouts.zc_app')
 @section('title','Pago Digital')
 @section('content')
-    @if(isset($errorMessage))
+    {{-- @if(isset($errorMessage)) --}}
         <section class="bg-white">
             <div class="container table-responsive">
                 <div class="row mb-3">
                     <div class="col-12">
-                        <h2 class="fw-bold text-blue-dark text-center"> {{ $errorMessage }}</h2>
+                        <h2 class="fw-bold text-blue-dark text-center"> {{-- $errorMessage --}}</h2>
                     </div>
                 </div>
                 <div class="row">
@@ -14,8 +14,8 @@
                 </div>
             </div>
         </section>
-    @else
-        @if(isset($pasarelaPago))
+    {{-- @else --}}
+        {{-- @if(isset($pasarelaPago)) --}}
             <div class="row">
                 <div class="col-12">
                     <table class="table table-bordered">
@@ -50,7 +50,6 @@
                 </div>
             </div>
 
-
             <div class="row mb-2 align-items-center">
                 <div class="col-sm-12 col-md-4 col-lg-3">
                     <img src="" alt="">
@@ -71,7 +70,7 @@
             <div class="row mb-2 align-items-center">
                 <div class="col-sm-12 col-md-6">
                     <p class="mb-1">Comprobante Pago: <span class="fw-bold"></span></p>
-                    <p class="mb-1">Cliente: <span class="fw-bold">{{ $pasarelaPago->optionalParameter4 }}</span></p>
+                    <p class="mb-1">Cliente: <span class="fw-bold">{{-- $pasarelaPago->optionalParameter4 --}}</span></p>
                     <p class="mb-1">Convenio: <span class="fw-bold"></span></p>
                 </div>
                 <div class="col-sm-12 col-md-6 text-start text-md-end">
@@ -84,7 +83,6 @@
                     <hr class="border border-3 shadow">
                 </div>
             </div>
-
 
             <table class="table table-bordered" cellspacing="0" cellpadding="8">
                 <tbody>
@@ -119,7 +117,6 @@
                 </tbody>
             </table>
 
-
             <section class="bg-white">
                 <div class="container table-responsive">
                     <div class="row mb-3">
@@ -132,8 +129,8 @@
                     </div>
                 </div>
             </section>
-        @else
+        {{-- @else --}}
             <p>No hay datos de pasarela de pago disponibles.</p>
-        @endif
-    @endif
+        {{-- @endif --}}
+    {{-- @endif --}}
 @endsection

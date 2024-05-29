@@ -112,7 +112,6 @@ class PasarelaPagoController extends Controller
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
-        // return response()->json($url);
         // Realizar la solicitud HTTP
         try {
             $response = Http::withHeaders($headers)->get($url);
@@ -120,8 +119,100 @@ class PasarelaPagoController extends Controller
             if ($response->successful()) {
                 // return $response->json();
                 $responseData = $response->json();
-                session(['transactionDetails' => $responseData]);
-                return redirect()->route('showTransactionDetails');
+
+                $amount = $responseData['amount'];
+                $amountFormat = number_format($amount / 100, 2);
+
+                $dataTransaction = [
+                    'Code' => $responseData['OrderId'],
+                    'Name' => $responseData['resultDetails']['clearingInstituteName'],
+                    // 'U_email' => '',
+                    // /'U_cardType' => $responseData['resultDetails']['CardType'],
+                    'U_bin' => $responseData['card']['bin'],
+                    'U_lastDigits' => $responseData['card']['last4Digits'],
+                    // /'U_deferredCode' => $responseData['resultDetails']['ReferenceNo'],
+                    // 'U_deferred' => $request->input('deferred'),
+                    // 'U_cardBrandCode' => $request->input('cardBrandCode'),
+                    'U_cardBrand' => $responseData['paymentBrand'],
+                    // 'U_clientTransactionId' => '',
+                    // 'U_phoneNumber' => $request->input('phoneNumber'),
+                    'U_statusCode' => $responseData['resultDetails']['RiskStatusCode'],
+                    'U_transactionStatus' => $responseData['resultDetails']['ExtendedDescription'],
+                    // /'U_authorizationCode' => $responseData['resultDetails']['AuthCode'],
+                    // 'U_messageCode' => $request->input('messageCode'),
+                    'U_transactionId' => $responseData['resultDetails']['TransactionId'],
+                    'U_document' => $responseData['OrderId'],
+                    'U_currency' => $responseData['currency'],
+                    // 'U_optionalParameter1' => $request->input('optionalParameter1'),
+                    // 'U_optionalParameter2' => $request->input('optionalParameter2'),
+                    // /'U_optionalParameter3' => $responseData['resultDetails']['BatchNo'],
+                    'U_optionalParameter4' => $responseData['card']['holder'],
+                    'U_storeName' => $responseData['resultDetails']['clearingInstituteName'],
+                    // 'U_date' => $request->input('date'),
+                    // 'U_regionIso' => $request->input('regionIso'),
+                    'U_transactionType' => $responseData['paymentType'],
+                    // 'U_reference' => '',
+                    'U_tipoPasarela' => 'datafast',
+                    'U_amount' => $amountFormat
+                ];
+                
+                // Iniciar transacción de base de datos
+                DB::beginTransaction();
+                try {
+                    $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
+                    $transaccionId = $responseData['resultDetails']['TransactionId'];
+                    // Verificar si ya existe un registro con la misma transacción
+                    $existingTransaction = PasarelaPago::where('transactionId', $transaccionId)->first();
+                    // Si ya existe un registro con la misma transacción, no hacemos nada
+                    if ($existingTransaction) {
+                        DB::commit();
+                        return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+                    }
+
+                    // Guardar la transacción en la base de datos local
+                    $pasarelaPago = new PasarelaPago();
+                    $pasarelaPago->email = '';
+                    $pasarelaPago->cardType = $responseData['resultDetails']['CardType'];
+                    $pasarelaPago->bin = $responseData['card']['bin'];
+                    $pasarelaPago->lastDigits = $responseData['card']['last4Digits'];
+                    $pasarelaPago->deferredCode = $responseData['resultDetails']['ReferenceNo'];
+                    $pasarelaPago->deferred = '';
+                    $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
+                    $pasarelaPago->cardBrand = $responseData['paymentBrand'];
+                    $pasarelaPago->amount = $amountFormat;
+                    $pasarelaPago->clientTransactionId = '';
+                    $pasarelaPago->phoneNumber = '';
+                    $pasarelaPago->statusCode = $responseData['resultDetails']['RiskStatusCode'];
+                    $pasarelaPago->transactionStatus = $request->input('transactionStatus');
+                    $pasarelaPago->authorizationCode = $responseData['resultDetails']['AuthCode'];
+                    $pasarelaPago->messageCode = '';
+                    $pasarelaPago->transactionId = $responseData['resultDetails']['TransactionId'];
+                    $pasarelaPago->document = $responseData['OrderId'];
+                    $pasarelaPago->currency = $responseData['currency'];
+                    $pasarelaPago->optionalParameter1 = '';
+                    $pasarelaPago->optionalParameter2 = '';
+                    $pasarelaPago->optionalParameter3 = $responseData['resultDetails']['BatchNo'];
+                    $pasarelaPago->optionalParameter4 = $responseData['card']['holder'];
+                    $pasarelaPago->storeName = $responseData['resultDetails']['clearingInstituteName'];
+                    $pasarelaPago->date = '';
+                    $pasarelaPago->regionIso = '';
+                    $pasarelaPago->transactionType = $responseData['paymentType'];
+                    $pasarelaPago->reference = '';
+                    $pasarelaPago->codigoSap = $createdTransaction['error'] ?? 'Guardar el error porque no se guarda en SAP';
+                    $pasarelaPago->tipoPasarela = 'datafast';
+    
+                    // $pasarelaPago->fill($result_array);
+                    $pasarelaPago->save();
+    
+                    // Confirmar la transacción de base de datos
+                    DB::commit();
+    
+                    session(['transactionDetails' => $responseData]);
+                    return redirect()->route('showTransactionDetails');
+                } catch (\Exception $th) {
+                    DB::rollBack();
+                    return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
+                }
             } else {
                 return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
             }
@@ -129,7 +220,6 @@ class PasarelaPagoController extends Controller
             // Manejar cualquier excepción
             return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
         }
-
     }
     
     public function showTransactionDetails() {
