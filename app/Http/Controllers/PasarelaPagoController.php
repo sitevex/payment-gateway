@@ -120,6 +120,45 @@ class PasarelaPagoController extends Controller
             if ($response->successful()) {
                 // return $response->json();
                 $responseData = $response->json();
+
+                $amount = $responseData['amount'];
+                $amountFormat = number_format($amount / 100, 2);
+
+                $dataTransaction = [
+                    'Code' => $responseData['OrderId'],
+                    'Name' => $responseData['resultDetails']['clearingInstituteName'],
+                    // 'U_email' => '',
+                    // /'U_cardType' => $responseData['resultDetails']['CardType'],
+                    'U_bin' => $responseData['card']['bin'],
+                    'U_lastDigits' => $responseData['card']['last4Digits'],
+                    // /'U_deferredCode' => $responseData['resultDetails']['ReferenceNo'],
+                    // 'U_deferred' => $request->input('deferred'),
+                    // 'U_cardBrandCode' => $request->input('cardBrandCode'),
+                    'U_cardBrand' => $responseData['paymentBrand'],
+                    // 'U_clientTransactionId' => '',
+                    // 'U_phoneNumber' => $request->input('phoneNumber'),
+                    'U_statusCode' => $responseData['resultDetails']['RiskStatusCode'],
+                    'U_transactionStatus' => $responseData['resultDetails']['ExtendedDescription'],
+                    // /'U_authorizationCode' => $responseData['resultDetails']['AuthCode'],
+                    // 'U_messageCode' => $request->input('messageCode'),
+                    'U_transactionId' => $responseData['resultDetails']['TransactionId'],
+                    'U_document' => $responseData['OrderId'],
+                    'U_currency' => $responseData['currency'],
+                    // 'U_optionalParameter1' => $request->input('optionalParameter1'),
+                    // 'U_optionalParameter2' => $request->input('optionalParameter2'),
+                    // /'U_optionalParameter3' => $responseData['resultDetails']['BatchNo'],
+                    'U_optionalParameter4' => $responseData['card']['holder'],
+                    'U_storeName' => $responseData['resultDetails']['clearingInstituteName'],
+                    // 'U_date' => $request->input('date'),
+                    // 'U_regionIso' => $request->input('regionIso'),
+                    'U_transactionType' => $responseData['paymentType'],
+                    // 'U_reference' => '',
+                    'U_tipoPasarela' => 'datafast',
+                    'U_amount' => $amountFormat
+                ];
+
+                $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
+
                 session(['transactionDetails' => $responseData]);
                 return redirect()->route('showTransactionDetails');
             } else {
