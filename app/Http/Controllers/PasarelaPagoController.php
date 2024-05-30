@@ -124,7 +124,7 @@ class PasarelaPagoController extends Controller
                 $amount = $responseData['amount'];
                 $amountFormat = number_format($amount / 100, 2);
 
-                $dataTransaction = [
+                /* $dataTransaction = [
                     'Code' => $responseData['OrderId'],
                     'Name' => $responseData['resultDetails']['clearingInstituteName'],
                     // 'U_email' => '',
@@ -221,7 +221,61 @@ class PasarelaPagoController extends Controller
                     session(['error' => $errorMessage]);
                     return redirect()->route('showTransactionDetails');
                     // return response()->json(['error' => 'Hubo un problema al procesar la solicitud Error 1'], 500);
+                } */
+
+                $transaccionId = $responseData['resultDetails']['TransactionId'];
+                // Verificar si ya existe un registro con la misma transacción
+                $existingTransaction = PasarelaPago::where('transactionId', $transaccionId)->first();
+                // Si ya existe un registro con la misma transacción, no hacemos nada
+                if ($existingTransaction) {
+                    DB::commit();
+                    $message = 'La Transacción ya existe en el regsitro';
+                    session(['transactionDetails' => $responseData, 'message' => $message]);
+                    return redirect()->route('showTransactionDetails');
+                    // return response()->json(['message' => 'La Transacción ya existe en el regsitro'], 200);
                 }
+
+                // Guardar la transacción en la base de datos local
+                $pasarelaPago = new PasarelaPago();
+                $pasarelaPago->email = '';
+                $pasarelaPago->cardType = $responseData['resultDetails']['CardType'];
+                $pasarelaPago->bin = $responseData['card']['bin'];
+                $pasarelaPago->lastDigits = $responseData['card']['last4Digits'];
+                $pasarelaPago->deferredCode = $responseData['resultDetails']['ReferenceNo'];
+                $pasarelaPago->deferred = '';
+                $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
+                $pasarelaPago->cardBrand = $responseData['paymentBrand'];
+                $pasarelaPago->amount = $amountFormat;
+                $pasarelaPago->clientTransactionId = '';
+                $pasarelaPago->phoneNumber = '';
+                $pasarelaPago->statusCode = $responseData['resultDetails']['RiskStatusCode'];
+                $pasarelaPago->transactionStatus = $request->input('transactionStatus');
+                $pasarelaPago->authorizationCode = $responseData['resultDetails']['AuthCode'];
+                $pasarelaPago->messageCode = '';
+                $pasarelaPago->transactionId = $responseData['resultDetails']['TransactionId'];
+                $pasarelaPago->document = $responseData['OrderId'];
+                $pasarelaPago->currency = $responseData['currency'];
+                $pasarelaPago->optionalParameter1 = '';
+                $pasarelaPago->optionalParameter2 = '';
+                $pasarelaPago->optionalParameter3 = $responseData['resultDetails']['BatchNo'];
+                $pasarelaPago->optionalParameter4 = $responseData['card']['holder'];
+                $pasarelaPago->storeName = $responseData['resultDetails']['clearingInstituteName'];
+                $pasarelaPago->date = '';
+                $pasarelaPago->regionIso = '';
+                $pasarelaPago->transactionType = $responseData['paymentType'];
+                $pasarelaPago->reference = '';
+                $pasarelaPago->codigoSap = $createdTransaction['error'] ?? 'Guardar el error porque no se guarda en SAP';
+                $pasarelaPago->tipoPasarela = 'datafast';
+
+                // $pasarelaPago->fill($result_array);
+                $pasarelaPago->save();
+
+                // Confirmar la transacción de base de datos
+                // DB::commit();
+
+                session(['transactionDetails' => $responseData]);
+                return redirect()->route('showTransactionDetails');
+
             } else {
                 Log::warning('Solicitud no exitosa: ' . $response->status());
                 session(['error' => 'Hubo un problema al procesar la solicitud Error 2']);
