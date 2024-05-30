@@ -242,10 +242,10 @@ class PasarelaPagoController extends Controller
         if ($transactionDetails) {
             return view('pages.pasarela_pago.transactionDetails', ['transactionDetails' => $transactionDetails]);
         } else {
-            $message = 'No se encontraron detalles de la transacción';
-            session(['transactionDetails' => $responseData, 'message' => $message]);
-            return redirect()->route('showTransactionDetails');
-            // return response()->json(['error' => 'No se encontraron detalles de la transacción'], 404);
+            // $message = 'No se encontraron detalles de la transacción';
+            // session(['transactionDetails' => $responseData, 'message' => $message]);
+            // return redirect()->route('showTransactionDetails');
+            return response()->json(['error' => 'No se encontraron detalles de la transacción'], 404);
         }
     }
 
