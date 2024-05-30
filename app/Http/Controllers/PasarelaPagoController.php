@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PasarelaPagoController extends Controller
 {
@@ -160,13 +161,17 @@ class PasarelaPagoController extends Controller
                 DB::beginTransaction();
                 try {
                     $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
+
                     $transaccionId = $responseData['resultDetails']['TransactionId'];
                     // Verificar si ya existe un registro con la misma transacción
                     $existingTransaction = PasarelaPago::where('transactionId', $transaccionId)->first();
                     // Si ya existe un registro con la misma transacción, no hacemos nada
                     if ($existingTransaction) {
                         DB::commit();
-                        return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+                        $message = 'La Transacción ya existe en el regsitro';
+                        session(['transactionDetails' => $responseData, 'message' => $message]);
+                        return redirect()->route('showTransactionDetails');
+                        // return response()->json(['message' => 'La Transacción ya existe en el regsitro'], 200);
                     }
 
                     // Guardar la transacción en la base de datos local
@@ -209,16 +214,26 @@ class PasarelaPagoController extends Controller
     
                     session(['transactionDetails' => $responseData]);
                     return redirect()->route('showTransactionDetails');
-                } catch (\Exception $th) {
+                } catch (\Exception $e) {
                     DB::rollBack();
-                    return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
+                    $errorMessage = 'Error al procesar la transacción: ' . $e->getMessage();
+                    Log::error($errorMessage);
+                    session(['error' => $errorMessage]);
+                    return redirect()->route('showTransactionDetails');
+                    // return response()->json(['error' => 'Hubo un problema al procesar la solicitud Error 1'], 500);
                 }
             } else {
-                return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
+                Log::warning('Solicitud no exitosa: ' . $response->status());
+                session(['error' => 'Hubo un problema al procesar la solicitud Error 2']);
+                return redirect()->route('showTransactionDetails');
+                // return response()->json(['error' => 'Hubo un problema al procesar la solicitud Error 2'], $response->status());
             }
         } catch (\Exception $e) {
             // Manejar cualquier excepción
-            return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
+            Log::error('Error en la solicitud:' . $e->getMessage());
+            session(['error' => 'Hubo un problema al procesar la solicitud Error 3']);
+            return redirect()->route('showTransactionDetails');
+            // return response()->json(['error' => 'Hubo un problema al procesar la solicitud Error 3'], 500);
         }
     }
     
@@ -227,7 +242,10 @@ class PasarelaPagoController extends Controller
         if ($transactionDetails) {
             return view('pages.pasarela_pago.transactionDetails', ['transactionDetails' => $transactionDetails]);
         } else {
-            return response()->json(['error' => 'No se encontraron detalles de la transacción'], 404);
+            $message = 'No se encontraron detalles de la transacción';
+            session(['transactionDetails' => $responseData, 'message' => $message]);
+            return redirect()->route('showTransactionDetails');
+            // return response()->json(['error' => 'No se encontraron detalles de la transacción'], 404);
         }
     }
 
