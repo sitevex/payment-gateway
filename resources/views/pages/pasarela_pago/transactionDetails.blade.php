@@ -42,7 +42,7 @@
 
     async function registerTransConfirmB1S(responseData) {
         let messageb1s = document.getElementById('messageb1s');
-        showLoder();
+        showLoader();
         const data = {
             email: '',
             cardType: '',
