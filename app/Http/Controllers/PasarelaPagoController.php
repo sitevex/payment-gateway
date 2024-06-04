@@ -251,7 +251,7 @@ class PasarelaPagoController extends Controller
                 $pasarelaPago->amount = $amountFormat;
                 $pasarelaPago->tipoPasarela = 'payphone';
             } elseif ($tipoPasarela === 'datafast') {
-                $pasarelaPago->amount = $amount;
+                $pasarelaPago->amount = $request->input('amount');
                 $pasarelaPago->tipoPasarela = 'datafast';
             } elseif ($tipoPasarela === 'tercer_tipo_pasarela') {
                 // Lógica para tercer tipo de pasarela de pago
