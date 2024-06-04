@@ -14,7 +14,7 @@
                         <div class="col-12 col-md-6 order-md-1">
                             <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">{{ $transactionDetails['resultDetails']['TransactionId'] }}</span></p>
                             <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">$ {{ $transactionDetails['amount'] }}</span></p>
-                            <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold"> {{transactionDetails['card']['holder']}}</span></p>
+                            <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold"> {{ $transactionDetails['card']['holder']}}</span></p>
                             <p class="fs-sm mb-0 d-none" id="email">Correo electrónico: <span class="fw-bold"></span></p>
                         </div>
                         <div class="col-12 order-md-3">
