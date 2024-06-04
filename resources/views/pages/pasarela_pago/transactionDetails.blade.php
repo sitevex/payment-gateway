@@ -152,5 +152,6 @@
     }
 
     registerTransConfirmB1S(responseData);
+    registrarDatafast(responseData);
 </script>
 @endpush
