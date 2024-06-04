@@ -38,7 +38,7 @@
 @push('script-app')
 <script>
     let responseData = {!! json_encode($transactionDetails) !!};
-    console.log(responseData);
+    // console.log(responseData);
 
     async function registerTransConfirmB1S(responseData) {
         let messageb1s = document.getElementById('messageb1s');
@@ -93,8 +93,6 @@
             } else {
                 messageb1s.value = 'sin mensaje de sap';
             }
-
-            // messageb1s.value = JSON.stringify({ code: responseData.code, value: responseData.error.message.value });
             hideLoader();
         } catch (error) {
             console.error('Error al enviar la solicitud:', error);
