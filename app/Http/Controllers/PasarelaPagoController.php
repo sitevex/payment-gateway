@@ -86,13 +86,8 @@ class PasarelaPagoController extends Controller
         // Realizar la solicitud HTTP
         try {
             $response = Http::withHeaders($headers)->post($url);
-            
             // Verificar si la solicitud fue exitosa
             if ($response->successful()) {
-                // $responseData = $response->json();
-                // Guardar el id en la sesión
-                // session(['checkoutId' => $responseData['id']]);
-                // return redirect()->back();
                 return $response->json();
             } else {
                 return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], $response->status());
@@ -105,7 +100,6 @@ class PasarelaPagoController extends Controller
     }
 
     public function transactionDetails(Request $request) {
-        // Extraer el resourcePath del request
         $resourcePath = $request->resourcePath;
         $entityId = '8a829418533cf31d01533d06f2ee06fa';
         $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";
@@ -113,66 +107,23 @@ class PasarelaPagoController extends Controller
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
-        // Realizar la solicitud HTTP
+
         try {
             $response = Http::withHeaders($headers)->get($url);
-            // Verificar si la solicitud fue exitosa
             if ($response->successful()) {
                 // return $response->json();
                 $responseData = $response->json();
-
-                $amount = $responseData['amount'];
-                $amountFormat = number_format($amount / 100, 2);
-
-                $dataTransaction = [
-                    'Code' => $responseData['OrderId'],
-                    'Name' => $responseData['resultDetails']['clearingInstituteName'],
-                    // 'U_email' => '',
-                    // /'U_cardType' => $responseData['resultDetails']['CardType'],
-                    'U_bin' => $responseData['card']['bin'],
-                    'U_lastDigits' => $responseData['card']['last4Digits'],
-                    // /'U_deferredCode' => $responseData['resultDetails']['ReferenceNo'],
-                    // 'U_deferred' => $request->input('deferred'),
-                    // 'U_cardBrandCode' => $request->input('cardBrandCode'),
-                    'U_cardBrand' => $responseData['paymentBrand'],
-                    // 'U_clientTransactionId' => '',
-                    // 'U_phoneNumber' => $request->input('phoneNumber'),
-                    'U_statusCode' => $responseData['resultDetails']['RiskStatusCode'],
-                    'U_transactionStatus' => $responseData['resultDetails']['ExtendedDescription'],
-                    // /'U_authorizationCode' => $responseData['resultDetails']['AuthCode'],
-                    // 'U_messageCode' => $request->input('messageCode'),
-                    'U_transactionId' => $responseData['resultDetails']['TransactionId'],
-                    'U_document' => $responseData['OrderId'],
-                    'U_currency' => $responseData['currency'],
-                    // 'U_optionalParameter1' => $request->input('optionalParameter1'),
-                    // 'U_optionalParameter2' => $request->input('optionalParameter2'),
-                    // /'U_optionalParameter3' => $responseData['resultDetails']['BatchNo'],
-                    'U_optionalParameter4' => $responseData['card']['holder'],
-                    'U_storeName' => $responseData['resultDetails']['clearingInstituteName'],
-                    // 'U_date' => $request->input('date'),
-                    // 'U_regionIso' => $request->input('regionIso'),
-                    'U_transactionType' => $responseData['paymentType'],
-                    // 'U_reference' => '',
-                    'U_tipoPasarela' => 'datafast',
-                    'U_amount' => $amountFormat
-                ];
-
-                $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
-
                 session(['transactionDetails' => $responseData]);
                 return redirect()->route('showTransactionDetails');
             } else {
                 Log::warning('Solicitud no exitosa: ' . $response->status());
                 session(['error' => 'Hubo un problema al procesar la solicitud']);
                 return redirect()->route('showTransactionDetails');
-                // return response()->json(['error' => 'Hubo un problema al procesar la solicitud Error 2'], $response->status());
             }
         } catch (\Exception $e) {
-            // Manejar cualquier excepción
             Log::error('Error en la solicitud: ' . $e->getMessage());
             session(['error' => 'Hubo un problema al procesar la solicitud']);
             return redirect()->route('showTransactionDetails');
-            // return response()->json(['error' => 'Hubo un problema al procesar la solicitud Error 3'], 500);
         }
     }
     
@@ -181,10 +132,7 @@ class PasarelaPagoController extends Controller
         if ($transactionDetails) {
             return view('pages.pasarela_pago.transactionDetails', ['transactionDetails' => $transactionDetails]);
         } else {
-            // $message = 'No se encontraron detalles de la transacción';
-            // session(['transactionDetails' => $responseData, 'message' => $message]);
-            // return redirect()->route('showTransactionDetails');
-            return response()->json(['error' => 'No se encontraron detalles de la transacción'], 404);
+            return view('pages.pasarela_pago.transactionDetails', ['error' => 'No se encotraron detalles de la transacción']);
         }
     }
 
@@ -227,7 +175,7 @@ class PasarelaPagoController extends Controller
             'U_amount' => $amountFormat
         ];
 
-        if ($codigoEstado === 3) {
+        if ($codigoEstado === 3 || $codigoEstado === 'APPROVE') {
             $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
             return response()->json($createdTransaction);
         } else {
@@ -260,38 +208,39 @@ class PasarelaPagoController extends Controller
             $amount = $request->input('amount');
             $amountFormat = number_format($amount / 100, 2);
             
+            $pasarelaPago->email = $request->input('email');
+            $pasarelaPago->cardType = $request->input('cardType');
+            $pasarelaPago->bin = $request->input('bin');
+            $pasarelaPago->lastDigits = $request->input('lastDigits');
+            $pasarelaPago->deferredCode = $request->input('deferredCode');
+            $pasarelaPago->deferred = $request->input('deferred');
+            $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
+            $pasarelaPago->cardBrand = $request->input('cardBrand');
+            $pasarelaPago->amount = $amountFormat;
+            $pasarelaPago->clientTransactionId = $request->input('clientTransactionId');
+            $pasarelaPago->phoneNumber = $request->input('phoneNumber');
+            $pasarelaPago->statusCode = $request->input('statusCode');
+            $pasarelaPago->transactionStatus = $request->input('transactionStatus');
+            $pasarelaPago->authorizationCode = $authorizationCode;
+            $pasarelaPago->messageCode = $request->input('messageCode');
+            $pasarelaPago->transactionId = $request->input('transactionId');
+            $pasarelaPago->document = $request->input('document');
+            $pasarelaPago->currency = $request->input('currency');
+            $pasarelaPago->optionalParameter1 = $request->input('optionalParameter1');
+            $pasarelaPago->optionalParameter2 = $request->input('optionalParameter2');
+            $pasarelaPago->optionalParameter3 = $request->input('optionalParameter3');
+            $pasarelaPago->optionalParameter4 = $request->input('optionalParameter4');
+            $pasarelaPago->storeName = $request->input('storeName');
+            $pasarelaPago->date = $request->input('date');
+            $pasarelaPago->regionIso = $request->input('regionIso');
+            $pasarelaPago->transactionType = $request->input('transactionType');
+            $pasarelaPago->reference = $request->input('reference');
+            $pasarelaPago->codigoSap = $request->input('codigoSap');
+
             if ($tipoPasarela === 'payphone') {
-                $pasarelaPago->email = $request->input('email');
-                $pasarelaPago->cardType = $request->input('cardType');
-                $pasarelaPago->bin = $request->input('bin');
-                $pasarelaPago->lastDigits = $request->input('lastDigits');
-                $pasarelaPago->deferredCode = $request->input('deferredCode');
-                $pasarelaPago->deferred = $request->input('deferred');
-                $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
-                $pasarelaPago->cardBrand = $request->input('cardBrand');
-                $pasarelaPago->amount = $amountFormat;
-                $pasarelaPago->clientTransactionId = $request->input('clientTransactionId');
-                $pasarelaPago->phoneNumber = $request->input('phoneNumber');
-                $pasarelaPago->statusCode = $request->input('statusCode');
-                $pasarelaPago->transactionStatus = $request->input('transactionStatus');
-                $pasarelaPago->authorizationCode = $authorizationCode;
-                $pasarelaPago->messageCode = $request->input('messageCode');
-                $pasarelaPago->transactionId = $request->input('transactionId');
-                $pasarelaPago->document = $request->input('document');
-                $pasarelaPago->currency = $request->input('currency');
-                $pasarelaPago->optionalParameter1 = $request->input('optionalParameter1');
-                $pasarelaPago->optionalParameter2 = $request->input('optionalParameter2');
-                $pasarelaPago->optionalParameter3 = $request->input('optionalParameter3');
-                $pasarelaPago->optionalParameter4 = $request->input('optionalParameter4');
-                $pasarelaPago->storeName = $request->input('storeName');
-                $pasarelaPago->date = $request->input('date');
-                $pasarelaPago->regionIso = $request->input('regionIso');
-                $pasarelaPago->transactionType = $request->input('transactionType');
-                $pasarelaPago->reference = $request->input('reference');
-                $pasarelaPago->codigoSap = $request->input('codigoSap');
                 $pasarelaPago->tipoPasarela = 'payphone';
-            } elseif ($tipoPasarela === 'otra_pasarela') {
-                // Lógica para otro tipo de pasarela de pago
+            } elseif ($tipoPasarela === 'datafast') {
+                $pasarelaPago->tipoPasarela = 'datafast';
             } elseif ($tipoPasarela === 'tercer_tipo_pasarela') {
                 // Lógica para tercer tipo de pasarela de pago
             }
