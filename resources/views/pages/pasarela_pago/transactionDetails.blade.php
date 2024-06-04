@@ -101,8 +101,8 @@
     
     async function registrarDatafast(responseData) {
         let messageb1s = document.getElementById('messageb1s');
-        showLoder();
-        const data = {
+        showLoader();
+        let data = {
             email: '',
             cardType: '',
             bin: responseData.card.bin,
@@ -141,7 +141,7 @@
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': csrfToken
                 },
-                body: JSON.stringify(data);
+                body: JSON.stringify(data)
             });
             const responseData = await response.json();
             console.log(responseData);
