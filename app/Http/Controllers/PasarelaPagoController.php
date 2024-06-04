@@ -137,9 +137,18 @@ class PasarelaPagoController extends Controller
     }
 
     public function registroPayB1S(Request $request){
+        $tipoPasarela = $request->input('tipoPasarela');
         $codigoEstado = $request->input('statusCode');
+
         $amount = $request->input('amount');
-        $amountFormat = number_format($amount / 100, 2);
+
+        if ($tipoPasarela === 'payphone') {
+            $amountFormat = number_format($amount / 100, 2);
+        } elseif ($tipoPasarela === 'datafast') {
+            $amountFormat = $request->input('amount');
+        } elseif ($tipoPasarela === 'tercer_tipo_pasarela') {
+            // Lógica para tercer tipo de pasarela de pago
+        }
 
         $dataTransaction = [
             'Code' => $request->input('document'),
@@ -205,6 +214,7 @@ class PasarelaPagoController extends Controller
             $pasarelaPago = new PasarelaPago();
             $tipoPasarela = $request->input('tipoPasarela');
             $pasarelaPago->tipoPasarela = $tipoPasarela;
+            
             $amount = $request->input('amount');
             $amountFormat = number_format($amount / 100, 2);
             
@@ -216,7 +226,7 @@ class PasarelaPagoController extends Controller
             $pasarelaPago->deferred = $request->input('deferred');
             $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
             $pasarelaPago->cardBrand = $request->input('cardBrand');
-            $pasarelaPago->amount = $amountFormat;
+            
             $pasarelaPago->clientTransactionId = $request->input('clientTransactionId');
             $pasarelaPago->phoneNumber = $request->input('phoneNumber');
             $pasarelaPago->statusCode = $request->input('statusCode');
@@ -238,8 +248,10 @@ class PasarelaPagoController extends Controller
             $pasarelaPago->codigoSap = $request->input('codigoSap');
 
             if ($tipoPasarela === 'payphone') {
+                $pasarelaPago->amount = $amountFormat;
                 $pasarelaPago->tipoPasarela = 'payphone';
             } elseif ($tipoPasarela === 'datafast') {
+                $pasarelaPago->amount = $amount;
                 $pasarelaPago->tipoPasarela = 'datafast';
             } elseif ($tipoPasarela === 'tercer_tipo_pasarela') {
                 // Lógica para tercer tipo de pasarela de pago
