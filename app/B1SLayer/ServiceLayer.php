@@ -2,6 +2,7 @@
 
 namespace App\B1SLayer;
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 class ServiceLayer
@@ -51,23 +52,31 @@ class ServiceLayer
     public function getRequest($resource, $id = null) 
     {
         $url = $id ? "$resource/$id" : $resource;
-        $response = Http::withBasicAuth($this->username, $this->password)
-                    ->get($this->baseUrl.$url);
-                    
-        return $response->json();
+        // $cacheKey = $url;
+
+        // return Cache::remember($cacheKey, 3600, function () use ($url) {
+            $response = Http::withBasicAuth($this->username, $this->password)
+                        ->get($this->baseUrl.$url);
+                        
+            return $response->json();
+        // });
     }
 
     public function getRequestQuery($resource, $query) 
     {
         $url = $this->baseUrl . $resource . '?' . $query;
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'Cookie' => 'B1SESSION=' . $this->sessionId,
-        ])
-        ->get($url);
+        // $cacheKey = md5($url);
 
-        return $response->json();
+        // return Cache::remember($cacheKey, 3600, function () use ($url) {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+                'Cookie' => 'B1SESSION=' . $this->sessionId,
+            ])
+            ->get($url);
+    
+            return $response->json();
+        // });
     }
 
     public function postRequest($resource, $data) 

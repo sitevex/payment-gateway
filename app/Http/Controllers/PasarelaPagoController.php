@@ -73,19 +73,26 @@ class PasarelaPagoController extends Controller
 
     public function processCheckoutDatafast(Request $request) {
 
-        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
         $amount = $request->amount;
         $paymentType = 'DB';
         $currency = 'USD';
-        $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&paymentType={$paymentType}&currency={$currency}";
-        
+        // $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&currency={$currency}&paymentType={$paymentType}";
+        $url = "https://eu-test.oppwa.com/v1/checkouts";
+        $data = [
+            "entityId" => $entityId,
+            "amount" => $amount,
+            "currency" => $currency,
+            "paymentType" => $paymentType
+        ];
+
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
         ];
 
         // Realizar la solicitud HTTP
         try {
-            $response = Http::withHeaders($headers)->post($url);
+            $response = Http::withHeaders($headers)->asForm()->post($url, $data);
             // Verificar si la solicitud fue exitosa
             if ($response->successful()) {
                 return $response->json();
@@ -101,11 +108,11 @@ class PasarelaPagoController extends Controller
 
     public function transactionDetails(Request $request) {
         $resourcePath = $request->resourcePath;
-        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
         $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";
         
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
         ];
 
         try {
