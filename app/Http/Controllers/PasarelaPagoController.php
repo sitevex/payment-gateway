@@ -73,7 +73,7 @@ class PasarelaPagoController extends Controller
 
     public function processCheckoutDatafast(Request $request) {
 
-        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
+        $entityId = '8a829418533cf31d01533d06f2ee06fa';
         $amount = $request->amount;
         $paymentType = 'DB';
         $currency = 'USD';
@@ -87,7 +87,7 @@ class PasarelaPagoController extends Controller
         ];
 
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
 
         // Realizar la solicitud HTTP
@@ -108,11 +108,11 @@ class PasarelaPagoController extends Controller
 
     public function transactionDetails(Request $request) {
         $resourcePath = $request->resourcePath;
-        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
+        $entityId = '8a829418533cf31d01533d06f2ee06fa';
         $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";
         
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
         ];
 
         try {
