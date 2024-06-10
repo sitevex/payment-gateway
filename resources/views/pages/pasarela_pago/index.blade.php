@@ -201,7 +201,7 @@
                             Datos de Facturación
                         </h6>
                         <div class="card border-0 shadow-zc rounded-4">
-                            <div class="card-body p-4">
+                            <div class="card-body p-4" id="cardFact">
                                 <div class="row gap-3">
                                     <input type="hidden" name="noPedidoFact" id="noPedidoFact" />
                                     <input type="hidden" name="referenceFact" id="referenceFact" />
@@ -212,18 +212,28 @@
                                     <div class="col-12">
                                         <label for="numeroIdentificacionFact" class="form-label fs-xs fw-bold mb-1">Número de identificación <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control border-white" name="numeroIdentificacionFact" id="numeroIdentificacionFact" required disabled readonly />
+                                        <div class="invalid-feedback">Campo requerido</div>
                                     </div>
+                                    
                                     <div class="col-12">
                                         <label for="nombreFact" class="form-label fs-xs fw-bold mb-1">Razón Social <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control border-white" name="nombreFact" id="nombreFact" required disabled readonly />
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="telefonoFact" class="form-label fs-xs fw-bold mb-1">Teléfono <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="telefonoFact" id="telefonoFact" required />
+                                        <div class="invalid-feedback">Campo requerido</div>
                                     </div>
                                     <div class="col-12">
                                         <label for="emailFact" class="form-label fs-xs fw-bold mb-1">Email <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="emailFact" id="emailFact" required />
+                                        <div class="invalid-feedback">Campo requerido</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="telefonoFact" class="form-label fs-xs fw-bold mb-1">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="number" class="form-control" name="telefonoFact" id="telefonoFact" required />
+                                        <div class="invalid-feedback">Campo requerido</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="direccionFact" class="form-label fs-xs fw-bold mb-1">Dirección <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="direccionFact" id="direccionFact" required />
+                                        <div class="invalid-feedback">Campo requerido</div>
                                     </div>
                                 </div>
                             </div>

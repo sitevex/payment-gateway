@@ -72,22 +72,57 @@ class PasarelaPagoController extends Controller
     }
 
     public function processCheckoutDatafast(Request $request) {
-
+        // return response()->json($request);
         $entityId = '8a829418533cf31d01533d06f2ee06fa';
         $amount = $request->amount;
         $paymentType = 'DB';
         $currency = 'USD';
         // $url = "https://eu-test.oppwa.com/v1/checkouts?entityId={$entityId}&amount={$amount}&currency={$currency}&paymentType={$paymentType}";
         $url = "https://eu-test.oppwa.com/v1/checkouts";
+        $identificationDocId = substr(str_pad($request->cedula, 10, '0', STR_PAD_LEFT), 0, 10);
         $data = [
             "entityId" => $entityId,
             "amount" => $amount,
             "currency" => $currency,
-            "paymentType" => $paymentType
+            "paymentType" => $paymentType,
+            "customer.givenName" => $request->primer_nombre,
+            "customer.middleName" => '',  // vacio ''
+            "customer.surname" => '',     // vacio ''
+            "customer.ip" => $request->ip(),
+            "customer.merchantCustomerId" => $request->merchantCustomerId, // '000000000001',
+            "merchantTransactionId" => 'transaction_' . $request->trx,
+            "customer.email" => $request->email,
+            "customer.identificationDocType" => 'IDCARD',
+            "customer.identificationDocId" => $identificationDocId,
+            "customer.phone" => $request->telefono,
+            "billing.street1" => '',       // no obligatorio
+            "billing.country" => '',                              // no obligatorio
+            "billing.postcode" => '',               // no obligatorio
+            "shipping.street1" => $request->direccion_entrega,
+            "shipping.country" => 'EC',
+            "risk.parameters[SHOPPER_MID]" => '1000000505',
+            "customParameters[SHOPPER_TID]" => 'PD100406',
+            "customParameters[SHOPPER_ECI]" => '0103910',
+            "customParameters[SHOPPER_PSERV]" => '17913101',
+            "customParameters[SHOPPER_VAL_BASE0]" => '0',   // 
+            "customParameters[SHOPPER_VAL_BASEIMP]" => $request->base12,    // Sub
+            "customParameters[SHOPPER_VAL_IVA]" => $request->valoriva,      // valor de Iva eje $121.32
+            "customParameters[SHOPPER_VERSIONDF]" => '2',
+            "testMode" => 'EXTERNAL'    // En producción este parámetro tiene que ser eliminado completamente.
         ];
+
+        $i = 0;
+        foreach ($request->items as $item) {
+            $data["cart.items[$i].name"] = $item["product_name"];
+            $data["cart.items[$i].description"] = "Descripcion: " . $item["product_name"];
+            $data["cart.items[$i].price"] = $item["product_price"];
+            $data["cart.items[$i].quantity"] = $item["cantidad"];
+            $i++;
+        }
 
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+            'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
         // Realizar la solicitud HTTP

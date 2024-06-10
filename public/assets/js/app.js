@@ -4,6 +4,9 @@ let errorMessage = "";
 let checkoutId = '';
 
 let numeroIdentificacion = document.getElementById('numeroIdentificacion');
+let cardFact = document.getElementById('cardFact');
+let requiredFields = cardFact.querySelectorAll('.form-control[required]');
+
 // ------------------ MUlti step ------------------ 
 const multiStepForm = document.querySelector("[data-multi-step]");
 const formSteps  = [...multiStepForm.querySelectorAll("[data-step]")]
@@ -297,7 +300,8 @@ function mostrarOrdenes(data) {
             _nextStep[itemId] = true;
             checkAndContinue(itemId);
             datosFactura(pedido);
-            processDatafast(pedido);
+            // processDatafast(pedido);
+            obtenerItemsPedido(itemId, pedido);
         });
     });
     // ------------------ Ver detalle ------------------
@@ -366,6 +370,35 @@ async function obtenerDetallePedido(noPedido){
     }
 }
 
+async function obtenerItemsPedido(itemId, pedido) {
+    showLoader();
+    const url = `/detalle-ordenes?noPedido=${itemId}`;
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        hideLoader();
+        if (data.value.length === 0) {
+            mostrarNoExistenOrdenes();
+        } else {
+            let items = data.value.map(item => ({
+                product_name: item.NAME_ITEM,
+                product_price: item.PRECIO_DESCUENTO,
+                cantidad: item.CANTIDAD
+            }));
+            processDatafast(pedido, items);
+        }
+    } catch (error) {
+        mostrarErrorModal('Error', 'Se produjo un error al obtener el detalle del pedido. Por favor, inténtalo de nuevo más tarde o regresa a la página de inicio.');
+        console.error('Error fetching data:', error);
+    }
+
+}
+
 function mostrarItemsDetalle(data) {
     let contentItemsOrden = document.getElementById('listItemsOrden');
 
@@ -393,13 +426,16 @@ function mostrarItemsDetalle(data) {
 
 // Step Método de pago
 function datosFactura(pedido) {
-    
+    console.log(pedido.EMAIL);
+    let emails = pedido.EMAIL;
+    // let emailArray = emails.split(';');
+    // let primerEmail = emailArray[0].trim();
+
     let totalPagarLabel = document.getElementById('totalPagarLabel');
     totalPagarLabel.innerHTML = '';
-
     document.getElementById('numeroIdentificacionFact').value = pedido.RUC;
     document.getElementById('nombreFact').value = pedido.NOMBRE_CLIENTE;
-    document.getElementById('emailFact').value = pedido.EMAIL;
+    document.getElementById('emailFact').value = emails;
     document.getElementById('telefonoFact').value = pedido.TELEFONO;
     document.getElementById('noPedidoFact').value = pedido.NO_PEDIDO;
     document.getElementById('referenceFact').value = pedido.VENDEDOR;
@@ -408,6 +444,7 @@ function datosFactura(pedido) {
     document.getElementById('impuestoFact').value = pedido.IMPUESTO;
     document.getElementById('totalPagarFact').value = pedido.TOTAL;
     totalPagarLabel.textContent = '$ ' + pedido.TOTAL;
+    // obtenerDetallePedido(pedido.NO_PEDIDO);
 }
 
 function procesoPagoPayPhone() {
@@ -458,10 +495,34 @@ function procesoPagoPayPhone() {
 
 }
 
-async function processDatafast(pedido) {
+async function processDatafast(pedido, items) {
     showLoader();
+    let primerNombre = nombreFact.value;
+    let segundoNomnre = nombreFact.value;
+    let apellido = nombreFact.value;
+    let mail = emailFact.value;
+    let nui = numeroIdentificacionFact.value;
+    let telefono = telefonoFact.value;
+    let direccion = direccionFact.value;
+    let transactionId = unicoFact.value;
+    let documentId = noPedidoFact.value;
+    let subtotal = subTotalPagarFact.value;
+    let impuesto = impuestoFact.value;
+
     let data = {
-        amount: pedido.TOTAL
+        amount: pedido.TOTAL,
+        primer_nombre: primerNombre,
+        segundo_nombre: segundoNomnre,
+        apellido: apellido,
+        email: mail,
+        cedula: nui,
+        telefono: telefono,
+        direccion_entrega: direccion,
+        trx: transactionId,
+        merchantCustomerId: documentId,
+        base12: subtotal,
+        valoriva: impuesto,
+        items: items
     };
     
     const url = '/process-payment-datafast';
@@ -504,6 +565,8 @@ function datafastForm(responseData) {
     datafastPaymentForm.innerHTML = '';
     datafastPaymentForm.appendChild(scriptElement);
     datafastPaymentForm.appendChild(formElement);
+
+    validateFieldsFact();
 }
 
 function mostrarNoExistenOrdenes() {
@@ -534,6 +597,30 @@ function mostrarNoExistenOrdenes() {
 
     contentMsjNoOrders.innerHTML = elemento;
 }
+
+function validateFieldsFact() {
+    let allValid = true;
+    const datafastForm = document.querySelector('.datafastPayment-form');
+    requiredFields.forEach(field => {
+        const feedback = field.nextElementSibling;
+        if (!field.value.trim()) {
+            field.classList.add('warning_input');
+            feedback.style.display = 'block';
+            allValid = false;
+        } else {
+            field.classList.remove('warning_input');
+            feedback.style.display = 'none';
+        }
+    });
+    // submitButton.disabled = !allValid;
+    datafastForm.style.pointerEvents = allValid ? 'auto' : 'none';
+}
+
+requiredFields.forEach(field => {
+    field.addEventListener('input', validateFieldsFact);
+});
+
+
 
 async function logoutSAPLayer() {
     showLoader();
