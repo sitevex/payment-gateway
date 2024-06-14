@@ -520,8 +520,8 @@ async function processDatafast(pedido, items) {
         direccion_entrega: direccion,
         trx: transactionId,
         merchantCustomerId: documentId,
-        base12: subtotal,
-        valoriva: impuesto,
+        baseImp: subtotal,
+        valorIva: impuesto,
         items: items
     };
     
@@ -538,7 +538,6 @@ async function processDatafast(pedido, items) {
         if (!response.ok) {
             throw new Error('Network response was not ok.');
         }
-
         const responseData = await response.json();
         hideLoader();
         // console.log(responseData);

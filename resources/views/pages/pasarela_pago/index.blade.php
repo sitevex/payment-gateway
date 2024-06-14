@@ -232,7 +232,7 @@
                                     </div>
                                     <div class="col-12">
                                         <label for="direccionFact" class="form-label fs-xs fw-bold mb-1">Dirección <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="direccionFact" id="direccionFact" required />
+                                        <input type="text" class="form-control" name="direccionFact" id="direccionFact" value="sin direccion" required />
                                         <div class="invalid-feedback">Campo requerido</div>
                                     </div>
                                 </div>
