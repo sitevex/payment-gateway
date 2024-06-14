@@ -102,6 +102,7 @@ class PasarelaPagoController extends Controller
             "customParameters[SHOPPER_TID]" => 'PD100406',
             "customParameters[SHOPPER_ECI]" => '0103910',
             "customParameters[SHOPPER_PSERV]" => '17913101',
+            "risk.parameters[USER_DATA2]" => "ZCMAYORISTAS",
             "customParameters[SHOPPER_VAL_BASE0]" => '0.00',   // 
             "customParameters[SHOPPER_VAL_BASEIMP]" => $request->baseImp,    // SubTotal
             "customParameters[SHOPPER_VAL_IVA]" => $request->valorIva,      // valor de Iva eje $121.32
