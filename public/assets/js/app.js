@@ -428,14 +428,14 @@ function mostrarItemsDetalle(data) {
 function datosFactura(pedido) {
     console.log(pedido.EMAIL);
     let emails = pedido.EMAIL;
-    // let emailArray = emails.split(';');
-    // let primerEmail = emailArray[0].trim();
+    let emailArray = emails.split(';');
+    let email = emailArray[0].trim();
 
     let totalPagarLabel = document.getElementById('totalPagarLabel');
     totalPagarLabel.innerHTML = '';
     document.getElementById('numeroIdentificacionFact').value = pedido.RUC;
     document.getElementById('nombreFact').value = pedido.NOMBRE_CLIENTE;
-    document.getElementById('emailFact').value = emails;
+    document.getElementById('emailFact').value = email;
     document.getElementById('telefonoFact').value = pedido.TELEFONO;
     document.getElementById('noPedidoFact').value = pedido.NO_PEDIDO;
     document.getElementById('referenceFact').value = pedido.VENDEDOR;
