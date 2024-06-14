@@ -98,7 +98,7 @@ class PasarelaPagoController extends Controller
             // "billing.postcode" => '',                                    // no obligatorio
             // "shipping.street1" => $request->direccion_entrega,           // no obligatorio
             // "shipping.country" => 'EC',                                  // no obligatorio
-            "risk.parameters[SHOPPER_MID]" => '1000000505',
+            "customParameters[SHOPPER_MID]" => '1000000505',
             "customParameters[SHOPPER_TID]" => 'PD100406',
             "customParameters[SHOPPER_ECI]" => '0103910',
             "customParameters[SHOPPER_PSERV]" => '17913101',
