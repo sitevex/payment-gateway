@@ -72,7 +72,7 @@ class PasarelaPagoController extends Controller
     }
 
     public function processCheckoutDatafast(Request $request) {
-        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
         $amount = $request->amount;
         $paymentType = 'DB';
         $currency = 'USD';
@@ -92,12 +92,12 @@ class PasarelaPagoController extends Controller
             "customer.email" => $request->email,
             "customer.identificationDocType" => 'IDCARD',
             "customer.identificationDocId" => $identificationDocId,
-            "customer.phone" => $request->telefono,
-            "billing.street1" => $request->direccion_entrega,              // no obligatorio
-            "billing.country" => 'EC',                                     // no obligatorio
-            "billing.postcode" => '090101',                                // no obligatorio
-            "shipping.street1" => $request->direccion_entrega,             // no obligatorio
-            "shipping.country" => 'EC',                                    // no obligatorio
+            // "customer.phone" => $request->telefono,
+            // "billing.street1" => $request->direccion_entrega,              // no obligatorio
+            // "billing.country" => 'EC',                                     // no obligatorio
+            // "billing.postcode" => '090101',                                // no obligatorio
+            // "shipping.street1" => $request->direccion_entrega,             // no obligatorio
+            // "shipping.country" => 'EC',                                    // no obligatorio
             "customParameters[SHOPPER_ECI]" => '0103910',
             "customParameters[SHOPPER_PSERV]" => '17913101',
             "customParameters[SHOPPER_VAL_BASE0]" => '0.00',
@@ -120,7 +120,7 @@ class PasarelaPagoController extends Controller
         }
 
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
             'Content-Type' => 'application/x-www-form-urlencoded'
         ];
 
@@ -141,11 +141,11 @@ class PasarelaPagoController extends Controller
 
     public function transactionDetails(Request $request) {
         $resourcePath = $request->resourcePath;
-        $entityId = '8a829418533cf31d01533d06f2ee06fa';
+        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
         $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";
         
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1MzNjZjMxZDAxNTMzZDA2ZmQwNDA3NDh8WHQ3RjIyUUVOWA==',
+            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
         ];
 
         try {
