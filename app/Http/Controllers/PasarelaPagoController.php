@@ -224,12 +224,12 @@ class PasarelaPagoController extends Controller
             'U_amount' => $amountFormat
         ];
 
-        if ($codigoEstado === 3 || $codigoEstado === 'APPROVE') {
+        // if ($codigoEstado === 3 || $codigoEstado === 'APPROVE') {
             $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
             return response()->json($createdTransaction);
-        } else {
-            return response()->json(['message' => 'La transacción fue cancelada'], 200);
-        }
+        // } else {
+        //     return response()->json(['message' => 'La transacción fue cancelada'], 200);
+        // }
     }
 
     public function guardarTransaccionPasarela(Request $request) {
@@ -242,7 +242,7 @@ class PasarelaPagoController extends Controller
             $existingTransaction = PasarelaPago::where('transactionId', $transaccionId)->first();
             // Si ya existe un registro con la misma transacción, no hacemos nada
             if ($existingTransaction) {
-                return response()->json(['message' => 'Transacción guardada con éxito'], 200);
+                return response()->json(['message' => 'Transacción ya fue guardada con éxito'], 200);
             }
 
             $authorizationCode = null;
