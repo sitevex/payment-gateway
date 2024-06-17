@@ -96,16 +96,16 @@ class PasarelaPagoController extends Controller
             // "billing.street1" => '',                                     // no obligatorio
             // "billing.country" => '',                                     // no obligatorio
             // "billing.postcode" => '',                                    // no obligatorio
-            // "shipping.street1" => $request->direccion_entrega,           // no obligatorio
-            // "shipping.country" => 'EC',                                  // no obligatorio
-            "customParameters[SHOPPER_MID]" => '1000000505',
-            "customParameters[SHOPPER_TID]" => 'PD100406',
+            // "shipping.street1" => '',                                    // no obligatorio
+            // "shipping.country" => '',                                    // no obligatorio
             "customParameters[SHOPPER_ECI]" => '0103910',
             "customParameters[SHOPPER_PSERV]" => '17913101',
-            "risk.parameters[USER_DATA2]" => "ZCMAYORISTAS",
-            "customParameters[SHOPPER_VAL_BASE0]" => '0.00',   // 
+            "customParameters[SHOPPER_VAL_BASE0]" => '0.00',
             "customParameters[SHOPPER_VAL_BASEIMP]" => $request->baseImp,    // SubTotal
             "customParameters[SHOPPER_VAL_IVA]" => $request->valorIva,      // valor de Iva eje $121.32
+            "customParameters[SHOPPER_MID]" => '1000000505',
+            "customParameters[SHOPPER_TID]" => 'PD100406',
+            "risk.parameters[USER_DATA2]" => "ZCMAYORISTAS",
             "customParameters[SHOPPER_VERSIONDF]" => '2',
             "testMode" => 'EXTERNAL'    // En producción este parámetro tiene que ser eliminado completamente.
         ];
