@@ -116,13 +116,13 @@ function updateProgressbar() {
 function doActionStep(currentStep) {
     switch (currentStep) {
         case 1:
-            console.log('Obtener pedidos..');
+            // console.log('Obtener pedidos..');
         break;
         case 2:
-            console.log('Metodo de pago');
+            // console.log('Metodo de pago');
         break;
         case 3:
-            console.log('Comprobante');
+            // console.log('Comprobante');
         break;
     }
 }
@@ -426,7 +426,6 @@ function mostrarItemsDetalle(data) {
 
 // Step Método de pago
 function datosFactura(pedido) {
-    console.log(pedido.EMAIL);
     let emails = pedido.EMAIL;
     let emailArray = emails.split(';');
     let email = emailArray[0].trim();
