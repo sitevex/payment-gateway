@@ -536,7 +536,7 @@ async function processDatafast(pedido, items) {
             body: JSON.stringify(data)
         });
         if (!response.ok) {
-            throw new Error('Network response was not ok.');
+            throw new Error('La repuesta de la red no fue correcta.');
         }
         const responseData = await response.json();
         hideLoader();
