@@ -8,14 +8,14 @@
                     @if(isset($transactionDetails))
                     <div class="row g-3" id="contentDetalleTrans">
                         <div class="col-12 col-md-6 text-start text-md-end order-md-2">
-                            <span class="badge text-bg-sail text-label-date">Fecha de Emisión {{$transactionDetails.resultDetails.AcquirerTimestamp}}</span>
+                            <span class="badge text-bg-sail text-label-date">Fecha de Emisión</span>
                             <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue"></p>
                         </div>
                         <div class="col-12 col-md-6 order-md-1">
-                            <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">{{$transactionDetails.customer.merchantCustomerId}}</span></p>
-                            <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">{{$transactionDetails.resultDetails.TotalAmount}}</span></p>
-                            <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">{{$transactionDetails.customer.givenName}}</span></p>
-                            <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">{{$transactionDetails.customer.email}}</span></p>
+                            <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold"></span></p>
+                            <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold"></span></p>
+                            <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold"></span></p>
+                            <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold"></span></p>
                         </div>
                         <div class="col-12 order-md-3">
                             <h2 class="fw-bold text-blue-dark text-center" id="message"></h2>
