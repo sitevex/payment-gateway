@@ -394,7 +394,8 @@ async function obtenerItemsPedido(itemId, pedido) {
         }
     } catch (error) {
         mostrarErrorModal('Error', 'Se produjo un error al obtener el detalle del pedido. Por favor, inténtalo de nuevo más tarde o regresa a la página de inicio.');
-        console.error('Error fetching data:', error);
+        hideLoader();
+        // console.error('Error fetching data:', error);
     }
 
 }
