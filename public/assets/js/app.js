@@ -300,8 +300,8 @@ function mostrarOrdenes(data) {
             _nextStep[itemId] = true;
             checkAndContinue(itemId);
             datosFactura(pedido);
-            // processDatafast(pedido);
-            obtenerItemsPedido(itemId, pedido);
+            processDatafast(pedido);
+            // obtenerItemsPedido(itemId, pedido);
         });
     });
     // ------------------ Ver detalle ------------------
@@ -495,7 +495,7 @@ function procesoPagoPayPhone() {
 
 }
 
-async function processDatafast(pedido, items) {
+async function processDatafast(pedido) {    // , items
     showLoader();
     let primerNombre = nombreFact.value;
     let segundoNomnre = nombreFact.value;
@@ -522,7 +522,7 @@ async function processDatafast(pedido, items) {
         merchantCustomerId: documentId,
         baseImp: subtotal,
         valorIva: impuesto,
-        items: items
+        // items: items
     };
     
     const url = '/process-payment-datafast';

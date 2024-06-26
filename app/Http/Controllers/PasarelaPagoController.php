@@ -110,14 +110,14 @@ class PasarelaPagoController extends Controller
             "testMode" => 'EXTERNAL'    // En producción este parámetro tiene que ser eliminado completamente.
         ];
 
-        $i = 0;
+        /* $i = 0;
         foreach ($request->items as $item) {
             $data["cart.items[$i].name"] = $item["product_name"];
             $data["cart.items[$i].description"] = "Descripcion: " . $item["product_name"];
             $data["cart.items[$i].price"] = $item["product_price"];
             $data["cart.items[$i].quantity"] = $item["cantidad"];
             $i++;
-        }
+        } */
 
         $headers = [
             'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
