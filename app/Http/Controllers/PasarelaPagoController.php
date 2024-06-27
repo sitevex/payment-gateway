@@ -92,8 +92,8 @@ class PasarelaPagoController extends Controller
             "customer.email" => $request->email,
             "customer.identificationDocType" => 'IDCARD',
             "customer.identificationDocId" => $identificationDocId,
-            // "customer.phone" => $request->telefono,
-            // "billing.street1" => $request->direccion_entrega,              // no obligatorio
+            "customer.phone" => $request->telefono,
+            "billing.street1" => $request->direccion_entrega,              // no obligatorio
             // "billing.country" => 'EC',                                     // no obligatorio
             // "billing.postcode" => '090101',                                // no obligatorio
             // "shipping.street1" => $request->direccion_entrega,             // no obligatorio
