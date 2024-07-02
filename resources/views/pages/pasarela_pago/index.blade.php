@@ -314,7 +314,20 @@
         },
         style: "card",
         locale: "es",
-        labels: {cvv: "CVV", cardHolder: "Nombre(Igual que en la tarjeta)", insertCode:"Ingrese el codigo"}
+        maskCvv: true,
+        brandDetection: true,
+        labels: {cvv: "CVV", cardHolder: "Nombre(Igual que en la tarjeta)", insertCode:"Ingrese el codigo"},
+        onBeforeSubmitCard: function(e){
+            const holder = $('.wpwl-control-cardHolder').val();
+            if(holder.trim().length < 2){
+                $(".wpwl-control-cardHolder").addClass("wpwl-has-error");
+                $(".wpwl-button-CardHolder").after("<div class='wpwl-hint-cardHolderError'>Campo requerido</div>");
+                $(".wpwl-button-pay").addClass("wpwl-button-error").attr("disabled", "disabled");
+                return false;
+            }
+            return true;
+        }
+
     }
 </script>
 @endpush
