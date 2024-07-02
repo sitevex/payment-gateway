@@ -8,14 +8,18 @@
                     @if(isset($transactionDetails))
                     <div class="row g-3" id="contentDetalleTrans">
                         <div class="col-12 col-md-6 text-start text-md-end order-md-2">
-                            <span class="badge text-bg-sail text-label-date">Fecha de Emisión {{$transactionDetails['resultDetails']['AcquirerTimestamp']}}</span>
+                            @if(isset($transactionDetails['resultDetails']['AcquirerTimestamp']))
+                                <span class="badge text-bg-sail text-label-date">Fecha de Emisión {{ $transactionDetails['resultDetails']['AcquirerTimestamp'] }}</span>
+                            @else
+                                <span class="badge text-bg-sail text-label-date">Fecha de Emisión: N/A</span>
+                            @endif
                             <p class="fs-xxs text-lg-end mx-2 mb-0" id="dateOfIssue"></p>
                         </div>
                         <div class="col-12 col-md-6 order-md-1">
-                            <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">{{$transactionDetails['customer']['merchantCustomerId']}}</span></p>
-                            <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">{{$transactionDetails['resultDetails']['TotalAmount']}}</span></p>
-                            <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">{{$transactionDetails['customer']['givenName']}}</span></p>
-                            <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">{{$transactionDetails['customer']['email']}}</span></p>
+                            <p class="fs-sm mb-0" id="transactionId">Comprobante Pago: <span class="fw-bold">{{ $transactionDetails['customer']['merchantCustomerId'] ?? 'N/A' }}</span></p>
+                            <p class="fs-sm mb-0" id="totalValue">Valor total: <span class="fw-bold">{{ $transactionDetails['resultDetails']['TotalAmount'] ?? 'N/A' }}</span></p>
+                            <p class="fs-sm mb-0" id="username">Cliente: <span class="fw-bold">{{ $transactionDetails['customer']['givenName'] ?? 'N/A' }}</span></p>
+                            <p class="fs-sm mb-0" id="email">Correo electrónico: <span class="fw-bold">{{ $transactionDetails['customer']['email'] ?? 'N/A' }}</span></p>
                         </div>
                         <div class="col-12 order-md-3">
                             <h2 class="fw-bold text-blue-dark text-center" id="message"></h2>
@@ -44,7 +48,7 @@
         let messageb1s = document.getElementById('messageb1s');
         showLoader();
         let data = {
-            email: responseData.customer.email,
+            /* email: responseData.customer.email,
             cardType: responseData.resultDetails.CardType,
             bin: responseData.card.bin,
             lastDigits: responseData.card.last4Digits,
@@ -70,6 +74,33 @@
             date: responseData.timestamp,
             regionIso: '',
             transactionType: responseData.paymentType,
+            reference: '', */
+            email: responseData.customer?.email ?? '',
+            cardType: responseData.resultDetails?.CardType ?? '',
+            bin: responseData.card?.bin ?? '',
+            lastDigits: responseData.card?.last4Digits ?? '',
+            deferredCode: responseData.resultDetails?.ReferenceNbr ?? '',
+            deferred: '',
+            cardBrandCode: '',
+            cardBrand: responseData.paymentBrand ?? '',
+            amount: responseData.amount ?? 0,
+            clientTransactionId: responseData.merchantTransactionId ?? '',
+            phoneNumber: '',
+            statusCode: responseData.resultDetails?.RiskStatusCode ?? '',
+            transactionStatus: responseData.resultDetails?.ExtendedDescription ?? '',
+            authorizationCode: responseData.resultDetails?.AuthCode ?? '',
+            messageCode: '',
+            transactionId: responseData.customer?.identificationDocId ?? '',
+            document: responseData.customer?.merchantCustomerId ?? '',
+            currency: responseData.currency ?? '',
+            optionalParameter1: '',
+            optionalParameter2: responseData.resultDetails?.BatchNo ?? '',
+            optionalParameter3: responseData.card?.givenName ?? '',
+            optionalParameter4: responseData.card?.holder ?? '',
+            storeName: responseData.risk?.parameters?.USER_DATA2 ?? '',
+            date: responseData.timestamp ?? '',
+            regionIso: '',
+            transactionType: responseData.paymentType ?? '',
             reference: '',
             tipoPasarela: 'datafast'
         }
@@ -103,7 +134,7 @@
         let messageb1s = document.getElementById('messageb1s');
         showLoader();
         let data = {
-            email: responseData.customer.email,
+            /* email: responseData.customer.email,
             cardType: responseData.resultDetails.CardType,
             bin: responseData.card.bin,
             lastDigits: responseData.card.last4Digits,
@@ -129,6 +160,33 @@
             date: responseData.timestamp,
             regionIso: '',
             transactionType: responseData.paymentType,
+            reference: '', */
+            email: responseData.customer?.email ?? '',
+            cardType: responseData.resultDetails?.CardType ?? '',
+            bin: responseData.card?.bin ?? '',
+            lastDigits: responseData.card?.last4Digits ?? '',
+            deferredCode: responseData.resultDetails?.ReferenceNbr ?? '',
+            deferred: '',
+            cardBrandCode: '',
+            cardBrand: responseData.paymentBrand ?? '',
+            amount: responseData.amount ?? 0,
+            clientTransactionId: responseData.merchantTransactionId ?? '',
+            phoneNumber: '',
+            statusCode: responseData.resultDetails?.RiskStatusCode ?? '',
+            transactionStatus: responseData.resultDetails?.ExtendedDescription ?? '',
+            authorizationCode: responseData.resultDetails?.AuthCode ?? '',
+            messageCode: '',
+            transactionId: responseData.customer?.identificationDocId ?? '',
+            document: responseData.customer?.merchantCustomerId ?? '',
+            currency: responseData.currency ?? '',
+            optionalParameter1: '',
+            optionalParameter2: responseData.resultDetails?.BatchNo ?? '',
+            optionalParameter3: responseData.card?.givenName ?? '',
+            optionalParameter4: responseData.card?.holder ?? '',
+            storeName: responseData.risk?.parameters?.USER_DATA2 ?? '',
+            date: responseData.timestamp ?? '',
+            regionIso: '',
+            transactionType: responseData.paymentType ?? '',
             reference: '',
             codigoSap: messageb1s.value,
             tipoPasarela: 'datafast'
