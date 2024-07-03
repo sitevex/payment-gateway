@@ -292,19 +292,15 @@
 <script type="text/javascript">
     var wpwlOptions = {
         onReady: function() {
-            /* var numberOfInstallmentsHtml ='<div class="wpwl-label wpwl-label-custom" style="display:inline-block">Diferidos:</div>' +
+            var numberOfInstallmentsHtml ='<div class="wpwl-label wpwl-label-custom w-100" style="display:inline-block">Diferidos:</div>' +
             '<div class="wpwl-wrapper wpwl-wrapper-custom" style="display:inline-block">' +
-            '<select name="recurring.numberOfInstallments"><option value="0">0</option><option value="3">3</option><option value="6">6</option><option value="9">9</option></select>' +
+            '<select class="form-select form-select-sm" name="recurring.numberOfInstallments"><option value="0">0</option><option value="3">3</option><option value="6">6</option><option value="12">12</option></select>' +
             '</div>';
-            $('form.wpwl-form-card').find('.wpwl-button').before(numberOfInstallmentsHtml); */
+            $('form.wpwl-form-card').find('.wpwl-button').before(numberOfInstallmentsHtml);
             var tipocredito =
             '<div class="wpwl-wrapper wpwl-wrapper-custom w-100" style="display:inline-block">'+ 'Tipo de crédito: <select class="form-select form-select-sm" name="customParameters[SHOPPER_TIPOCREDITO]"><option value="00">Corriente</option>'+
-            '<option value="02">Diferido con Interés 3</option>'+
-            '<option value="02">Diferido con Interés 6</option>'+
-            '<option value="02">Diferido con Interés 12</option>'+
-            '<option value="03">Diferido sin Interés 3</option>'+
-            '<option value="03">Diferido sin Interés 6</option>'+
-            '<option value="03">Diferido sin Interés 12</option>'+
+            '<option value="02">Diferido con Interés</option>'+
+            '<option value="03">Diferido sin Interés</option>'+
             '</div>'
             $('form.wpwl-form-card').find('.wpwl-button').before(tipocredito);
 
