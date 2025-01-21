@@ -31,7 +31,8 @@
         <div class="navbar navbar-expand-xl" style="background-color: #112860;">
             <div class="container">
                 <a class="navbar-brand text-center d-flex align-items-center">
-                    @include('components.atoms.logo.zc_mayoristas_white')
+                    {{-- @include('components.atoms.logo.zc_mayoristas_white') --}}
+                    <img src="{{asset('assets/img/logo/zcmayoristas_white.png')}}" alt="" width="128">
                 </a>
                 <ul class="nav align-items-center ms-sm-2">
                     <li class="nav-item">

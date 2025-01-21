@@ -131,7 +131,8 @@
                         <div class="col-sm-10 col-md-8 col-lg-5 col-xxl-4">
                             <a class="d-flex flex-center text-decoration-none mb-4 d-none">
                                 <div class="d-flex align-items-center fw-bolder fs-3 d-inline-block">
-                                    @include('components.atoms.logo.zc_mayoristas')
+                                    {{-- @include('components.atoms.logo.zc_mayoristas') --}}
+                                    <img src="{{asset('assets/img/logo/zcmayoristas_1.png')}}" alt="" width="128">
                                 </div>
                             </a>
                             <div class="card bg-transparent border-0 mb-5">

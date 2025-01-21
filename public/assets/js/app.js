@@ -462,7 +462,8 @@ function procesoPagoPayPhone() {
         amountWithoutTax: valorPagar,
         amount: valorPagar,
         currency: "USD",
-        clientTransactionId: transactionId + identificadorUnico,
+        // clientTransactionId: transactionId + identificadorUnico,
+        clientTransactionId: transactionId,
         reference: reference,
         documentId: documentId,
         responseUrl: "https://pagodigital.zcmayoristas.com/response",
@@ -554,7 +555,8 @@ function datafastForm(responseData) {
     const checkoutIdDatafast = responseData.id;
     
     const scriptElement = document.createElement('script');
-    scriptElement.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;
+    //scriptElement.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`; // dev
+    scriptElement.src = `https://eu-prod.oppwa.com/v1/paymentWidgets.js?checkoutId=${checkoutIdDatafast}`;  // PRO
 
     const formElement = document.createElement('form'); 
     formElement.action = `${urlBase}/v1/checkouts`;

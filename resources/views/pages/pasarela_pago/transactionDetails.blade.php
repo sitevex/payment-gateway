@@ -37,7 +37,7 @@
             </div>
         </div>
     </div>
-    <pre>{{ json_encode($transactionDetails, JSON_PRETTY_PRINT) }}</pre>
+    <pre>{{-- json_encode($transactionDetails, JSON_PRETTY_PRINT) --}}</pre>
 @endsection
 @push('script-app')
 <script>

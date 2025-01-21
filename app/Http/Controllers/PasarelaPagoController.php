@@ -16,12 +16,12 @@ class PasarelaPagoController extends Controller
 {
     protected $serviceLayer;
 
-    function __construct(ServiceLayer $serviceLayer) 
+    function __construct(ServiceLayer $serviceLayer)
     {
         $this->serviceLayer = $serviceLayer;
     }
 
-    public function businessPartners(Request $request) 
+    public function businessPartners(Request $request)
     {
         // Obtener el valor de 'ruc' desde la solicitud formulario Login
         $ruc = $request->input('ruc');
@@ -39,11 +39,13 @@ class PasarelaPagoController extends Controller
         return response()->json($businessPartners);
     }
 
-    public function listaPedido(Request $request) {
+    public function listaPedido(Request $request)
+    {
         $customerCode = $request->input('customerCode');
-        
+
         // Solicitud GET
-        $resource = '/sml.svc/ORDEN_CAB';
+
+        $resource = '/sml.svc/ORDEN_CABE';
         $filter = '$filter=RUC eq \'' . $customerCode . '\'';
         //$orderby = '$orderby=CREATIONDATE desc';
 
@@ -54,29 +56,35 @@ class PasarelaPagoController extends Controller
         return response()->json($listadoServicio);
     }
 
-    public function obtenerDetallePedido(Request $request){
+    public function obtenerDetallePedido(Request $request)
+    {
         $noPedido = $request->input('noPedido');
-        
-        $resource = '/sml.svc/ORDEN_LIN';
-        $filter = '$filter=NO_PEDIDO eq ' .$noPedido;
-       
+
+        //$resource = '/sml.svc/ORDEN_LIN';   // DEV
+        $resource = '/sml.svc/ORDEN_LINE';  // PRO
+        $filter = '$filter=NO_PEDIDO eq ' . $noPedido;
+
         $query = "$filter";
         $detallePedido = $this->serviceLayer->getRequestQuery($resource, $query);
         // dd($detallePedido);
         return response()->json($detallePedido);
     }
 
-    public function payphoneTransResp(Request $request) {
+    public function payphoneTransResp(Request $request)
+    {
         $response = $request->all();
         return view('pages.pasarela_pago.response', compact('response'));
     }
 
-    public function processCheckoutDatafast(Request $request) {
-        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
+    public function processCheckoutDatafast(Request $request)
+    {
+        //$entityId = '8ac7a4c9756eef8f0175701a04d7045e'; // dev
+        $entityId = '8acda4c77ba05ed8017bc0920f7203de'; // PRO
         $amount = $request->amount;
         $paymentType = 'DB';
         $currency = 'USD';
-        $url = "https://eu-test.oppwa.com/v1/checkouts";
+        // $url = "https://eu-test.oppwa.com/v1/checkouts"; // dev
+        $url = "https://eu-prod.oppwa.com/v1/checkouts";    // PRO
         $identificationDocId = substr(str_pad($request->cedula, 10, '0', STR_PAD_LEFT), 0, 10);
         $data = [
             "entityId" => $entityId,
@@ -88,12 +96,13 @@ class PasarelaPagoController extends Controller
             "customer.surname" => $request->primer_nombre,     //
             "customer.ip" => $request->ip(),
             "customer.merchantCustomerId" => $request->merchantCustomerId,  //
-            "merchantTransactionId" => 'transaction_' . $request->trx,
+            // "merchantTransactionId" => 'transaction_' . $request->trx,
+            "merchantTransactionId" => $request->trx,
             "customer.email" => $request->email,
             "customer.identificationDocType" => 'IDCARD',
             "customer.identificationDocId" => $identificationDocId,
             "customer.phone" => $request->telefono,
-            "billing.street1" => $request->direccion_entrega,              // no obligatorio
+            "billing.street1" => $request->direccion_entrega,                 // no obligatorio
             // "billing.country" => 'EC',                                     // no obligatorio
             // "billing.postcode" => '090101',                                // no obligatorio
             // "shipping.street1" => $request->direccion_entrega,             // no obligatorio
@@ -103,11 +112,13 @@ class PasarelaPagoController extends Controller
             "customParameters[SHOPPER_VAL_BASE0]" => '0.00',
             "customParameters[SHOPPER_VAL_BASEIMP]" => $request->baseImp,   // SubTotal
             "customParameters[SHOPPER_VAL_IVA]" => $request->valorIva,      // valor de Iva eje $121.32
-            "customParameters[SHOPPER_MID]" => '1000000505',
-            "customParameters[SHOPPER_TID]" => 'PD100406',
+            //"customParameters[SHOPPER_MID]" => '1000000505', //DEV
+            //"customParameters[SHOPPER_TID]" => 'PD100406', //DEV
+            "customParameters[SHOPPER_MID]" => '4100001966', //PRO
+            "customParameters[SHOPPER_TID]" => 'BP347792',  // PRO
             "risk.parameters[USER_DATA2]" => "ZCMAYORISTAS",
             "customParameters[SHOPPER_VERSIONDF]" => '2',
-            "testMode" => 'EXTERNAL'    // En producción este parámetro tiene que ser eliminado completamente.
+            //"testMode" => 'EXTERNAL'    // En producción este parámetro tiene que ser eliminado completamente.
         ];
 
         /* $i = 0;
@@ -120,8 +131,9 @@ class PasarelaPagoController extends Controller
         } */
 
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
-            'Content-Type' => 'application/x-www-form-urlencoded'
+            // 'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',   // dev
+            'Authorization' => 'Bearer OGFjZGE0Yzc3YmEwNWVkODAxN2JjMDkxNDI1YjAzZDF8V0gyZ0RzQXpCQg==',   // PRO
+            'Content-Type' => 'application/x-www-form-urlencoded',
         ];
 
         try {
@@ -136,16 +148,19 @@ class PasarelaPagoController extends Controller
             // Manejar cualquier excepción
             return response()->json(['error' => 'Hubo un problema al procesar la solicitud'], 500);
         }
-        
     }
 
-    public function transactionDetails(Request $request) {
+    public function transactionDetails(Request $request)
+    {
         $resourcePath = $request->resourcePath;
-        $entityId = '8ac7a4c9756eef8f0175701a04d7045e';
-        $url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";
-        
+        // $entityId = '8ac7a4c9756eef8f0175701a04d7045e'; //DEV
+        $entityId = '8acda4c77ba05ed8017bc0920f7203de'; //PRD
+        $url = "https://eu-prod.oppwa.com{$request->resourcePath}?entityId={$entityId}"; //PRD
+        //$url = "https://eu-test.oppwa.com{$request->resourcePath}?entityId={$entityId}";//DEV
+
         $headers = [
-            'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',
+            'Authorization' => 'Bearer OGFjZGE0Yzc3YmEwNWVkODAxN2JjMDkxNDI1YjAzZDF8V0gyZ0RzQXpCQg==', //PROD
+            // 'Authorization' => 'Bearer OGE4Mjk0MTg1YTY1YmY1ZTAxNWE2YzhjNzI4YzBkOTV8YmZxR3F3UTMyWA==',//DEV
         ];
 
         try {
@@ -166,8 +181,9 @@ class PasarelaPagoController extends Controller
             return redirect()->route('showTransactionDetails');
         }
     }
-    
-    public function showTransactionDetails() {
+
+    public function showTransactionDetails()
+    {
         $transactionDetails = session('transactionDetails');
         if ($transactionDetails) {
             return view('pages.pasarela_pago.transactionDetails', ['transactionDetails' => $transactionDetails]);
@@ -176,7 +192,8 @@ class PasarelaPagoController extends Controller
         }
     }
 
-    public function registroPayB1S(Request $request){
+    public function registroPayB1S(Request $request)
+    {
         $tipoPasarela = $request->input('tipoPasarela');
         $codigoEstado = $request->input('statusCode');
 
@@ -221,18 +238,21 @@ class PasarelaPagoController extends Controller
             'U_reference' => $request->input('reference'),
             'U_tipoPasarela' => $request->input('tipoPasarela'),
             // 'U_codigoSap' => $request->input('codigoSap'),
-            'U_amount' => $amountFormat
+            'U_amount' => $amountFormat,
+            'U_Status' => 'C',
         ];
 
         // if ($codigoEstado === 3 || $codigoEstado === 'APPROVE') {
-            $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
-            return response()->json($createdTransaction);
+        // $createdTransaction = $this->serviceLayer->postRequest('pasarelaPagos', $dataTransaction);
+        $createdTransaction = $this->serviceLayer->postRequest('Pago', $dataTransaction);
+        return response()->json($createdTransaction);
         // } else {
         //     return response()->json(['message' => 'La transacción fue cancelada'], 200);
         // }
     }
 
-    public function guardarTransaccionPasarela(Request $request) {
+    public function guardarTransaccionPasarela(Request $request)
+    {
         // Iniciar transacción de base de datos
         DB::beginTransaction();
 
@@ -254,10 +274,10 @@ class PasarelaPagoController extends Controller
             $pasarelaPago = new PasarelaPago();
             $tipoPasarela = $request->input('tipoPasarela');
             $pasarelaPago->tipoPasarela = $tipoPasarela;
-            
+
             $amount = $request->input('amount');
             $amountFormat = number_format($amount / 100, 2);
-            
+
             $pasarelaPago->email = $request->input('email');
             $pasarelaPago->cardType = $request->input('cardType');
             $pasarelaPago->bin = $request->input('bin');
@@ -266,7 +286,7 @@ class PasarelaPagoController extends Controller
             $pasarelaPago->deferred = $request->input('deferred');
             $pasarelaPago->cardBrandCode = $request->input('cardBrandCode');
             $pasarelaPago->cardBrand = $request->input('cardBrand');
-            
+
             $pasarelaPago->clientTransactionId = $request->input('clientTransactionId');
             $pasarelaPago->phoneNumber = $request->input('phoneNumber');
             $pasarelaPago->statusCode = $request->input('statusCode');
@@ -312,14 +332,15 @@ class PasarelaPagoController extends Controller
             // Manejar el error adecuadamente
             return response()->json(['error' => 'Error al guardar la transacción: ' . $e->getMessage()], 500);
         }
-        
     }
 
-    public function comprobateDetalle(Request $request) {
+    public function comprobateDetalle(Request $request)
+    {
         return view('pages.pasarela_pago.comprobante');
     }
 
-    public function logoutSap() {
+    public function logoutSap()
+    {
         $response = $this->serviceLayer->logoutB1SLayer();
 
         // Verificar la respuesta y realizar acciones necesarias
